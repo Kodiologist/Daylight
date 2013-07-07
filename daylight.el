@@ -21,7 +21,8 @@
   :options-alist
   '((:daylight-date-created "DAYLIGHT_CREATED" nil nil)
     (:daylight-bibliography-url "DAYLIGHT_BIBLIOGRAPHY" nil nil)
-    (:daylight-license-url "DAYLIGHT_LICENSE" nil nil)))
+    (:daylight-license-url "DAYLIGHT_LICENSE" nil nil)
+    (:daylight-include-meta nil "daylight-include-meta" t)))
 
 (defun daylight-export-to-file (file)
   (let (
@@ -90,14 +91,14 @@ results block matching the file name (but without the file extension)."
   (message "Cleaning up...")
   (let (info2 plist k v)
     ; `info2' will be `info' (eventually, encoded in JSON), but
-    ; only the parts thereof with string or numeric values
-    ; (there's no need to send, e.g., the whole parse tree).
+    ; only the parts thereof with simple values (there's no need
+    ; to send, e.g., the whole parse tree).
     (setq plist info)
     (while plist
       (setq k (car plist)
         v (cadr plist)
         plist (cddr plist))
-      (when (or (stringp v) (numberp v))
+      (when (or (stringp v) (numberp v) (null v) (eq v t))
         (push (cons k v) info2)))
     (unless (and
         (= (length (plist-get info :author)) 1)

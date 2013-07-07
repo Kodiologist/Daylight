@@ -44,22 +44,23 @@ text = re.sub(r'^\\begin\{aligned\}$.+?^\\end\{aligned\}$',
 # but at least it's valid HTML5.
 date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
 date_created = None
-if info.get('daylight-date-created'):
+if info['daylight-date-created']:
     try:
         date_created = datetime.strptime(info['daylight-date-created'], "%d %b %Y").date()
     except ValueError:
       # We failed to parse the creation date. We can still use
       # it in the subtitle, but not in a meta tag.
         pass
-text = text.replace('</head>',
-    '<link rel="schema.dcterms" href="http://purl.org/dc/terms/">\n' +
-    '<meta name="dcterms.title" content="{}">\n'.format(escape(info['title'])) +
-        ''.join(['<meta name="dcterms.creator" content="{}">\n'.format(escape(a))
-            for a in info['author'].split('; ')]) +
-        ('<meta name="dcterms.created" content="{}">\n'.format(date_created)
-            if date_created else '') +
-        '<meta name="dcterms.modified" content="{}">\n'.format(date_modified) +
-        '</head>')
+if info['daylight-include-meta']:
+    text = text.replace('</head>',
+        '<link rel="schema.dcterms" href="http://purl.org/dc/terms/">\n' +
+        '<meta name="dcterms.title" content="{}">\n'.format(escape(info['title'])) +
+            ''.join(['<meta name="dcterms.creator" content="{}">\n'.format(escape(a))
+                for a in info['author'].split('; ')]) +
+            ('<meta name="dcterms.created" content="{}">\n'.format(date_created)
+                if date_created else '') +
+            '<meta name="dcterms.modified" content="{}">\n'.format(date_modified) +
+            '</head>')
 
 # Remove 'align' attributes from <caption>s, which are obsolete in
 # HTML5.
@@ -107,11 +108,16 @@ text = re.sub(r'<p>(\s*)<a id="([^"]+)"></a>\s*',
 # Put the title in a <header> and add the subtitle.
 authors_html = escape(english_list(
     [undo_name_inversion(a) for a in info['author'].split('; ')]))
-subtitle = '<p class="subtitle">{}<br>Created {}{}</p>'.format(
-    authors_html,
-    info['daylight-date-created'],
-    ' • Last modified {}'.format(date_modified.strftime("%d %b %Y").lstrip('0'))
-        if date_modified != date_created else '')
+if info['daylight-include-meta']:
+    subtitle = '<p class="subtitle">{}<br>{}{}{}</p>'.format(
+        authors_html,
+        'Created {}'.format(info['daylight-date-created'])
+            if date_created else '',
+        ' • ' if date_created and date_modified != date_created else '',
+        'Last modified {}'.format(date_modified.strftime("%d %b %Y").lstrip('0'))
+            if date_modified != date_created else '')
+else:
+    subtitle = ''
 text = re.sub('<h1 class="title">(.+?)</h1>',
     r'<header><h1 class="title">\1</h1>' + subtitle + '</header>',
     text)
@@ -186,10 +192,10 @@ def f(m):
 text = re.sub(r'<a\b[^>]+>', f, text)
 
 # Add a license footer.
-license_url = info.get('daylight-license-url')
+license_url = info['daylight-license-url']
 if license_url:
     year_created = (int(re.search('\d\d\d\d', info['daylight-date-created']).group(0))
-        if info.get('daylight-date-created')
+        if 'daylight-date-created' in info
         else None)
     year_modified = date_modified.year
     text = text.replace('</body>',
