@@ -1,0 +1,344 @@
+# -*- Org -*-
+
+#+TITLE: Example document
+
+#+author: Arfer, Kodi B.; Doe, John
+#+daylight_created: 3 Oct 2009
+#+daylight_license: http://creativecommons.org/licenses/by-sa/3.0/us/deed.en_US
+#+daylight_bibliography: http://arfer.net/daylight/kodi-bibliography.yaml
+
+#+begin_wabstract
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non nulla neque. Praesent justo felis, vulputate id augue eu, condimentum consectetur augue. Sed at suscipit felis. Nam fringilla tempor erat. Phasellus dictum mattis neque. Integer dapibus commodo fermentum. Sed dapibus, quam a accumsan fringilla, tellus lectus tincidunt nisi, sed accumsan ante nulla eget tortor. Aenean eleifend eget urna et ultricies. Curabitur rutrum lacus non feugiat gravida. Quisque quis congue lectus. Donec sit amet libero ut purus ultricies ultrices sed quis libero. Vestibulum tincidunt molestie molestie. Vivamus lacinia neque sit amet ante posuere, id ultrices nulla consequat.
+#+end_wabstract
+
+Here's some more text before the first heading. Here's [[george][a link]] to the next paragraph, which has direct target "george".
+
+<<george>> I like cheese puffs.
+
+* Emphasis, links, and footnotes
+
+Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http://google.com][emphasis *and* links]] work? Just fine, thank you. The kinds of emphasis: *stars*, /slashes/, _underscores_, =equals signs=, ~tildes~, +strikethrough+.
+
+Here's [[m:i][italics]] implemented with ~m:i~. Here we try using an unbracketed link inside a link of that kind: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
+
+Here we will test the ~wp~ link type: [[wp:Gilbert & Sullivan]], [[wp:Gilbert & Sullivan][G & S]], [[wp:Gilbert & Sullivan][/G & S/]], /[[wp:Gilbert & Sullivan][G & S]]/.
+
+Here's a DOI: [[doi:10.1016/0022-1031(73)90030-9]].
+
+The ~cls~ link type creates a ~span~ with the given class. [[cls:xyzzy][This sentence is of class ~xyzzy~.]]
+
+I'm a [[http://en.wikipedia.org/Dualism][dualist]], sort of. (That link went to http://en.wikipedia.org/Dualism ). Here are some links: [[/a/b][absolute]], [[./a/b][relative]]. Some trickier ones: [[/foo/salt & paper][ketchup & mustard (absolute)]], [[./foo/salt & paper][ketchup & mustard (relative)]]. For some time, I called myself a monist, since I believe that all we need to think is a physical nervous system and whatever that nervous system needs to function.[fn:foof] In[fn:taxonomy1][fn:taxonomy2] particular[fn:multip], I don't think we need supernatural help[fn:finalf], like souls. What, then, is a mind?
+
+Vestibulum a quam augue. Mauris vestibulum nisi cursus, accumsan tellus ut, ullamcorper dolor. Aliquam vulputate diam erat, sit amet sollicitudin tortor ornare nec. Suspendisse ac erat ac sem tempus iaculis quis quis erat. In ut metus aliquam, blandit nunc vitae, scelerisque tellus. Sed id orci vitae erat lacinia molestie. Quisque sollicitudin faucibus libero eu lobortis. Vivamus ornare tortor eget libero luctus tempor. Mauris rhoncus tristique magna, porttitor egestas justo venenatis sit amet. Sed vitae tincidunt eros. Nam ac malesuada est. Ut interdum nec nulla ac dictum. Vivamus adipiscing mi ut lacus cursus mollis. Vivamus eget interdum dolor. Proin sit amet massa turpis.
+
+* Lists and hard-wrapping
+
+Here's a little list:
+
+- One thing
+- Another thing
+  - A subthing
+  - Another subthing
+    - A subsubthing
+- A penultimate thing
+- A final thing
+
+Here is some plain text after the list.
+
+Here is \\
+a hard-wrapped \\
+paragraph.
+
+** A subsection
+
+ Sed dignissim risus et aliquam euismod. Phasellus ultricies consequat odio sed vestibulum. Pellentesque congue egestas aliquet. Fusce aliquam ornare semper. Cras rhoncus egestas ante blandit fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam non enim augue. Pellentesque ut quam eget dolor posuere consequat ac eu dui. Morbi at neque pretium, vestibulum quam eget, rutrum libero. Vestibulum tempor vel nulla id adipiscing. Nunc fringilla diam a ultricies porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus at est ullamcorper, accumsan arcu non, tincidunt tellus. Suspendisse consequat, ligula non pharetra lacinia, justo tellus faucibus lacus, ut rhoncus orci sem eget metus. 
+
+* Horizontal rules and quote blocks
+
+Nam sit amet tempor purus. In rhoncus tempus elementum. Suspendisse congue dictum nisi, ac tincidunt orci sollicitudin ac. Integer suscipit ligula non metus sollicitudin tempus. Proin fermentum imperdiet tincidunt. Sed leo justo, faucibus non mi ac, ultrices consectetur arcu. Etiam vitae nisi vel urna condimentum imperdiet sit amet et magna. Nam nisi lorem, posuere quis libero vitae, ultricies porta velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut ut pretium turpis, at euismod nulla. Maecenas dictum pellentesque nisl. 
+
+--------------------------------------------------
+
+Here is a sentence.
+
+#+begin_quote
+Vestibulum dictum vulputate felis eu tempus. Proin pellentesque quam et lectus tristique, vitae congue quam tempor. Mauris vitae sollicitudin lacus. Aliquam viverra dictum mollis. Phasellus sem augue, vestibulum sed vulputate nec, dapibus vitae justo. Pellentesque gravida vestibulum tempus. Donec nisi eros, fringilla sit amet sollicitudin vel, volutpat convallis metus. Pellentesque in augue sollicitudin, luctus ante sed, gravida lacus. Morbi hendrerit varius interdum. In quis enim sed nulla vestibulum malesuada interdum ut ligula. 
+#+end_quote
+
+Another sentence.
+
+* Citations
+
+One of my favorite articles is [[bib:Nisbett & Wilson 1977 "telling more"]]. With parentheses: ([[bibp:Nisbett & Wilson 1977 "telling more"]]). Another article I like is [[bib:Wilson & Brekke 1994]] ([[bibp:Wilson & Brekke 1994]]). [[bib:Hastie, Tibshirani, & Friedman 2009]] have more authors ([[bibp:Hastie, Tibshirani, & Friedman 2009]]).[fn:fnwithbibref]
+
+* Code blocks
+
+#+begin_src R
+pi
+#+end_src
+
+#+RESULTS:
+|   |            value |
+|---+------------------|
+|   | 3.14159265358979 |
+
+#+begin_src R
+3
+#+end_src
+
+#+RESULTS:
+|   | value |
+|---+-------|
+|   |     3 |
+
+#+begin_src R
+"hello world\n"
+#+end_src
+
+#+RESULTS:
+|   |             |
+|---+-------------|
+|   | hello world |
+
+I'm not sure what a string without a trailing newline should do, but here's what happens as things are arranged right now:
+
+#+begin_src R
+"hello world"
+#+end_src
+
+#+RESULTS:
+|   | x           |
+|---+-------------|
+| 1 | hello world |
+
+#+begin_src R
+c(2 + 2, 3)
+#+end_src
+
+#+RESULTS:
+|   | value |
+|---+-------|
+|   | 4 3   |
+
+#+begin_src R
+c(a = 2 + 2, b = 3)
+#+end_src
+
+#+RESULTS:
+|   | value |
+|---+-------|
+| a |     4 |
+| b |     3 |
+
+In the below, notice how the first number gets a trailing 0.
+
+#+begin_src R
+c(a = .2, b = .02)
+#+end_src
+
+#+RESULTS:
+|   | value |
+|---+-------|
+| a |  0.20 |
+| b |  0.02 |
+
+#+begin_src R
+factor(c("a", "a", "c", "b", "a", "c"))
+#+end_src
+
+#+RESULTS:
+|   | value       |
+|---+-------------|
+|   | a a c b a c |
+
+#+begin_src R
+mov[1:5, 1:5]
+#+end_src
+
+#+RESULTS:
+|       | title                                   | year | length | budget | rating |
+|-------+-----------------------------------------+------+--------+--------+--------|
+| 15609 | Ei ist eine geschissene Gottesgabe, Das | 1993 |     90 |        |    8.4 |
+| 21877 | Hamos sto aigaio                        | 1985 |    109 |        |    5.5 |
+| 33676 | Mind Benders, The                       | 1963 |     99 |        |    6.4 |
+| 53389 | Trop (peu) d'amour                      | 1998 |    119 |        |    4.5 |
+| 11856 | Crystania no densetsu                   | 1995 |     85 |        |    6.1 |
+
+#+begin_src R
+paste0(format(environment(function () {})), "\n")
+#+end_src
+
+#+RESULTS:
+|   |                          |
+|---+--------------------------|
+|   | <environment: 0x3e0b848> |
+
+Evaluating the following does *not* print ~mov~ in the echo area.
+
+#+begin_src R :results silent
+ww = mov
+#+end_src
+
+#+begin_src R
+nrow(ww)
+#+end_src
+
+#+RESULTS:
+|   | value |
+|---+-------|
+|   |  1000 |
+
+* Tables
+
+Go to [[tab--trivial-table]].
+
+#+NAME: tab--trivial-table
+#+CAPTION: The caption for the first table.
+| Man | Plan             | Place   |
+|-----+------------------+---------|
+| TR  | To build a canal | Panama  |
+| LBJ | Win a war        | Vietnam |
+
+Here is a reference to the next table: [[tab--fromcode]].
+
+#+begin_src R
+data.frame(foo = pi^(1:5), bar = exp(1:5), baz = sqrt(1:5))
+#+end_src
+
+#+NAME: tab--fromcode
+#+CAPTION: The caption for another table.
+#+RESULTS:
+|   |        foo |        bar |      baz |
+|---+------------+------------+----------|
+| 1 |   3.141593 |   2.718282 | 1.000000 |
+| 2 |   9.869604 |   7.389056 | 1.414214 |
+| 3 |  31.006277 |  20.085537 | 1.732051 |
+| 4 |  97.409091 |  54.598150 | 2.000000 |
+| 5 | 306.019685 | 148.413159 | 2.236068 |
+
+Here is a reference to a table without a caption: [[tab--nocap]]. Notice how the reference text looks different now.
+
+#+NAME: tab--nocap
+| Man | Plan             | Place   |
+|-----+------------------+---------|
+| TR  | To build a canal | Panama  |
+| LBJ | Win a war        | Vietnam |
+
+In the table below, the first column contains dollar signs but is right-aligned.
+
+| price | item      |
+|-------+-----------|
+|    $1 | apple     |
+|    $3 | popcorn   |
+|   $20 | olive oil |
+
+* Images
+
+An image included with an HTTP link. (It doesn't have a ~figure-label~ like the images below because it has no ~id~.)
+
+[[http://i.imgur.com/xfUJ3jq.png]]
+
+The next image is also included with an HTTP link. It also has alt-text and a caption. Here's a reference to it: [[fig--comic]].
+
+#+NAME: fig--comic
+#+ATTR_HTML: :alt A comic strip in which Charlie Brown nervously introduces himself to a "pretty girl" as "Brownie Charles".
+#+CAPTION: [[http://www.gocomics.com/peanuts/1990/07/27][/Peanuts/ strip for 27 July 1990]] by Charles Schulz.
+[[http://i.imgur.com/mCkZD.gif]]
+
+Next is a local image, [[fig--tinypng]].
+
+#+NAME: fig--tinypng
+#+CAPTION: A tiny PNG.
+[[./img.png]]
+
+Now for an image that has a ~#+NAME~ that we refer to ([[fig--tinypng2]]) but not a caption. Notice how the reference text looks different now.
+
+#+NAME: fig--tinypng2
+[[./img.png]]
+
+Finally, some "graphics": that is, images produced by R code blocks. Notice that ~:results graphics~ is not necessary; graphics output is inferred from the file extension of ~:file~.
+
+#+begin_src R :file g/mov-len-rat.png
+qplot(length/60, rating, data = ss(mov, length/60 < 3))
+#+end_src
+
+#+RESULTS:
+[[file:g/mov-len-rat.png]]
+
+Here's one with a caption. This is a reference to it: [[fig--g/mov-rat-len]]. Notice how the target is provided by the file link in the ~#+RESULTS~ instead of by ~#+NAME~.
+
+#+begin_src R :file g/mov-rat-len.png
+qplot(rating, length/60, data = ss(mov, length/60 < 3))
+#+end_src
+
+#+CAPTION: The previous graph with the axes swapped.
+#+RESULTS:
+[[file:g/mov-rat-len.png]]
+
+* Mathematical notation
+
+Today's episode brought to you by:
+
+- $2$ (2)
+- $a$ ([[var:a]])
+- $2^2$ (2^{2})
+- $2^{20}$ (2^{20})
+- $2^a$ (2^{_a_})
+- $2_a$ (2_{_a_})
+- $a^2$ ([[var:a]]^{2})
+- $a_2$ ([[var:a]]_{2})
+- $a_b$ ([[var:a]]_{[[var:b]]})
+- $2^{2a}$ (2^{2[[var:a]]})
+- $2_{2a}$ (2_{2[[var:a]]})
+- $a + b$ ([[var:a]] + _b_)
+- $a - b$ ([[var:a]] − _b_)
+- $-a$ (−[[var:a]])
+- $n\t{boot}$ ([[var:n]]_{boot})
+- $\sin x$ (MathML)
+- \(\sin x\) (MathML)
+- $\sqrt{2}$ (MathML)
+- $\sqrt{x}$ (MathML)
+- \(\sum_{n = 0}^∞ \frac{1}{n!}\) (MathML)
+
+I can use underscores in names like 2_a, though.
+
+Here are some display equations:
+
+ \[ e = \sum_{n = 0}^∞ \frac{1}{n!} \]
+ \[ y\t{sandwich} = x\t{peanut butter} + x\t{jelly} \]
+\[ y ~ «
+    \frac{1}{γ}[ \log(1 + γr_L) - \log(1 + γr_S) ] -
+    \frac{1}{τ}[ \log(1 + τt_L) - \log(1 + τt_S) ] » , \]
+\[ y ~ \Bern \invlogit  10 ρ
+   « r_L (1 + b t_L)^{-1/α} - r_S (1 + b t_S)^{-1/α} » . \]
+
+Here's an aligned group of equations (which doesn't really work in Firefox):
+
+\begin{aligned}
+\sin x + \sin y &= 4πj \\
+&= a^2 + b^2 - 2 ab \cos C
+\end{aligned}
+
+* COMMENT This node should not be exported.
+
+Fish heads fish heads, roly-poly fish heads.
+
+* Notes
+
+Can Daylight handle another section named "Notes"?
+
+* Notes
+
+[fn:fnwithbibref] Here's a footnote with a bibliography reference ([[bibp:Hastie, Tibshirani, & Friedman 2009]]).
+
+[fn:foof] Duis at libero eros. Duis non luctus augue. In quis nibh vel libero commodo pretium. Aliquam a turpis placerat, facilisis dolor a, ultrices mi. Proin aliquam, nulla sed aliquam scelerisque, lorem eros fringilla mi, at hendrerit nibh erat non arcu. Aenean sollicitudin enim sed placerat volutpat. Integer sed volutpat dolor.
+
+[fn:taxonomy1] Formerly /Cnemidophorus uniparens/.
+
+[fn:taxonomy2] Formerly /Cnemidophorus inornatus/.
+
+[fn:multip] This is a two-sentence paragraph. The next paragraph belongs to the same footnote.
+
+Pellentesque facilisis, tortor eget blandit mattis, libero nunc pulvinar dui, at consectetur velit metus at ligula. Ut eget lorem molestie, auctor ligula in, tempus tortor. Suspendisse nunc tellus, vehicula eu semper non, accumsan a tortor. Curabitur eu ultrices urna. Nullam vulputate placerat tempus. Pellentesque faucibus ipsum sit amet sagittis ultrices. Vivamus a felis posuere, semper urna eget, pulvinar mi. Vivamus commodo odio in risus dictum iaculis. Fusce elementum semper lacus vel laoreet. Nullam commodo posuere ipsum eu lacinia. 
+
+[fn:finalf] I ain't 'fraid a' no ghost.

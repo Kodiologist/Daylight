@@ -1,0 +1,104 @@
+body
+   {background: white;
+    color: black;}
+
+h1
+   {font-size: xx-large;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;}
+#content > header
+   {text-align: center;
+    margin: 0em 0em 2em 0em;}
+#content > header > .subtitle
+   {margin-top: 0;}
+
+.wabstract
+   {margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2em;
+    border: thin solid black;
+    background-color: #eed;
+    padding-left: 1em;
+    padding-right: 1em;}
+
+a
+   {color: navy;
+    text-decoration: underline;}
+a:visited
+   {color: purple;}
+a.internal, a.internal:visited
+   {color: #040;}
+/*a.wikipedia
+   {text-decoration: none;
+    border-bottom: thin dashed black;}*/
+a.wikipedia
+   {background-color: #ddd;}
+.url, .doi
+   {font-family: monospace;}
+.footref, .footnum
+   {vertical-align: super;
+    font-size: smaller;
+    line-height: normal;}
+
+/*em
+   {font-style: normal;
+    font-weight: bold;}*/
+var
+   {font-style: italic;}
+
+pre.src, pre.example
+   {margin-left: 1em;
+    margin-right: 1em;
+    border: thin solid gray;
+    padding: .5em;
+    background-color: #eee;
+    overflow: auto;}
+
+td, th
+   {padding-left: .2em;
+    padding-right: .2em;}
+td.left
+   {text-align: left;}
+td.right
+   {text-align: right;}
+
+a.table-ref-id, a.figure-ref-id
+   {font-family: monospace;}
+
+figcaption > .figure-number, caption > .table-number
+   {font-style: italic;}
+
+figure
+   {text-align: center;}
+.figure-label > a.figure-label-text
+   {font-family: monospace;
+    border: thin solid black;
+    color: black;
+    background-color: #eedec4;
+    text-decoration: none;
+    padding: .25em;}
+.figure-label
+   {margin-top: 1.5em;
+    margin-bottom: 0em;}
+.figure-label + p
+   {margin-top: .5em;
+    margin-bottom: 0;}
+p + figcaption
+   {margin-top: .5em;}
+
+#text-bibliography > p
+   {margin-top: 0;
+    margin-bottom: .25em;
+    text-indent: -2em;
+    margin-left: 2em;}
+
+div.footdef
+   {margin-top: 1em;}
+a.footnum + p.footpara
+   {display: inline;}
+
+#license-footer
+   {margin-top: 3em;
+    text-align: center;
+    font-size: small;}
