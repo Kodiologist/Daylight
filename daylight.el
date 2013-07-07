@@ -420,9 +420,9 @@ printing only happens automatically at top level."
       (search-forward "\n#+daylight_" nil t))))
 
 (defun daylight-solidify-link-text (s)
-  "Like `org-solidify-link-text', but hyphens are considered safe."
+  "Allow all but a few characters."
   (save-match-data
-    (mapconcat 'identity (org-split-string s "[^-a-zA-Z0-9_.-:]+") "-")))
+    (mapconcat 'identity (org-split-string s "[\"'&<>#?]+") "-")))
 
 (defun daylight-aliasing (symbol f form)
 "Execute FORM with the function cell of SYMBOL temporarily
