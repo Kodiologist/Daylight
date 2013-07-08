@@ -319,6 +319,8 @@ Here's an aligned group of equations (which doesn't really work in Firefox):
 &= a^2 + b^2 - 2 ab \cos C
 \end{aligned}
 
+Here's a line that has dollar signs inside tildes, where they should be left as-is: there is ~show.param(l$sr.rho, "dr")~ and ~show.param(l$sr.rho, "rho")~.
+
 * COMMENT This node should not be exported.
 
 Fish heads fish heads, roly-poly fish heads.
