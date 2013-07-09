@@ -46,6 +46,10 @@ a.wikipedia
     font-weight: bold;}*/
 var
    {font-style: italic;}
+code
+   {background-color: #eee;
+    padding: .1em .2em;
+    border: thin solid gray;}
 
 pre.src, pre.example
    {margin-left: 1em;
