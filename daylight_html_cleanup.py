@@ -163,17 +163,15 @@ if '<div id="footnotes">' in text:
 contents = ''
 def f(mo):
     global contents
-    contents = re.sub(r'\A<div', '<nav',
-        re.sub(r'</div>\Z', '</nav>',
-        mo.group(0)))
+    contents = mo.group(0)
     return ''
 text = re.sub(
-    '<div id="table-of-contents">'
+    '<nav id="table-of-contents">'
         '.+?'
         '<div id="text-table-of-contents">'
         r'\s+<ul>'
         '.+?'
-        r'</ul>\s*</div>\s*</div>',
+        r'</ul>\s*</div>\s*</nav>',
     f, text, 1, re.DOTALL)
 if contents:
    text = re.sub('<div id="outline-container-sec-1" class="outline-2">',
