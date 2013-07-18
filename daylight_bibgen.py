@@ -26,8 +26,8 @@ def encode_bibref(s):
 
 def digest_citation(text):
     return (
-        re.sub(r'`(.+?)`', r'¦\1¦',
-        re.sub(r'(\[\[itn:[^\]]+)\]\], \[\[itn:', r'\1, ',
+        re.sub(r'`(.+?)`', r'[[m:i][\1]]',
+        re.sub(r'(\[\[m:i\]\[[^\]]+)\]\], \[\[m:i\]\[', r'\1, ',
         re.sub(r'(doi:10\.[^ ]+[^ .])', r'[[\1]]',
         text))))
 
@@ -116,7 +116,6 @@ org = re.sub(r'\[\[bib(p?):(.+?)\]\]', f, org)
 
 ref_org = ("\n* References\n:PROPERTIES:\n:CUSTOM_ID: bibliography\n:END:\n" +
     '\n\n'.join(
-        #'#+HTML: <div id="{}"></div>\n{}'
         '<<{}>> {}'.format(encode_bibref(key), digest_citation(c))
             for key, c in zip(ids, text.split('\n\n'))) +
     '\n\n')
