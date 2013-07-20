@@ -90,6 +90,8 @@ figure
     margin-bottom: 0;}
 p + figcaption
    {margin-top: .5em;}
+figcaption
+   {text-align: left;}
 
 #text-bibliography > p
    {margin-top: 0;
