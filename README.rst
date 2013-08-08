@@ -44,7 +44,7 @@ Oh boy, I hope you packed a lunch.
 
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
 - Install quickbib (from `Citematic`_; the Perl parts of Citematic are not required by Daylight).
-- Install `Kodi.R`_ (you must set the R option ``Kodi.R.path`` so R find it, presumably in your .Rprofile).
+- Install `Kodi.R`_ (you must set the R option ``Kodi.R.path`` so R can find it, presumably in your .Rprofile).
 - In your .emacs, write::
 
       (require 'daylight) ; And make sure Emacs can find daylight.el.
