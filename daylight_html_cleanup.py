@@ -180,6 +180,29 @@ if apa:
         '<h2 class="footnotes">Notes</h2>',
         '<h2 class="footnotes">Footnotes</h2>')
 
+if apa:
+   # Move tables to the end. Make sure there's a line break between
+   # "Table N" and the body of each caption.
+   tables = []
+   def f(m):
+       tables.append('\n\n' +
+           re.sub('(<span class="table-number">.+?</span>)',
+               r'\1<div>', count = 1, string =
+           re.sub('</caption>', '</div></caption>', count = 1, string =
+           m.group(0))))
+       return ''
+   text = re.sub(r'<table.+?</table>', f, text, flags = re.DOTALL)
+   text = text.replace('</body>', '<h2 id="tables-header">Tables</h2>' +
+       ''.join(tables) + '</body>')
+   # Remove figures, but move the figure captions to the end.
+   figcaptions = []
+   def f(m):
+       figcaptions.extend(re.findall('<figcaption>(.+?)</figcaption>', m.group(0), flags = re.DOTALL))
+       return ''
+   text = re.sub(r'<figure.+?</figure>', f, text, flags = re.DOTALL)
+   text = text.replace('</body>', '<h2 id="figure-captions-header">Figure Captions</h2>' +
+       ''.join('\n\n<p class="moved-figcaption">' + s for s in figcaptions) + '</body>')
+
 # Move the table of contents to just before the first headline.
 # (Or, in APA mode, just delete it.)
 contents = ''

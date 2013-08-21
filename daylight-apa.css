@@ -50,13 +50,33 @@ code
     padding: 0;
     border: none;}
 
-#outline-container-bibliography, #footnotes
+#outline-container-bibliography, #footnotes, #tables-header, #figure-captions-header
    {page-break-before: always;
     margin-top: 3em;}
-#bibliography, .footnotes
+#bibliography, .footnotes, #tables-header, #figure-captions-header
    {font-weight: normal;}
 /*#footnotes .footnum
    {vertical-align: baseline;
     font-size: 100%;}
 #footnotes .footnum:after
    {content: ".";}*/
+
+table, p.moved-figcaption
+   {page-break-after: always;
+    margin-bottom: 3em;}
+caption
+   {text-align: left;
+    line-height: 200%;}
+caption > .table-number
+   {font-style: normal;}
+th
+   {font-weight: normal;
+    border-bottom: thin solid black;}
+table
+   {border-top: thin solid black;
+    border-bottom: thin solid black;}
+
+p.moved-figcaption > .figure-number
+   {font-style: italic;}
+p.moved-figcaption
+   {line-height: 200%;}
