@@ -1,0 +1,62 @@
+body
+   {font-family: "Times New Roman", sans-serif;
+    font-size: 12pt;}
+code, .url, .doi
+   {font-size: 10pt;}
+
+.wabstract
+   {margin: 0;
+    border: none;
+    background: none;
+    padding: 0;
+    page-break-after: always;
+    margin-bottom: 3em;}
+.wabstract p
+   {text-indent: 0;}
+
+.wabstract + div > h2
+/* Don't boldface the introduction header. */
+   {font-weight: normal;}
+
+h1, h2, h3, h4, h5, h6
+   {font-size: 100%;}
+h1, h2
+   {text-align: center;}
+h2, h3, h4, h5
+   {font-weight: bold;}
+p, h4, h5, h6, .footdef
+   {text-indent: .5in;}
+h4:after, h5:after, h6:after
+   {content: ".";}
+h5, h6
+   {font-style: italic;}
+h6
+   {font-weight: normal;}
+
+p, ul, ol
+   {margin-top: 0em;
+    margin-bottom: 0em;}
+ul, ol
+   {margin-left: 1em;}
+p, li
+   {line-height: 200%;}
+
+a:link, a:visited
+   {color: black !important;
+    text-decoration: none;}
+
+code
+   {background: none;
+    padding: 0;
+    border: none;}
+
+#outline-container-bibliography, #footnotes
+   {page-break-before: always;
+    margin-top: 3em;}
+#bibliography, .footnotes
+   {font-weight: normal;}
+/*#footnotes .footnum
+   {vertical-align: baseline;
+    font-size: 100%;}
+#footnotes .footnum:after
+   {content: ".";}*/

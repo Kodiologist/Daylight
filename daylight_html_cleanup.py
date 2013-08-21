@@ -28,6 +28,8 @@ def undo_name_inversion(name):
 text = stdin.read()
 info = json.loads(argv[1])
 
+apa = info['daylight-apa'] is True
+
 # Convert <latexfrag>s and environments to MathML.
 text = re.sub(r'<latexfrag>(.+?)</latexfrag>',
     lambda m: to_mathml(m.group(1), delimited = True),
@@ -42,24 +44,25 @@ text = re.sub(r'^\\begin\{aligned\}$.+?^\\end\{aligned\}$',
 # http://scholar.google.com/intl/en-US/scholar/inclusion.html#indexing
 # I don't think Google Scholar actually supports dcterms.* (yet),
 # but at least it's valid HTML5.
-date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
-date_created = None
-if info['daylight-date-created']:
-    try:
-        date_created = datetime.strptime(info['daylight-date-created'], "%d %b %Y").date()
-    except ValueError:
-      # We failed to parse the creation date. We can still use
-      # it in the subtitle, but not in a meta tag.
-        pass
-if info['daylight-include-meta']:
-    text = text.replace('</head>',
-        '<link rel="schema.dcterms" href="http://purl.org/dc/terms/">\n' +
-        '<meta name="dcterms.title" content="{}">\n'.format(escape(info['title'])) +
-            ''.join(['<meta name="dcterms.creator" content="{}">\n'.format(escape(a))
-                for a in info['author'].split('; ')]) +
-            ('<meta name="dcterms.created" content="{}">\n'.format(date_created)
-                if date_created else '') +
-            '<meta name="dcterms.modified" content="{}">\n'.format(date_modified) +
+if not apa:
+    date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
+    date_created = None
+    if info['daylight-date-created']:
+        try:
+            date_created = datetime.strptime(info['daylight-date-created'], "%d %b %Y").date()
+        except ValueError:
+          # We failed to parse the creation date. We can still use
+          # it in the subtitle, but not in a meta tag.
+            pass
+    if info['daylight-include-meta']:
+        text = text.replace('</head>',
+            '<link rel="schema.dcterms" href="http://purl.org/dc/terms/">\n' +
+            '<meta name="dcterms.title" content="{}">\n'.format(escape(info['title'])) +
+                ''.join(['<meta name="dcterms.creator" content="{}">\n'.format(escape(a))
+                    for a in info['author'].split('; ')]) +
+                ('<meta name="dcterms.created" content="{}">\n'.format(date_created)
+                    if date_created else '') +
+                '<meta name="dcterms.modified" content="{}">\n'.format(date_modified) +
             '</head>')
 
 # Remove 'align' attributes from <caption>s, which are obsolete in
@@ -105,22 +108,34 @@ text = re.sub(r'<p>(\s*)<a id="([^"]+)"></a>\s*',
     r'<p id="\2">\1',
     text)
 
-# Put the title in a <header> and add the subtitle.
-authors_html = escape(english_list(
-    [undo_name_inversion(a) for a in info['author'].split('; ')]))
-if info['daylight-include-meta']:
-    subtitle = '<p class="subtitle">{}<br>{}{}{}</p>'.format(
-        authors_html,
-        'Created {}'.format(info['daylight-date-created'])
-            if date_created else '',
-        ' • ' if date_created and date_modified != date_created else '',
-        'Last modified {}'.format(date_modified.strftime("%d %b %Y").lstrip('0'))
-            if date_modified != date_created else '')
+if apa:
+   # Replace the "Introduction" header with the title, and put
+   # "Abstract" at the top.
+   def f(m):
+       global title_html
+       title_html = m.group(1)
+       return '<h2 id="abstract-header">Abstract</h2>'
+   text = re.sub('<h1 class="title">(.+?)</h1>', f, text, count = 1)
+   text = re.sub('(<h2 [^>]+>)Introduction</h2>',
+       r'\1{}</h2>'.format(title_html),
+       text, count = 1)
 else:
-    subtitle = ''
-text = re.sub('<h1 class="title">(.+?)</h1>',
-    r'<header><h1 class="title">\1</h1>' + subtitle + '</header>',
-    text)
+    # Put the title in a <header> and add the subtitle.
+    authors_html = escape(english_list(
+        [undo_name_inversion(a) for a in info['author'].split('; ')]))
+    if info['daylight-include-meta']:
+        subtitle = '<p class="subtitle">{}<br>{}{}{}</p>'.format(
+            authors_html,
+            'Created {}'.format(info['daylight-date-created'])
+                if date_created else '',
+            ' • ' if date_created and date_modified != date_created else '',
+            'Last modified {}'.format(date_modified.strftime("%d %b %Y").lstrip('0'))
+                if date_modified != date_created else '')
+    else:
+        subtitle = ''
+    text = re.sub('<h1 class="title">(.+?)</h1>',
+        r'<header><h1 class="title">\1</h1>' + subtitle + '</header>',
+        text)
 
 # Use names instead of numbers for section IDs.
 sections = {}
@@ -159,7 +174,14 @@ if '<div id="footnotes">' in text:
         r'<li><a href="#footnotes">Notes\1',
         text)
 
+if apa:
+    # The header must be "Footnotes", not "Notes".
+    text = text.replace(
+        '<h2 class="footnotes">Notes</h2>',
+        '<h2 class="footnotes">Footnotes</h2>')
+
 # Move the table of contents to just before the first headline.
+# (Or, in APA mode, just delete it.)
 contents = ''
 def f(mo):
     global contents
@@ -173,7 +195,7 @@ text = re.sub(
         '.+?'
         r'</ul>\s*</div>\s*</nav>',
     f, text, 1, re.DOTALL)
-if contents:
+if contents and not apa:
    text = re.sub('<div id="outline-container-sec-1" class="outline-2">',
        lambda mo: contents + mo.group(0),
        text, 1)
@@ -191,7 +213,7 @@ text = re.sub(r'<a\b[^>]+>', f, text)
 
 # Add a license footer.
 license_url = info['daylight-license-url']
-if license_url:
+if license_url and not apa:
     year_created = (int(re.search('\d\d\d\d', info['daylight-date-created']).group(0))
         if 'daylight-date-created' in info
         else None)

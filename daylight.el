@@ -22,9 +22,10 @@
   '((:daylight-date-created "DAYLIGHT_CREATED" nil nil)
     (:daylight-bibliography-url "DAYLIGHT_BIBLIOGRAPHY" nil nil)
     (:daylight-license-url "DAYLIGHT_LICENSE" nil nil)
-    (:daylight-include-meta nil "daylight-include-meta" t)))
+    (:daylight-include-meta nil "daylight-include-meta" t)
+    (:daylight-apa nil "daylight-apa" nil)))
 
-(defun daylight-export-to-file (file)
+(defun daylight-export-to-file (file &optional ext-plist)
   (let (
         (org-html-text-markup-alist
         '((bold . "<em>%s</em>")
@@ -46,7 +47,7 @@
           ("Table %d:" . "Table %d.")
           ("Listing %d:" . "Listing %d.")))))
   (daylight-aliasing 'org-export-solidify-link-text 'daylight-solidify-link-text
-    '(org-export-to-file 'daylight file nil nil nil (list
+    '(org-export-to-file 'daylight file nil nil nil (append ext-plist (list
       :html-doctype "html5"
       :time-stamp-file nil
       :html-head daylight-head
@@ -58,7 +59,7 @@
         ; Most of the effect of this option is negated by our
         ; LaTeX processing, but we set it to something to keep
         ; ox-html from inserting the MathJax JavaScript.
-      :html-postamble nil)))))
+      :html-postamble nil))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Miscellaneous hooks
