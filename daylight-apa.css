@@ -1,8 +1,12 @@
+@page
+   {margin: 1in;}
+
 body
-   {font-family: "Times New Roman", sans-serif;
+   {font-family: "Times New Roman";
     font-size: 12pt;}
 code, .url, .doi
-   {font-size: 10pt;}
+   {font-family: "DejaVu Sans Mono";
+    font-size: 10pt;}
 
 .wabstract
    {margin: 0;
@@ -10,7 +14,7 @@ code, .url, .doi
     background: none;
     padding: 0;
     page-break-after: always;
-    margin-bottom: 3em;}
+    margin-bottom: 8em;}
 .wabstract p
    {text-indent: 0;}
 
@@ -52,7 +56,7 @@ code
 
 #outline-container-bibliography, #footnotes, #tables-header, #figure-captions-header
    {page-break-before: always;
-    margin-top: 3em;}
+    margin-top: 8em;}
 #bibliography, .footnotes, #tables-header, #figure-captions-header
    {font-weight: normal;}
 /*#footnotes .footnum
@@ -63,7 +67,7 @@ code
 
 table, p.moved-figcaption
    {page-break-after: always;
-    margin-bottom: 3em;}
+    margin-bottom: 8em;}
 caption
    {text-align: left;
     line-height: 200%;}
