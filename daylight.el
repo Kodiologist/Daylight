@@ -158,11 +158,11 @@ results block matching the file name (but without the file extension)."
 ; kind of markup.
   'ignore
   (lambda (path desc format)
-    (unless (string= path "i")
+    (unless (member path '("i" "code"))
       (error "'m' link: Unknown type %S" path))
     (cond
       ((eq format 'html)
-        (format "<i>%s</i>" desc))
+        (format "<%s>%s</%s>" path desc path))
       ((eq format 'odt)
         (org-odt-format-fontify (org-html-encode-plain-text path) "Emphasis"))
       (t

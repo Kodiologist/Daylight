@@ -19,7 +19,7 @@ Here's some more text before the first heading. Here's [[george][a link]] to the
 
 Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http://google.com][emphasis *and* links]] work? Just fine, thank you. The kinds of emphasis: *stars*, /slashes/, _underscores_, =equals signs=, ~tildes~, +strikethrough+.
 
-Here's [[m:i][italics]] implemented with ~m:i~. Here we try using an unbracketed link inside a link of that kind: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
+Here's [[m:i][italics]] implemented with ~m:i~. Here's [[m:code][computer-code markup]] implemented with ~m:code~. Here we try using an unbracketed link inside a link of that kind: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
 
 Here we will test the ~wp~ link type: [[wp:Gilbert & Sullivan]], [[wp:Gilbert & Sullivan][G & S]], [[wp:Gilbert & Sullivan][/G & S/]], /[[wp:Gilbert & Sullivan][G & S]]/.
 
