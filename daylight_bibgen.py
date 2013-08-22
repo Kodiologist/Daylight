@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from sys import stdin
+from sys import argv, stdin
 from os import environ
 from os.path import join, getmtime, exists
 import re
@@ -51,6 +51,7 @@ class org_bib_formatter(object):
 # ------------------------------------------------------------
 
 org = stdin.read()
+apa = argv[1] != 'nil'
 
 m = re.search('\n#\+DAYLIGHT_BIBLIOGRAPHY: (.+)', org, re.IGNORECASE)
 if not m:
@@ -75,15 +76,17 @@ if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path)
 else:
     with open(bib_pickle_path, "rb") as f: database = pickle.load(f)
 
-cites, ids, text = quickbib.bib(environ['APA_CSL_PATH'],
+cites, ids, text = quickbib.bib(
+    environ['APA_CSL_PATH'],
     [mergedicts(database[re.sub(',? &', ',', c)], {'id': c})
          for c in citations],
     formatter = org_bib_formatter,
     return_cites_and_keys = True,
-    always_include_issue = True,
-    include_isbn = True,
-    url_after_doi = True,
-    publisher_website = False)
+    **(dict() if apa else dict(
+        always_include_issue = True,
+        include_isbn = True,
+        url_after_doi = True,
+        publisher_website = False)))
 
 # Strip outer parentheses.
 cites = [c[1:-1] for c in cites]

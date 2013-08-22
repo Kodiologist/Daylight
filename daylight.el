@@ -376,7 +376,8 @@ printing only happens automatically at top level."
       (save-excursion
         (search-forward-regexp "\\[\\[bibp?:" nil t)))
     (message "Generating bibliography...")
-    (daylight-proc-buffer daylight-bibgen-path)))
+    (daylight-proc-buffer daylight-bibgen-path
+      (format "%s" (plist-get ext-plist :daylight-apa)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Utilities
