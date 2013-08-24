@@ -6,7 +6,8 @@
 (require 'assoc)
 (require 'cl)
 
-(defvar daylight-head "")
+(defvar daylight-css-href "http://arfer.net/daylight.css")
+(defvar daylight-apa-css-href "http://arfer.net/daylight-apa.css")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Backend and end-user functions
@@ -47,19 +48,28 @@
           ("Table %d:" . "Table %d.")
           ("Listing %d:" . "Listing %d.")))))
   (daylight-aliasing 'org-export-solidify-link-text 'daylight-solidify-link-text
-    '(org-export-to-file 'daylight file nil nil nil (append ext-plist (list
-      :html-doctype "html5"
-      :time-stamp-file nil
-      :html-head daylight-head
-      :html-head-include-default-style nil
-      :html-head-include-scripts nil
-      :html-html5-fancy t
-      :section-numbers nil
-      :with-latex 'daylight
-        ; Most of the effect of this option is negated by our
-        ; LaTeX processing, but we set it to something to keep
-        ; ox-html from inserting the MathJax JavaScript.
-      :html-postamble nil))))))
+    '(org-export-to-file 'daylight file nil nil nil (append
+      (list :html-head (concat
+        (plist-get ext-plist :html-head)
+        (and daylight-css-href (format
+          "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
+          (daylight-escape-url daylight-css-href)))
+        (and daylight-apa-css-href (plist-get ext-plist :daylight-apa) (format
+          "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
+          (daylight-escape-url daylight-apa-css-href)))))
+      ext-plist
+      (list
+        :html-doctype "html5"
+        :time-stamp-file nil
+        :html-head-include-default-style nil
+        :html-head-include-scripts nil
+        :html-html5-fancy t
+        :section-numbers nil
+        :with-latex 'daylight
+          ; Most of the effect of this option is negated by our
+          ; LaTeX processing, but we set it to something to keep
+          ; ox-html from inserting the MathJax JavaScript.
+        :html-postamble nil))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Miscellaneous hooks

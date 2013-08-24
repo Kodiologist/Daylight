@@ -49,7 +49,6 @@ Oh boy, I hope you packed a lunch.
 
       (require 'daylight) ; And make sure Emacs can find daylight.el.
       (setq daylight-ess t)
-      (setq daylight-head "<link rel='stylesheet' type='text/css' href='http://arfer.net/daylight.css'>")
       (setq daylight-simplify-math-path ".../daylight_simplify_math.py")
       (setq daylight-bibgen-path ".../daylight_bibgen.py")
       (setq daylight-html-cleanup-path ".../daylight_html_cleanup.py")
