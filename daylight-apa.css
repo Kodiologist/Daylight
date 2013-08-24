@@ -1,6 +1,12 @@
 @page
    {margin: 1in;}
 
+/* Make table captions as wide as the body text. */
+caption
+   {width: 6.5in;} /* 8.5in - 2 * 1in */
+table
+   {overflow: visible;}
+
 body
    {font-family: "Times New Roman";
     font-size: 12pt;}
