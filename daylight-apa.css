@@ -71,6 +71,9 @@ code
 #footnotes .footnum:after
    {content: ".";}*/
 
+div.footdef
+   {margin-top: 0;}
+
 table, p.moved-figcaption
    {page-break-after: always;
     margin-bottom: 8em;}
