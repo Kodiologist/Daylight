@@ -2,6 +2,7 @@
 
 import sys, re, argparse, subprocess
 from xml.sax.saxutils import unescape
+from cgi import escape
 
 operators = ('logit', 'ilogit', 'invlogit', 'Bern', 'Unif', 'Normal')
 latex_chars = {
@@ -22,7 +23,7 @@ char_regex = re.compile(
 def digest_latex(s):
     return char_regex.sub(lambda mo: latex_chars[mo.group(0)],
         operator_regex.sub(r'\\operatorname{\1}',
-        re.sub(r'\\t\{(.+?)\}', r'_\\text{\1}', s)))
+        re.sub(r'\\t\{(.+?)\}', r'_\\text{\1}', s))).strip()
 
 def to_mathml(s, block = None, delimited = False, xmlns = False):
     s = s.strip()
@@ -39,17 +40,19 @@ def to_mathml(s, block = None, delimited = False, xmlns = False):
             raise ValueError('No delimiter found')
     if block is None:
         block = False
-    s = subprocess.Popen(
+    latex = digest_latex(unescape(s))
+    mathml = subprocess.Popen(
            ["blahtexml", "--mathml"],
            stdin = subprocess.PIPE,
            stdout = subprocess.PIPE).communicate(
-        bytes(digest_latex(unescape(s)), 'UTF-8'))[0].decode('UTF-8')
-    s = re.sub(r'\A\s*<blahtex>\s*<mathml>\s*<markup>\s*', '', s)
-    s = re.sub(r'\s*</markup>\s*</mathml>\s*</blahtex>\s*\Z', '', s)
-    return '<math{}{}>{}</math>'.format(
+        bytes(latex, 'UTF-8'))[0].decode('UTF-8')
+    mathml = re.sub(r'\A\s*<blahtex>\s*<mathml>\s*<markup>\s*', '', mathml)
+    mathml = re.sub(r'\s*</markup>\s*</mathml>\s*</blahtex>\s*\Z', '', mathml)
+    return '<math{}{}{}>{}</math>'.format(
+        ' alttext="{}"'.format(escape(latex, True)),
         ' xmlns="http://www.w3.org/1998/Math/MathML"' if xmlns else '',
         ' display="block"' if block else '',
-        s)
+        mathml)
 
 # ---------------------------------------------------------------
 

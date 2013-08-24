@@ -194,10 +194,10 @@ Go to [[tab--trivial-table]].
 
 #+NAME: tab--trivial-table
 #+CAPTION: The caption for the first table.
-| Man | Plan             | Place   |
-|-----+------------------+---------|
-| TR  | To build a canal | Panama  |
-| LBJ | Win a war        | Vietnam |
+| Man | Plan          | Place   |
+|-----+---------------+---------|
+| TR  | Build a canal | Panama  |
+| LBJ | Win a war     | Vietnam |
 
 Here is a reference to the next table: [[tab--fromcode]].
 
@@ -219,10 +219,10 @@ data.frame(foo = pi^(1:5), bar = exp(1:5), baz = sqrt(1:5))
 Here is a reference to a table without a caption: [[tab--nocap]]. Notice how the reference text looks different now.
 
 #+NAME: tab--nocap
-| Man | Plan             | Place   |
-|-----+------------------+---------|
-| TR  | To build a canal | Panama  |
-| LBJ | Win a war        | Vietnam |
+| Man | Plan          | Place   |
+|-----+---------------+---------|
+| TR  | Build a canal | Panama  |
+| LBJ | Win a war     | Vietnam |
 
 In the table below, the first column contains dollar signs but is right-aligned.
 
