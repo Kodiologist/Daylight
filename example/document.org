@@ -21,7 +21,14 @@ Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http:
 
 Here's [[m:i][italics]] implemented with ~m:i~. The value of this alternative notation is that it can be used in contexts real emphasis markup can't—[[m:i][like this]]—and also like /home/[[m:i][username]]/this. Here's [[m:code][computer-code markup]] implemented with ~m:code~. Here we try using an unbracketed link inside an ~m:i~ link: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
 
-Here we will test the ~wp~ link type: [[wp:Gilbert & Sullivan]], [[wp:Gilbert & Sullivan][G & S]], [[wp:Gilbert & Sullivan][/G & S/]], /[[wp:Gilbert & Sullivan][G & S]]/.
+Here we will test the ~wp~ link type:
+- [[wp:Gilbert & Sullivan]]
+- [[wp:Gilbert & Sullivan][G & S]]
+- [[wp:Gilbert & Sullivan][/G & S/]]
+- /[[wp:Gilbert & Sullivan][G & S]]/
+- [[wp:"Crocodile" Dundee]]
+- [[wp:'89 Live in Japan]]
+- [[wp:100% (game show)]]
 
 Here's a DOI: [[doi:10.1016/0022-1031(73)90030-9]].
 

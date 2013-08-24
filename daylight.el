@@ -3,6 +3,7 @@
 (require 'ox)
 (require 'ox-html)
 (require 'json)
+(require 'url-util)
 (require 'assoc)
 (require 'cl)
 
@@ -53,10 +54,10 @@
         (plist-get ext-plist :html-head)
         (and daylight-css-href (format
           "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
-          (daylight-escape-url daylight-css-href)))
+          (daylight-escape-html daylight-css-href)))
         (and daylight-apa-css-href (plist-get ext-plist :daylight-apa) (format
           "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
-          (daylight-escape-url daylight-apa-css-href)))))
+          (daylight-escape-html daylight-apa-css-href)))))
       ext-plist
       (list
         :html-doctype "html5"
@@ -146,8 +147,8 @@ results block matching the file name (but without the file extension)."
       ((and (not desc) (member type '("http" "https" "ftp" "mailto")))
         ; It's a literal URL. Give it a special class.
         (format "<a class=\"url\" href=\"%s\">%s</a>"
-          (daylight-escape-url raw-link)
-          (daylight-escape-url raw-link)))
+          (daylight-escape-html raw-link)
+          (daylight-escape-html raw-link)))
       (t
         ; Pass the buck to `org-html-link'.
         (org-html-link link desc info)))))
@@ -158,7 +159,7 @@ results block matching the file name (but without the file extension)."
     (cond
       ((eq format 'html)
         (format "<span class='%s'>%s</span>"
-          (org-html-encode-plain-text path)
+          (daylight-escape-html path)
           desc))
       (t
         ""))))
@@ -174,7 +175,7 @@ results block matching the file name (but without the file extension)."
       ((eq format 'html)
         (format "<%s>%s</%s>" path desc path))
       ((eq format 'odt)
-        (org-odt-format-fontify (org-html-encode-plain-text path) "Emphasis"))
+        (org-odt-format-fontify (daylight-escape-html path) "Emphasis"))
       (t
         ""))))
 
@@ -183,15 +184,16 @@ results block matching the file name (but without the file extension)."
   (lambda (path desc format)
     (cond
       ((eq format 'html)
-        (format "<var>%s</var>" (org-html-encode-plain-text path)))
+        (format "<var>%s</var>" (daylight-escape-html path)))
       ((eq format 'odt)
-        (org-odt-format-fontify (org-html-encode-plain-text path) "Emphasis"))
+        (org-odt-format-fontify (daylight-escape-html path) "Emphasis"))
       (t
         ""))))
 
 (defun daylight-translate-wp-link (input)
   (format "http://en.wikipedia.org/wiki/%s"
-    (daylight-ucfirst (replace-regexp-in-string " " "_" input))))
+    (daylight-hexify-string (daylight-ucfirst
+      (replace-regexp-in-string " " "_" input)))))
 
 (org-add-link-type "wp"
   (lambda (path)
@@ -200,9 +202,9 @@ results block matching the file name (but without the file extension)."
     (cond
       ((eq format 'html)
         (format "<a class='wikipedia' title='Wikipedia: %s' href='%s'>%s</a>"
-          (org-html-encode-plain-text (daylight-ucfirst path))
-          (daylight-escape-url (daylight-translate-wp-link path))
-          (or desc (org-html-encode-plain-text path))))
+          (daylight-escape-html (daylight-ucfirst path))
+          (daylight-escape-html (daylight-translate-wp-link path))
+          (or desc (daylight-escape-html path))))
       (t
         ""))))
 
@@ -214,9 +216,9 @@ results block matching the file name (but without the file extension)."
       ((eq format 'html)
         (format "<a class='doi' href='http://dx.doi.org/%s'>doi:%s</a>"
           (daylight-escape-url path)
-          (org-html-encode-plain-text path)))
+          (daylight-escape-html path)))
       ((eq format 'odt)
-        (org-html-encode-plain-text (concat "doi:" path)))
+        (daylight-escape-html (concat "doi:" path)))
       (t
         ""))))
 
@@ -366,18 +368,18 @@ printing only happens automatically at top level."
       (org-open-link-from-string (format "[[%s]]" (daylight-translate-bib-link path))))
     (lambda (path desc format)
       (let ((text (or desc
-            (org-html-encode-plain-text
+            (daylight-escape-html
               (replace-regexp-in-string " \".+\"" "" path)))))
         (cond
           ((eq format 'html)
             (format "<a class='bibref' href='#bibref--%s'>%s</a>"
-              (daylight-escape-url
+               (daylight-escape-url
                 (replace-regexp-in-string " +" "_"
                 (replace-regexp-in-string "[^-[:alnum:] ]" ""
                 path)))
               text))
           (t
-            (org-html-encode-plain-text text)))))))
+            (daylight-escape-html text)))))))
 
 (add-hook 'org-export-before-parsing-hook 'daylight-add-bib)
 (defun daylight-add-bib (backend)
@@ -396,9 +398,23 @@ printing only happens automatically at top level."
 (defun daylight-ucfirst (str)
   (format "%c%s" (upcase (elt str 0)) (substring str 1)))
 
+(defun daylight-escape-html (s)
+  (dolist (pair
+        '(
+          ("&" . "&amp;") ("<" . "&lt;") (">" . "&gt;")
+          ("\"" . "&quot;") ("'" . "&#39;"))
+        s)
+    (setq s (replace-regexp-in-string (car pair) (cdr pair) s t t))))
+
+(defconst daylight-url-unreserved-chars
+  (cons ?/ url-unreserved-chars))
+(defun daylight-hexify-string (s)
+"Like `url-hexify-string', but doesn't hexify slashes." 
+  (let ((url-unreserved-chars daylight-url-unreserved-chars))
+    (url-hexify-string s)))
+
 (defun daylight-escape-url (s)
-  (replace-regexp-in-string  " " "%20"
-    (org-html-encode-plain-text s)))
+  (daylight-escape-html (daylight-hexify-string s)))
 
 (defun daylight-proc-on-string (program s &rest args)
   (with-temp-buffer
