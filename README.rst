@@ -39,7 +39,7 @@ Oh boy, I hope you packed a lunch.
 - You'll need Emacs, Org, Emacs Speaks Statistics (ESS), and R. Here's a known-good combination of versions:
 
   - GNU Emacs 24.2.1
-  - Org commit 50749996053f4b9fbadaa5ba3bbea2b6826d50e7 (no stable release of Org will currently suffice, but I'll probably switch to 8.1 when it's released)
+  - Org 8.1
   - ESS 13.05
   - R 3.0.1
 

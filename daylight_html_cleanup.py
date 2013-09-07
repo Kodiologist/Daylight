@@ -28,7 +28,7 @@ def undo_name_inversion(name):
 text = stdin.read()
 info = json.loads(argv[1])
 
-apa = info['daylight-apa'] is True
+apa = info.get('daylight-apa') is True
 
 # Convert <latexfrag>s and environments to MathML.
 text = re.sub(r'<latexfrag>(.+?)</latexfrag>',
@@ -64,6 +64,11 @@ if not apa:
                     if date_created else '') +
                 '<meta name="dcterms.modified" content="{}">\n'.format(date_modified) +
             '</head>')
+
+# Remove '<meta name="author" …', which is redundant with dcterms.creator.
+with open("/tmp/test", "w") as o:
+    o.write(text)
+text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, 1)
 
 # Remove 'align' attributes from <caption>s, which are obsolete in
 # HTML5.

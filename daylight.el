@@ -49,7 +49,7 @@
           ("Table %d:" . "Table %d.")
           ("Listing %d:" . "Listing %d.")))))
   (daylight-aliasing 'org-export-solidify-link-text 'daylight-solidify-link-text
-    '(org-export-to-file 'daylight file nil nil nil (append
+    '(org-export-to-file 'daylight file nil nil nil nil (append
       (list :html-head (concat
         (plist-get ext-plist :html-head)
         (and daylight-css-href (format
