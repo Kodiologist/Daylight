@@ -240,7 +240,7 @@ def f(m):
 text = re.sub(r'<a\b[^>]+>', f, text)
 
 # Add a license footer.
-license_url = info['daylight-license-url']
+license_url = info.get('daylight-license-url')
 if license_url and not apa:
     year_created = (int(re.search('\d\d\d\d', info['daylight-date-created']).group(0))
         if 'daylight-date-created' in info
