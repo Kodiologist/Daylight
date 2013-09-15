@@ -47,14 +47,14 @@ text = re.sub(r'^\\begin\{aligned\}$.+?^\\end\{aligned\}$',
 if not apa:
     date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
     date_created = None
-    if info['daylight-date-created']:
+    if info.get('daylight-date-created'):
         try:
             date_created = datetime.strptime(info['daylight-date-created'], "%d %b %Y").date()
         except ValueError:
           # We failed to parse the creation date. We can still use
           # it in the subtitle, but not in a meta tag.
             pass
-    if info['daylight-include-meta']:
+    if info.get('daylight-include-meta'):
         text = text.replace('</head>',
             '<link rel="schema.dcterms" href="http://purl.org/dc/terms/">\n' +
             '<meta name="dcterms.title" content="{}">\n'.format(escape(info['title'])) +
