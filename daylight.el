@@ -350,6 +350,7 @@ printing only happens automatically at top level."
 (defvar daylight-bibgen-path nil)
 
 (defun daylight-translate-bib-link (input)
+  (setq input (substring-no-properties input))
   (unless (string-match "\\(.+?\\)\\([12][0-9][0-9][0-9]\\)\\(?: \"?\\([^\"]+?\\)\"?\\)?\\'" input)
     (error "Malformed bib link"))
   (let (
@@ -357,15 +358,16 @@ printing only happens automatically at top level."
       (year (match-string 2 input))
       (title (match-string 3 input)))
     (setq names (split-string (chomp names) ", \\(?:& \\)?\\| & " t))
-    (format "%s::KEY: %s %s%s" (getenv "DAYLIGHT_BIB_PATH")
+    (find-file (getenv "DAYLIGHT_BIB_PATH"))
+    (goto-char (point-min))
+    (search-forward (format "KEY: %s %s%s"
       (mapconcat 'identity names ", ")
       year
-      (if title (format " \"%s\"" title) ""))))
+      (if title (format " \"%s\"" title) "")))))
 
 (dolist (linktype '("bib" "bibp"))
   (org-add-link-type linktype
-    (lambda (path)
-      (org-open-link-from-string (format "[[%s]]" (daylight-translate-bib-link path))))
+    'daylight-translate-bib-link
     (lambda (path desc format)
       (let ((text (or desc
             (daylight-escape-html
