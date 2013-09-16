@@ -6,7 +6,7 @@ from os.path import join, getmtime, exists
 import re
 from cgi import escape
 import pickle
-import quickbib
+import quickbib, citematic_coins
 
 abbreviate_subsequent_authors = 3
 
@@ -15,9 +15,6 @@ def bib_uri_to_local_file(uri):
         re.sub('\A[a-z]+:/+', '', uri).replace('/', ':'))
 
 # ------------------------------------------------------------
-
-def mergedicts(d1, d2):
-    return dict(list(d1.items()) + list(d2.items()))
 
 def encode_bibref(s):
     s = ''.join(c for c in s if c == '-' or c == ' ' or c.isalnum())
@@ -70,16 +67,19 @@ citations = re.findall(r'\[\[bibp?:(.+?)\]\]', org)
 
 if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path):
     import yaml
-    with open(bib_path) as f: database = yaml.load(f)
-    database = {c['KEY']: c['csl'] for c in database}
+    with open(bib_path) as f: old_database = yaml.load(f)
+    database = {}
+    for item in old_database:
+        key = item['KEY'].lower()
+        database[key] = item['csl']
+        database[key]['id'] = key
     with open(bib_pickle_path, "wb") as f: pickle.dump(database, f)
 else:
     with open(bib_pickle_path, "rb") as f: database = pickle.load(f)
 
 cites, ids, text = quickbib.bib(
     environ['APA_CSL_PATH'],
-    [mergedicts(database[re.sub(',? &', ',', c)], {'id': c})
-         for c in citations],
+    [database[re.sub(',? &', ',', c.lower())] for c in citations],
     formatter = org_bib_formatter,
     return_cites_and_keys = True,
     **(dict() if apa else dict(
@@ -128,7 +128,8 @@ org = re.sub(r"\[\[bib(p?):(.+?)\]\](' |'s )?", f, org)
 
 ref_org = ("\n* References\n:PROPERTIES:\n:CUSTOM_ID: bibliography\n:END:\n" +
     '\n\n'.join(
-        '<<{}>> {}'.format(encode_bibref(key), digest_citation(c))
+        '<<{}>> {} @@html:{}@@'.format(
+                encode_bibref(key), digest_citation(c), citematic_coins.coins(database[key]))
             for key, c in zip(ids, text.split('\n\n'))) +
     '\n\n')
 

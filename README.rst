@@ -9,7 +9,7 @@ Daylight is the software package I use to produce `research notebooks, research 
 
 The features that Daylight provides over plain Org include (see ``example/document.org`` and ``example/document.html`` for a demonstration):
 
-- Automatically generated APA-style bibliographies and linked citations
+- Automatically generated APA-style bibliographies, with linked inline citations and COinS_
 - APA-style table and figure references, when the table or figure has a caption
 - Production of APA-style manuscripts as PDFs
 - Simplification of LaTeX fragments to other Org constructs (when this is possible, and translation to MathML otherwise)
@@ -77,6 +77,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 .. _`open-notebook science`: http://en.wikipedia.org/wiki/Open_notebook_science
 .. _`Org mode`: http://orgmode.org/
 .. _citeproc-py: https://github.com/brechtm/citeproc-py
+.. _COinS: http://ocoins.info/
 .. _Citematic: https://github.com/Kodiologist/Citematic
 .. _Kodi.R: https://github.com/Kodiologist/Kodi.R
 .. _`GNU General Public License`: http://www.gnu.org/licenses/
