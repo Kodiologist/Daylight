@@ -1,5 +1,8 @@
 @page
    {margin: 1in;}
+@media print
+   {body
+       {margin: 0;}}
 
 /* Make table captions as wide as the body text. */
 caption
