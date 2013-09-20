@@ -60,6 +60,9 @@ code
     padding: 0;
     border: none;}
 
+blockquote > p:first-child
+   {text-indent: 0;}
+
 #outline-container-bibliography, #footnotes, #tables-header, #figure-captions-header
    {page-break-before: always;
     margin-top: 8em;}
