@@ -39,9 +39,9 @@ Oh boy, I hope you packed a lunch.
 - You'll need Emacs, Org, Emacs Speaks Statistics (ESS), and R. Here's a known-good combination of versions:
 
   - GNU Emacs 24.2.1
-  - Org 8.1
+  - Org 8.2.1
   - ESS 13.05
-  - R 3.0.1
+  - R 3.0.2
 
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
 - Install quickbib (from `Citematic`_; the Perl parts of Citematic are not required by Daylight).
