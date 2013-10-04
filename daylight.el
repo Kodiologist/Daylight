@@ -328,17 +328,26 @@ printing only happens automatically at top level."
     (setq body (format "print({\n%s\n})" body))))
 
 (defadvice org-babel-R-evaluate-session (around use-kodi-eval activate)
-"Do two things:
+"Do three things:
 - Wrap the code in 'kodi.eval'. Besides the compartmentalizing
   effect of 'ksource', 'kodi.eval' replaces invisible return values
   with the empty string, to keep Babel from trying to print
   assignments of huge objects.
 - Keep Babel from messing up numbers that were formatted at the
-  R level. Otherwise, Babel may, e.g., throw away some trailing 0s."
+  R level. Otherwise, Babel may, e.g., throw away some trailing 0s.
+- For output, use org.write.table (from Kodi.R) instead of
+  write.table."
   (if daylight-ess
-    (let ((body (format "get('Daylight.Kodi', 'ESSR')$kodi.eval({\n%s\n}, %S)"
-        body
-        (directory-file-name (file-name-directory (buffer-file-name))))))
+    (let (
+        (body (format "get('Daylight.Kodi', 'ESSR')$kodi.eval({\n%s\n}, %S)"
+          body
+          (directory-file-name (file-name-directory (buffer-file-name)))))
+        (org-babel-R-write-object-command
+          (replace-regexp-in-string
+            "\\bwrite\\.table("
+            "get('Daylight.Kodi', 'ESSR')$org.write.table("
+            org-babel-R-write-object-command
+            t t)))
       (daylight-aliasing 'org-babel-number-p (lambda (string) nil)
         'ad-do-it))
     ad-do-it))
