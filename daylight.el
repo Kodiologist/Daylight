@@ -4,8 +4,6 @@
 (require 'ox-html)
 (require 'json)
 (require 'url-util)
-(require 'assoc)
-(require 'cl)
 
 (defvar daylight-css-href "http://arfer.net/daylight.css")
 (defvar daylight-apa-css-href "http://arfer.net/daylight-apa.css")
@@ -254,12 +252,13 @@ results block matching the file name (but without the file extension)."
 (defun daylight-set-babel-default ()
   (when (daylight-buffer-is-daylit)
     (make-local-variable 'org-babel-default-header-args)
-    (aput 'org-babel-default-header-args :session "*R*")
-    (aput 'org-babel-default-header-args :colnames "yes")
-    (aput 'org-babel-default-header-args :rownames "yes")
-    (aput 'org-babel-default-header-args :width 800)
-    (aput 'org-babel-default-header-args :height 500)
-    (aput 'org-babel-default-header-args :exports "both")))
+    (daylight-update-alist 'org-babel-default-header-args '(    
+      (:session . "*R*")
+      (:colnames . "yes")
+      (:rownames . "yes")
+      (:width . 800)
+      (:height . 500)
+      (:exports . "both")))))
 
 (add-hook 'ess-R-post-run-hook 'daylight-ess-load-initial-R)
 (defconst daylight-ess-initial-R
@@ -462,6 +461,16 @@ printing only happens automatically at top level."
   "Allow all but a few characters."
   (save-match-data
     (mapconcat 'identity (org-split-string s "[\"'&<>#?]+") "-")))
+
+(defun daylight-update-alist (symbol updates)
+"Each supplied cons cell is added to the alist in SYMBOL.
+If the alist already has a cell for the given key,
+its cdr is replaced with the cdr of the updated cell."
+  (dolist (x updates)
+    (let ((cell (assoc (car x) (symbol-value symbol))))
+      (if cell
+        (setcdr cell (cdr x))
+        (set symbol (cons x (symbol-value symbol)))))))
 
 (defun daylight-aliasing (symbol f form)
 "Execute FORM with the function cell of SYMBOL temporarily
