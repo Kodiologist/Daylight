@@ -66,8 +66,6 @@ if not apa:
             '</head>')
 
 # Remove '<meta name="author" …', which is redundant with dcterms.creator.
-with open("/tmp/test", "w") as o:
-    o.write(text)
 text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, 1)
 
 # Remove 'align' attributes from <caption>s, which are obsolete in
