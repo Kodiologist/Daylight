@@ -1,0 +1,36 @@
+@page
+   {margin: .25in;}
+@media print
+   {body
+       {margin: 0;}}
+
+@media screen
+   {.outline-2
+      {width: 10in;
+       height: 7.5in;
+       border: thin solid gray;
+       margin-top: 2em;}
+    h2
+      {margin-top: 0;}
+    .outline-text-2, h2
+      {margin: .25in;}}
+
+body
+   {font-family: Arial,sans-serif;
+    font-size: 24pt;}
+math
+   {font-family: Arial,sans-serif;}
+
+em
+   {font-style: normal;
+    font-weight: bold;}
+
+h1
+   {font-size: 150%;
+    color: #008;}
+
+h2
+   {page-break-before: always;}
+
+.outline-text-2 > ul > li
+   {margin-bottom: .5em;}

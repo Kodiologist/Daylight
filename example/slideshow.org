@@ -1,0 +1,67 @@
+# -*- Org -*-
+#+STARTUP: indent showall
+
+#+TITLE: Example slideshow: A demonstration of Daylight's slideshow output
+
+#+author: Arfer, Kodi B.
+#+daylight_created: 3 Oct 2009
+#+daylight_license: http://creativecommons.org/licenses/by-sa/3.0/us/deed.en_US
+
+#+OPTIONS: daylight-slideshow:t
+
+Presented by Tweedledum and Tweedledee \\
+on 1 Nov 2009 \\
+for the Org-Mode Association of America, \\
+23rd Annual Meeting
+
+* A simple slide
+
+- Indirect realism
+
+- Idealism
+  - Berkeley
+  - Schopenhauer
+
+- G. E. Moore's "Proof of an External World"
+  1. Here is one hand.
+  2. And here is another.
+  3. Therefore, at least two things exist. \\
+    (Homework: fill in the details by proving that Moore's hands are distinct.)
+
+* Experiment 1 method
+
+From Smith and Trope (2006).
+
+- Priming task: essay-writing
+  - Low power-primed subjects (LPs) wrote about an experience "in which someone else had control over them".
+  - High power-primed subjects (HPs) wrote about an experience "when they had control over another individual or individual".
+  - Controls wrote about "their day yesterday".
+
+- Categorization task
+  - Rate how well an item (e.g., "car" or "camel") belongs to a category (e.g., "vehicle").
+
+* Summary by experiment
+
+1. HPs construed categories more abstractly.
+2. HPs construed actions more abstractly.
+3. HPs better detected hidden coherence.
+4. HPs overgeneralized their memories more (*worse* performance).
+5. HPs found more plausible (and more abstract) interpretations of pictures.
+6. HPs found hidden details better (?).
+7. HPs had more active right hemispheres (perhaps).
+
+There was no consistent finding for controls compared to LPs and HPs.
+
+* Math and a GIF
+
+If we use the same model as the one assumed by the $t$-test, we get
+ \[ Y ~ \Normal(b_0 + b_1X,\; σ) + \sum_{i = 1}^∞ n_i - \int_{0}^π F(x) dx\]
+where $b_0$, $b_1$, and $σ$ (and $\sqrt{σ}$) are free parameters, and $X$ is $0$ for a blue room and $1$ for a red room. The CI we want is then the one for $b_1$.
+
+[[http://i.imgur.com/mCkZD.gif]]
+
+* An SVG
+
+[[http://arfer.net/chaos/proof/d4.svg]]
+
+Dat infinite resolution.

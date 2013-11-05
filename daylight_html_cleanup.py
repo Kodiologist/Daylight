@@ -29,6 +29,7 @@ text = stdin.read()
 info = json.loads(argv[1])
 
 apa = info.get('daylight-apa') is True
+slideshow = info.get('daylight-slideshow') is True
 
 # Convert <latexfrag>s and environments to MathML.
 text = re.sub(r'<latexfrag>(.+?)</latexfrag>',
@@ -126,7 +127,7 @@ else:
     # Put the title in a <header> and add the subtitle.
     authors_html = escape(english_list(
         [undo_name_inversion(a) for a in info['author'].split('; ')]))
-    if info['daylight-include-meta']:
+    if not slideshow and info['daylight-include-meta']:
         subtitle = '<p class="subtitle">{}<br>{}{}{}</p>'.format(
             authors_html,
             'Created {}'.format(info['daylight-date-created'])
@@ -207,7 +208,7 @@ if apa:
        ''.join('\n\n<p class="moved-figcaption">' + s for s in figcaptions) + '</body>')
 
 # Move the table of contents to just before the first headline.
-# (Or, in APA mode, just delete it.)
+# (Or, in APA or slideshow mode, just delete it.)
 contents = ''
 def f(mo):
     global contents
@@ -221,7 +222,7 @@ text = re.sub(
         '.+?'
         r'</ul>\s*</div>\s*</nav>',
     f, text, 1, re.DOTALL)
-if contents and not apa:
+if contents and not (apa or slideshow):
    text = re.sub('<div id="outline-container-sec-1" class="outline-2">',
        lambda mo: contents + mo.group(0),
        text, 1)
@@ -239,7 +240,7 @@ text = re.sub(r'<a\b[^>]+>', f, text)
 
 # Add a license footer.
 license_url = info.get('daylight-license-url')
-if license_url and not apa:
+if license_url and not (apa or slideshow):
     year_created = (int(re.search('\d\d\d\d', info['daylight-date-created']).group(0))
         if 'daylight-date-created' in info
         else None)

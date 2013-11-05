@@ -7,6 +7,7 @@
 
 (defvar daylight-css-href "http://arfer.net/daylight.css")
 (defvar daylight-apa-css-href "http://arfer.net/daylight-apa.css")
+(defvar daylight-slideshow-css-href "http://arfer.net/daylight-slideshow.css")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Backend and end-user functions
@@ -23,7 +24,8 @@
     (:daylight-bibliography-url "DAYLIGHT_BIBLIOGRAPHY" nil nil)
     (:daylight-license-url "DAYLIGHT_LICENSE" nil nil)
     (:daylight-include-meta nil "daylight-include-meta" t)
-    (:daylight-apa nil "daylight-apa" nil)))
+    (:daylight-apa nil "daylight-apa" nil t)
+    (:daylight-slideshow nil "daylight-slideshow" nil t)))
 
 (defun daylight-export-to-file (file &optional ext-plist)
   (let (
@@ -48,14 +50,6 @@
           ("Listing %d:" . "Listing %d.")))))
   (daylight-aliasing 'org-export-solidify-link-text 'daylight-solidify-link-text
     '(org-export-to-file 'daylight file nil nil nil nil (append
-      (list :html-head (concat
-        (plist-get ext-plist :html-head)
-        (and daylight-css-href (format
-          "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
-          (daylight-escape-html daylight-css-href)))
-        (and daylight-apa-css-href (plist-get ext-plist :daylight-apa) (format
-          "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
-          (daylight-escape-html daylight-apa-css-href)))))
       ext-plist
       (list
         :html-doctype "html5"
@@ -95,6 +89,20 @@ results block matching the file name (but without the file extension)."
                 (progn (skip-chars-forward "^]") (point))))))
             (forward-line -1)
             (insert "#+NAME: fig--" file "\n")))))))
+
+(defadvice org-html-template (before add-to-html-head activate)
+  (when (daylight-buffer-is-daylit)
+    (plist-put info :html-head (concat
+      (plist-get ext-plist :html-head)
+      (and daylight-css-href (format
+        "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
+        (daylight-escape-html daylight-css-href)))
+      (and daylight-apa-css-href (plist-get info :daylight-apa) (format
+        "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
+        (daylight-escape-html daylight-apa-css-href)))
+      (and daylight-slideshow-css-href (plist-get info :daylight-slideshow) (format
+        "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
+        (daylight-escape-html daylight-slideshow-css-href)))))))
 
 (defvar daylight-html-cleanup-path nil)
 (defun daylight-final-function (contents backend info)
