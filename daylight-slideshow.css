@@ -2,7 +2,11 @@
    {margin: .25in;}
 @media print
    {body
-       {margin: 0;}}
+       {margin: 0;}
+    #license-footer
+       {position: absolute;
+        bottom: .25in;
+        width: 10in;}}
 
 @media screen
    {.outline-2
@@ -22,15 +26,20 @@ math
    {font-family: Arial,sans-serif;}
 
 em
-   {font-style: normal;
+   {font-style: inherit;
     font-weight: bold;}
 
 h1
    {font-size: 150%;
-    color: #008;}
+    color: #008;
+    margin-top: 1in;}
 
 h2
    {page-break-before: always;}
 
 .outline-text-2 > ul > li
    {margin-bottom: .5em;}
+
+a[rel = license]
+   {color: inherit;
+    text-decoration: inherit;}

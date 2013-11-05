@@ -240,12 +240,13 @@ text = re.sub(r'<a\b[^>]+>', f, text)
 
 # Add a license footer.
 license_url = info.get('daylight-license-url')
-if license_url and not (apa or slideshow):
+if license_url and not apa:
     year_created = (int(re.search('\d\d\d\d', info['daylight-date-created']).group(0))
         if 'daylight-date-created' in info
         else None)
     year_modified = date_modified.year
-    text = text.replace('</body>',
+    rep = '<div id="outline-container-sec-1"' if slideshow else '</body>'
+    text = text.replace(rep,
         '<footer id="license-footer"><p>' +
         'This work is licensed under {}.'.format(license_html[license_url]) +
         ' Copyright {} {}.'.format(
@@ -253,7 +254,8 @@ if license_url and not (apa or slideshow):
                 if year_created and year_created != year_modified
                 else year_modified,
             authors_html) +
-        '</p></footer></body>')
+        '</p></footer>' +
+        rep)
 
 # Done.
 print(text, end = '')
