@@ -196,16 +196,18 @@ if apa:
            m.group(0))))
        return ''
    text = re.sub(r'<table.+?</table>', f, text, flags = re.DOTALL)
-   text = text.replace('</body>', '<h2 id="tables-header">Tables</h2>' +
-       ''.join(tables) + '</body>')
+   if tables:
+       text = text.replace('</body>', '<h2 id="tables-header">Tables</h2>' +
+           ''.join(tables) + '</body>')
    # Remove figures, but move the figure captions to the end.
    figcaptions = []
    def f(m):
        figcaptions.extend(re.findall('<figcaption>(.+?)</figcaption>', m.group(0), flags = re.DOTALL))
        return ''
    text = re.sub(r'<figure.+?</figure>', f, text, flags = re.DOTALL)
-   text = text.replace('</body>', '<h2 id="figure-captions-header">Figure Captions</h2>' +
-       ''.join('\n\n<p class="moved-figcaption">' + s for s in figcaptions) + '</body>')
+   if figcaptions:
+       text = text.replace('</body>', '<h2 id="figure-captions-header">Figure Captions</h2>' +
+           ''.join('\n\n<p class="moved-figcaption">' + s for s in figcaptions) + '</body>')
 
 # Move the table of contents to just before the first headline.
 # (Or, in APA or slideshow mode, just delete it.)
