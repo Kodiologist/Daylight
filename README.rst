@@ -2,7 +2,7 @@
   :alt: Princess Celestia raising the sun
   :align: center
 
-Daylight is the software package I use to produce `research notebooks, research papers. presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 (because citeproc-py_ is written in Python 3) and a little bit of R for helping with R code blocks.
+Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 (because citeproc-py_ is written in Python 3) and a little bit of R for helping with R code blocks.
 
 .. __: http://arfer.net/projects
 .. __: http://arfer.net/w
@@ -64,7 +64,7 @@ You should now be able to export a Daylight buffer to HTML with ``(daylight-expo
 
 To produce a PDF in APA style, say ``(daylight-export-to-file "/tmp/daylight-output.html" (list :daylight-apa t))``, open the resulting HTML page in Firefox, and print it to a file. Yes, this system is a little silly considering that Org also supports LaTeX and OpenDocument export. But, having used both LaTeX and LibreOffice's scripting interface extensively in the past, I can attest that the combination of Firefox, HTML, and CSS is much pleasanter to work with.
 
-Similarly, if a Daylight buffer has ``daylight_slideshow:t`` in its ``#+OPTIONS`` line, ``daylight-export-to-file`` will produce an HTML file suitable for printing to a file to create a slideshow.
+Similarly, if a Daylight buffer has ``daylight_slideshow:t`` in its ``#+OPTIONS`` line, ``daylight-export-to-file`` will produce an HTML file suitable for printing to a file to create a slideshow. Daylight expects the paper size for slideshows to be 10 inches wide by 7½ inches tall.
 
 The ``example`` directory contains various informal tests. A few tests of R encapsulation can be run by doing ``ess-load-file`` on ``tests.R``. As for ``document.org``, try exporting it or evaluating code blocks in it after ``ess-load-file``\-ing ``setup.R``. If you disable syntax highlighting [with, say, ``(daylight-aliasing 'org-html-fontify-code (lambda (code lang) (org-html-encode-plain-text code)) '(daylight-export-to-file "/tmp/daylight-output.html"))``] and ensure your filesystem's modification date for ``document.org`` is set appropriately, the result of exporting ``document.org`` should be identical to ``document.html``.
 
