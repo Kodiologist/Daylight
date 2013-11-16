@@ -17,7 +17,9 @@ Here's some more text before the first heading. Here's [[george][a link]] to the
 
 * Emphasis, links, and footnotes
 
-Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http://google.com][emphasis *and* links]] work? Just fine, thank you. The kinds of emphasis: *stars*, /slashes/, _underscores_, =equals signs=, ~tildes~, +strikethrough+.
+Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http://google.com][emphasis *and* links]] work? Just fine, thank you.
+# Here is an "inline" comment. It doesn't separate paragraphs.
+The kinds of emphasis: *stars*, /slashes/, _underscores_, =equals signs=, ~tildes~, +strikethrough+.
 
 Here's [[m:i][italics]] implemented with ~m:i~. The value of this alternative notation is that it can be used in contexts real emphasis markup can't—[[m:i][like this]]—and also like /home/[[m:i][username]]/this. Here's [[m:code][computer-code markup]] implemented with ~m:code~. Here we try using an unbracketed link inside an ~m:i~ link: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
 
@@ -91,6 +93,7 @@ pi
 
 #+begin_src R
 3
+# This comment is preserved.
 #+end_src
 
 #+RESULTS:

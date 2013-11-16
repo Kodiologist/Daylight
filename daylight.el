@@ -90,6 +90,28 @@ results block matching the file name (but without the file extension)."
             (forward-line -1)
             (insert "#+NAME: fig--" file "\n")))))))
 
+(add-hook 'org-export-before-parsing-hook 'daylight-strip-comments)
+(defun daylight-strip-comments (backend)
+"Remove '# …'-style comments. The intended effect is to allow
+such comments in the middle of paragraphs (otherwise, they split
+the paragraph into two)."
+  (when (org-export-derived-backend-p backend 'daylight)
+    (save-excursion
+      (goto-char (point-min))
+      (let (in-src line)
+        (while (progn (forward-line 1) (not (eobp)))
+          (setq line (thing-at-point 'line))
+          (cond
+            ((string-prefix-p "#+BEGIN_SRC " line)
+              (setq in-src t))
+            ((string-prefix-p "#+END_SRC " line)
+              (setq in-src nil))
+            ((and (string-prefix-p "# " line) (not in-src))
+              (while (not (or (eobp) (= (char-after) ?\n)))
+                (delete-char 1))
+              (unless (eobp)
+                (delete-char 1)))))))))
+
 (defadvice org-html-template (before add-to-html-head activate)
   (when (daylight-buffer-is-daylit)
     (plist-put info :html-head (concat

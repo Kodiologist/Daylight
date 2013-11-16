@@ -23,6 +23,7 @@ The features that Daylight provides over plain Org include (see ``example/docume
 
 - Linkable labels to figures, generated based on the file name
 - Shortcut link types for the English Wikipedia and DOIs
+- Mid-paragraph comments
 - Named instead of numbered ``id``\s for sections (which ought to be a lot more future-proof)
 - Headers with creation and modification dates
 - License footers
