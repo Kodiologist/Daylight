@@ -4,7 +4,7 @@
 
 #+author: Arfer, Kodi B.; Doe, John
 #+daylight_created: 3 Oct 2009
-#+daylight_license: http://creativecommons.org/licenses/by-sa/3.0/us/deed.en_US
+#+daylight_license: http://creativecommons.org/licenses/by-sa/4.0/
 #+daylight_bibliography: http://arfer.net/daylight/kodi-bibliography.yaml
 
 #+begin_wabstract
