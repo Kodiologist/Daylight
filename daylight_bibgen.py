@@ -77,7 +77,7 @@ if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path)
 else:
     with open(bib_pickle_path, "rb") as f: database = pickle.load(f)
 
-cites, ids, text = quickbib.bib(
+cites, ids, bibl = quickbib.bib(
     environ['APA_CSL_PATH'],
     [database[re.sub(',? &', ',', c.lower())] for c in citations],
     formatter = org_bib_formatter,
@@ -130,7 +130,7 @@ ref_org = ("\n* References\n:PROPERTIES:\n:CUSTOM_ID: bibliography\n:END:\n" +
     '\n\n'.join(
         '<<{}>> {} @@html:{}@@'.format(
                 encode_bibref(key), digest_citation(c), citematic_coins.coins(database[key]))
-            for key, c in zip(ids, text.split('\n\n'))) +
+            for key, c in zip(ids, bibl)) +
     '\n\n')
 
 # If there's a section for footnotes, put ref_org before that.
