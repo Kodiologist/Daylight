@@ -169,7 +169,7 @@ the paragraph into two)."
         ; This link's path has no protocol and begins
         ; with "/" or "./", so assume it's a link to a document.
         (format "<a href=\"%s\">%s</a>"
-          (daylight-escape-url
+          (daylight-escape-html
             (replace-regexp-in-string "\\`./" "" raw-link))
           desc))
       ((and (not desc) (member type '("http" "https" "ftp" "mailto")))
