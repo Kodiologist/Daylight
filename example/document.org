@@ -78,7 +78,7 @@ Another sentence.
 
 * Citations
 
-One of my favorite articles is [[bib:Nisbett & Wilson 1977 "telling more"]]. With parentheses: ([[bibp:Nisbett & Wilson 1977 "telling more"]]). Another article I like is [[bib:Wilson & Brekke 1994]] ([[bibp:Wilson & Brekke 1994]]). [[bib:Hastie, Tibshirani, & Friedman 2009]] have more authors ([[bibp:Hastie, Tibshirani, & Friedman 2009]]). [[bib:Peters, Miedl, & Büchel 2012]] have an accent mark. [[bib:Cohen 1994 "round"]] has italics in the title. Here's a genitive citation: [[bib:Geisser 1993]]'s monograph. Another: [[bib:Domingos 2012 "useful"]]'s paper.[fn:fnwithbibref]
+One of my favorite articles is [[bib:Nisbett & Wilson 1977 "telling more"]]. With parentheses: ([[bibp:Nisbett & Wilson 1977 "telling more"]]). Another article I like is [[bib:Wilson & Brekke 1994]] ([[bibp:Wilson & Brekke 1994]]). [[bib:Hastie, Tibshirani, & Friedman 2009]] have more authors ([[bibp:Hastie, Tibshirani, & Friedman 2009]]). [[bib:Peters, Miedl, & Büchel 2012]] have an accent mark. [[bib:Cohen 1994 "round"]] has italics in the title. Here's a genitive citation: [[bib:Geisser 1993]]'s monograph. Another: [[bib:Domingos 2012 "useful"]]'s paper. Here are three citations to two distinct articles with the same author and year: [[bib:Sanday 1981 "context"]], [[bib:Sanday 1981 "context"]], [[bib:Sanday 1981 "origins"]]. [fn:fnwithbibref]
 
 * Code blocks
 
