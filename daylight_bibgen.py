@@ -63,7 +63,8 @@ bib_pickle_path = bib_path + '.pkl'
 
 # ------------------------------------------------------------
 
-citations = re.findall(r'\[\[bibp?:(.+?)\]\]', org)
+citations = re.findall(r'\[\[bibp?:(.+?)\]\]',
+    re.sub(r'^# .*', '', org, flags = re.MULTILINE))
 
 if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path):
     import yaml
@@ -95,6 +96,9 @@ cites = [c[1:-1] for c in cites]
 
 cite_n = -1
 def f(mo):
+    if re.search('^# .*\Z', mo.string[:mo.start()], flags = re.MULTILINE):
+      # This citation was in a comment, so skip it.
+        return mo.group(0)
     global cite_n
     cite_n += 1
     cite = cites[cite_n]
