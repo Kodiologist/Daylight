@@ -179,6 +179,24 @@ if '<div id="footnotes">' in text:
     text = re.sub(r'<li><a href="[^"]+">Notes(</a></li>\s*</ul>\s*</div>)',
         r'<li><a href="#footnotes">Notes\1',
         text)
+    # Replace numbered footnote IDs with names.
+    footnotes = {}
+    def f(m):
+        label, preface, fn_n, rest = m.groups()
+        r_id  = 'fnr--' + label
+        if fn_n in footnotes:
+            footnotes[fn_n]['seen'] += 1
+            r_id += '.' + str(footnotes[fn_n]['seen'])
+        else:
+            footnotes[fn_n] = dict(seen = 1, label = label)
+        return '{}<a id="{}"{} href="#fn--{}">'.format(
+            preface, escape(r_id), rest, escape(label))
+    text = re.sub(r'<footenotelabel fn:([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+">',
+        f, text)
+    text = re.sub(r'<a id="fn.(\d+)"([^>]+?) href="[^"]+">',
+        lambda m: '<a id="fn--{0}"{1} href="#fnr--{0}">'.format(
+            escape(footnotes[m.group(1)]['label']), m.group(2)),
+        text)
 
 if apa:
     # The header must be "Footnotes", not "Notes".

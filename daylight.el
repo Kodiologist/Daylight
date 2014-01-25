@@ -112,6 +112,15 @@ the paragraph into two)."
               (unless (eobp)
                 (delete-char 1)))))))))
 
+(defadvice org-html-footnote-reference (after FOO activate)
+; Prepend to each footnote reference some fake HTML with the
+; footnote label, so daylight-html-cleanup can replace numeric
+; footnote IDs with labels.
+  (if (org-export-derived-backend-p backend 'daylight)
+    (let ((label (org-element-property :label footnote-reference)))
+      (setq ad-return-value (concat
+        "<footenotelabel " label ">" ad-return-value)))))
+
 (defadvice org-html-template (before add-to-html-head activate)
   (when (daylight-buffer-is-daylit)
     (plist-put info :html-head (concat
