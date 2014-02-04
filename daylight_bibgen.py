@@ -109,24 +109,31 @@ def f(mo):
         first_author = re.match('[^,]+', cite).group(0)
         date = re.search(', [^,]+\Z', cite).group(0)
         cite = '{} et al.{}'.format(first_author, date)
-    if mo.group(3):
+    if mo.group(3) and "'" in mo.group(3):
       # This citation ends with a possessive mark ("'" or "'s").
       # Move it to before the year.
         cite = re.sub(', [^,]+\Z',
             lambda m: mo.group(3).rstrip() + m.group(0),
             cite,
             count = 1)
-    if mo.group(1) != 'p':
+    if mo.group(1) == 'p':
+      # This citation is inside parentheses.
+         if mo.group(3) == ' ':
+           # Add a trailing comma.
+            cite += ','
+    else:
       # This citation is outside of parentheses.
         # Change "&" to "and".
         cite = cite.replace('&', 'and')
         # Put the date in parentheses.
         cite = re.sub(r', ([^,]+)\Z', r' (\1)', cite)
     return '[[bib{}:{}][{}]]{}'.format(
-        mo.group(1), mo.group(2).lower(), cite,
+        mo.group(1),
+        mo.group(2).lower(),
           # The lower() is needed because quickbib coerces IDs to lowercase.
+        cite,
         ' ' if mo.group(3) else '')
-org = re.sub(r"\[\[bib(p?):(.+?)\]\](' |'s )?", f, org)
+org = re.sub(r"\[\[bib(p?):([^\]]+)\]\]( |' |'s )?", f, org)
 
 # Make the bibliography
 
