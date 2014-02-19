@@ -28,6 +28,34 @@ for the Org-Mode Association of America, \\
   3. Therefore, at least two things exist. \\
     (Homework: fill in the details by proving that Moore's hands are distinct.)
 
+Here is one paragraph.
+
+And here is another.
+
+* A busy slide
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+- Pellentesque ac mi eget nunc sollicitudin porta ut in nunc.
+
+- Integer et enim sit amet lorem accumsan posuere a eu.
+
+- Sed nec tellus sed sem ultrices auctor sed et neque.
+
+- Praesent pulvinar lectus sed tincidunt fermentum.
+
+- Etiam pellentesque lectus ut lorem varius, et rhoncus mauris pretium.
+
+- Duis nec urna vel risus lobortis aliquet vitae ut est.
+
+- Sed condimentum odio vel aliquet scelerisque.
+
+- Nunc ac tortor eget erat tempor ullamcorper.
+
+- Praesent congue leo non lectus fringilla tempor.
+
+- Vestibulum faucibus augue ac sodales congue.
+
 * Experiment 1 method
 
 From Smith and Trope (2006).

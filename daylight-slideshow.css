@@ -6,7 +6,9 @@
     #license-footer
        {position: absolute;
         bottom: .25in;
-        width: 10in;}}
+        width: 10in;}
+    .outline-text-2 > *:last-child
+       {margin-bottom: 0 !important;}}
 
 @media screen
    {.outline-2
@@ -37,8 +39,8 @@ h1
 h2
    {page-break-before: always;}
 
-.outline-text-2 > ul > li
-   {margin-bottom: .5em;}
+.outline-text-2 > ul > li + li
+   {margin-top: .5em;}
 
 a[rel = license]
    {color: inherit;
