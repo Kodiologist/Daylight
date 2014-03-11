@@ -515,6 +515,90 @@ In the below, notice how the first number gets a trailing 0.
 </tbody>
 </table>
 
+<p>
+Observe how TRUE and FALSE are color-coded in the HTML output:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">transform(mov[1:5, 1:5], year = year &gt; 1990)
+</pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="right">
+
+<col  class="left">
+
+<col  class="left">
+
+<col  class="right">
+
+<col  class="left">
+
+<col  class="right">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">title</th>
+<th scope="col" class="left">year</th>
+<th scope="col" class="right">length</th>
+<th scope="col" class="left">budget</th>
+<th scope="col" class="right">rating</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">15609</td>
+<td class="left">Ei ist eine geschissene Gottesgabe, Das</td>
+<td class="left"><span class='boolean-true'>TRUE</span></td>
+<td class="right">90</td>
+<td class="left">&#xa0;</td>
+<td class="right">8.4</td>
+</tr>
+
+<tr>
+<td class="right">21877</td>
+<td class="left">Hamos sto aigaio</td>
+<td class="left"><span class='boolean-false'>FALSE</span></td>
+<td class="right">109</td>
+<td class="left">&#xa0;</td>
+<td class="right">5.5</td>
+</tr>
+
+<tr>
+<td class="right">33676</td>
+<td class="left">Mind Benders, The</td>
+<td class="left"><span class='boolean-false'>FALSE</span></td>
+<td class="right">99</td>
+<td class="left">&#xa0;</td>
+<td class="right">6.4</td>
+</tr>
+
+<tr>
+<td class="right">53389</td>
+<td class="left">Trop (peu) d'amour</td>
+<td class="left"><span class='boolean-true'>TRUE</span></td>
+<td class="right">119</td>
+<td class="left">&#xa0;</td>
+<td class="right">4.5</td>
+</tr>
+
+<tr>
+<td class="right">11856</td>
+<td class="left">Crystania no densetsu</td>
+<td class="left"><span class='boolean-true'>TRUE</span></td>
+<td class="right">85</td>
+<td class="left">&#xa0;</td>
+<td class="right">6.1</td>
+</tr>
+</tbody>
+</table>
+
 <div class="org-src-container">
 
 <pre class="src src-R">paste0(format(environment(function () {})), "\n")
@@ -940,7 +1024,7 @@ Cohen, J. (1994). The earth is round (<i>p</i> &lt; .05). <i>American Psychologi
 </p>
 
 <p id="bibref--domingos_2012_useful">
-Domingos, P. (2012). A few useful things to know about machine learning. <i>Communications of the ACM, 55</i>(10), 78–87. <a class='doi' href='http://dx.doi.org/10.1145/2347736.2347755'>doi:10.1145/2347736.2347755</a> <span class="Z3988" title="rft.au=Domingos%2C%20Pedro&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi/fmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft_id=info%3Adoi/10.1145/2347736.2347755&amp;rft.atitle=A%20few%20useful%20things%20to%20know%20about%20machine%20learning&amp;rft.jtitle=Communications%20of%20the%20ACM&amp;rft.date=2012&amp;rft.volume=55&amp;rft.issue=10"></span>
+Domingos, P. (2012). A few useful things to know about machine learning. <i>Communications of the ACM, 55</i>(10), 78–87. <a class='doi' href='http://dx.doi.org/10.1145/2347736.2347755'>doi:10.1145/2347736.2347755</a>. Retrieved from <a class="url" href="http://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf">http://homes.cs.washington.edu/~pedrod/papers/cacm12.pdf</a> <span class="Z3988" title="rft.au=Domingos%2C%20Pedro&amp;ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi/fmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft_id=info%3Adoi/10.1145/2347736.2347755&amp;rft.atitle=A%20few%20useful%20things%20to%20know%20about%20machine%20learning&amp;rft.jtitle=Communications%20of%20the%20ACM&amp;rft.date=2012&amp;rft.volume=55&amp;rft.issue=10"></span>
 </p>
 
 <p id="bibref--geisser_1993">

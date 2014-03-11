@@ -59,6 +59,13 @@ pre.src, pre.example
     background-color: #eee;
     overflow: auto;}
 
+.boolean-true, .boolean-false
+   {font-weight: bold;}
+.boolean-true
+   {color: #080;}
+.boolean-false
+   {color: #800;}
+
 td, th
    {padding-left: .2em;
     padding-right: .2em;}

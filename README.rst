@@ -16,6 +16,7 @@ The features that Daylight provides over plain Org include (see ``example/docume
 - Simplification of LaTeX fragments to other Org constructs (when this is possible, and translation to MathML otherwise)
 - Encapsulation of evaluated R code (so you don't forget to include a dependency, or get surprised by interactions between objects that belong to different projects, or get tripped up by your own .Rprofile)
 - R code blocks evaluated with ``:results silent`` will not print huge assigned objects to the echo area
+- Color-coded ``TRUE`` and ``FALSE`` in R output
 - Streamlined production of graphics from R code blocks
 
   - ``:results graphics`` is implied by ``:file``
