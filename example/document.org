@@ -219,6 +219,12 @@ nrow(ww)
 |---+-------|
 |   |  1000 |
 
+The following block has ~:auto t~, so it's run when ~setup.R~ is evaluated, and ~:results silent~ is implied.
+
+#+begin_src R :auto t
+hello.from.notebook = T
+#+end_src
+
 * Tables
 
 Go to [[tab--trivial-table]].

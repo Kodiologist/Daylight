@@ -346,6 +346,14 @@ the paragraph into two)."
       (format "\ninvisible(get('Daylight.Kodi', 'ESSR')$ksource(file = %S))"
         file))))
 
+(defadvice org-babel-execute:R (before auto-implies-silent activate)
+"Make ':auto t' imply ':results silent'."
+  (when (and
+      daylight-ess
+      (assoc :auto params)
+      (cdr (assoc :auto params)))
+    (setcar (cdr (assoc :result-params params)) "silent")))
+
 (defadvice org-babel-R-graphical-output-file (before infer-graphics-results activate)
 "Assume ':results graphics' when ':file' is given and has
 the file extension of an image."
