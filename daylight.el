@@ -406,19 +406,21 @@ printing only happens automatically at top level."
 
 (defun daylight-translate-bib-link (input)
   (setq input (substring-no-properties input))
-  (unless (string-match "\\(.+?\\)\\([12][0-9][0-9][0-9]\\)\\(?: \"?\\([^\"]+?\\)\"?\\)?\\'" input)
-    (error "Malformed bib link"))
-  (let (
-      (names (match-string 1 input))
-      (year (match-string 2 input))
-      (title (match-string 3 input)))
-    (setq names (split-string (chomp names) ", \\(?:& \\)?\\| & " t))
+  (let (key names year title)
+    (setq key input)
+    (when (string-match "\\(.+?\\)\\([12][0-9][0-9][0-9]\\)\\(?: \"?\\([^\"]+?\\)\"?\\)?\\'" input)
+      (setq names (match-string 1 input))
+      (setq year (match-string 2 input))
+      (setq title (match-string 3 input))
+      (setq names (split-string (chomp names) ", \\(?:& \\)?\\| & " t))
+      (setq key (format "%s %s%s"
+        (mapconcat 'identity names ", ")
+        year
+        (if title (format " \"%s\"" title) ""))))
+    (setq key (concat "KEY: " key))
     (find-file (getenv "DAYLIGHT_BIB_PATH"))
     (goto-char (point-min))
-    (search-forward (format "KEY: %s %s%s"
-      (mapconcat 'identity names ", ")
-      year
-      (if title (format " \"%s\"" title) "")))))
+    (search-forward key)))
 
 (dolist (linktype '("bib" "bibp"))
   (org-add-link-type linktype
