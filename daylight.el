@@ -75,6 +75,27 @@
       ; This is the same as the default except that leading
       ; dollar signs are also allowed.
 
+(defvar daylight-postproc nil)
+(add-hook 'org-export-before-processing-hook 'daylight-get-postproc)
+(defun daylight-get-postproc (backend)
+; Save and remove the POSTPROC block, if there is one.
+  (when (org-export-derived-backend-p backend 'daylight)
+    (save-excursion
+      (goto-char (point-min))
+      (setq daylight-postproc (and
+        (search-forward "\n* POSTPROC\n" nil t)
+        (progn
+          (backward-char)
+          (search-forward "\n#+BEGIN_SRC python\n" nil t))
+        (buffer-substring-no-properties (point) (progn
+          (search-forward "\n#+END_SRC\n")
+          (forward-line -1)
+          (backward-char)
+          (point)))))
+      (delete-region
+        (progn (outline-back-to-heading t) (point))
+        (progn (outline-next-heading) (point))))))
+
 (add-hook 'org-export-before-parsing-hook 'daylight-add-fig-names)
 (defun daylight-add-fig-names (backend)
 "For each code block that produces graphics, adds a #+NAME to the
@@ -159,6 +180,7 @@ the paragraph into two)."
         (stringp (car (plist-get info :title))))
       (error "non-plain-text #+TITLE not yet implemented"))
     (push (cons :title (car (plist-get info :title))) info2)
+    (push (cons :postproc daylight-postproc) info2)
     (daylight-proc-on-string daylight-html-cleanup-path contents
       (json-encode info2))))
 

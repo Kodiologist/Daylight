@@ -23,6 +23,7 @@ The features that Daylight provides over plain Org include (see ``example/docume
   - No outer ``print(...)`` is needed for ``ggplot2``
 
 - Linkable labels to figures, generated based on the file name
+- Custom postprocessors written in Python
 - Shortcut link types for the English Wikipedia and DOIs
 - Mid-paragraph comments
 - Named instead of numbered ``id``\s for sections and footnotes (which ought to be a lot more future-proof)
@@ -36,6 +37,8 @@ I've published Daylight more for the sake of making my research reproducible tha
 
 Installation and use
 ============================================================
+
+**Warning:** Don't export untrusted Daylight files. At least one feature (POSTPROC blocks) allows arbitrary code execution.
 
 Oh boy, I hope you packed a lunch.
 

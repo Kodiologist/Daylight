@@ -381,3 +381,13 @@ Can Daylight handle another section named "Notes"?
 Pellentesque facilisis, tortor eget blandit mattis, libero nunc pulvinar dui, at consectetur velit metus at ligula. Ut eget lorem molestie, auctor ligula in, tempus tortor. Suspendisse nunc tellus, vehicula eu semper non, accumsan a tortor. Curabitur eu ultrices urna. Nullam vulputate placerat tempus. Pellentesque faucibus ipsum sit amet sagittis ultrices. Vivamus a felis posuere, semper urna eget, pulvinar mi. Vivamus commodo odio in risus dictum iaculis. Fusce elementum semper lacus vel laoreet. Nullam commodo posuere ipsum eu lacinia. 
 
 [fn:finalf] I ain't 'fraid a' no ghost.
+
+* POSTPROC
+
+#+begin_src python
+POSTPROC = lambda text: re.sub(
+    'I like cheese puffs.',
+    'I like cheese puffs and tacos (this part was inserted by the POSTPROC block, via a regex substitution on the generated HTML).',
+    text,
+    count = 1)
+#+end_src

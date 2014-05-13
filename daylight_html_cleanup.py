@@ -279,5 +279,10 @@ if license_url and not apa:
         '</p></footer>' +
         rep)
 
+# Apply any post-processing block defined by the file.
+if info['postproc']:
+    exec(info['postproc'])
+    text = POSTPROC(text)
+
 # Done.
 print(text, end = '')
