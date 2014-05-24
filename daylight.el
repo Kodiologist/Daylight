@@ -92,9 +92,10 @@
           (forward-line -1)
           (backward-char)
           (point)))))
-      (delete-region
-        (progn (outline-back-to-heading t) (point))
-        (progn (outline-next-heading) (point))))))
+      (when daylight-postproc
+        (delete-region
+          (progn (outline-back-to-heading t) (point))
+          (progn (outline-next-heading) (point)))))))
 
 (add-hook 'org-export-before-parsing-hook 'daylight-add-fig-names)
 (defun daylight-add-fig-names (backend)
