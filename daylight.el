@@ -75,6 +75,27 @@
       ; This is the same as the default except that leading
       ; dollar signs are also allowed.
 
+(add-hook 'org-export-before-processing-hook 'daylight-strip-comments)
+(defun daylight-strip-comments (backend)
+"Remove '# …'-style comments. The intended effect is to allow
+such comments in the middle of paragraphs (otherwise, they split
+the paragraph into two)."
+  (when (org-export-derived-backend-p backend 'daylight)
+    (save-excursion
+      (goto-char (point-min))
+      (let (in-src (case-fold-search t))
+        (while (progn (forward-line 1) (not (eobp)))
+          (cond
+            ((looking-at "#\\+BEGIN_SRC ")
+              (setq in-src t))
+            ((looking-at "#\\+END_SRC ")
+              (setq in-src nil))
+            ((and (looking-at "# ") (not in-src))
+              (while (not (or (eobp) (= (char-after) ?\n)))
+                (delete-char 1))
+              (unless (eobp)
+                (delete-char 1)))))))))
+
 (defvar daylight-postproc nil)
 (add-hook 'org-export-before-processing-hook 'daylight-get-postproc)
 (defun daylight-get-postproc (backend)
@@ -111,28 +132,6 @@ results block matching the file name (but without the file extension)."
                 (progn (skip-chars-forward "^]") (point))))))
             (forward-line -1)
             (insert "#+NAME: fig--" file "\n")))))))
-
-(add-hook 'org-export-before-parsing-hook 'daylight-strip-comments)
-(defun daylight-strip-comments (backend)
-"Remove '# …'-style comments. The intended effect is to allow
-such comments in the middle of paragraphs (otherwise, they split
-the paragraph into two)."
-  (when (org-export-derived-backend-p backend 'daylight)
-    (save-excursion
-      (goto-char (point-min))
-      (let (in-src line)
-        (while (progn (forward-line 1) (not (eobp)))
-          (setq line (thing-at-point 'line))
-          (cond
-            ((string-prefix-p "#+BEGIN_SRC " line)
-              (setq in-src t))
-            ((string-prefix-p "#+END_SRC " line)
-              (setq in-src nil))
-            ((and (string-prefix-p "# " line) (not in-src))
-              (while (not (or (eobp) (= (char-after) ?\n)))
-                (delete-char 1))
-              (unless (eobp)
-                (delete-char 1)))))))))
 
 (defadvice org-html-footnote-reference (after FOO activate)
 ; Prepend to each footnote reference some fake HTML with the
