@@ -107,6 +107,10 @@ pi
 |---+-------|
 |   |     3 |
 
+This is a sentence.
+# Here's an inline comment after a src block.
+This is another sentence in the same paragraph.
+
 #+begin_src R
 "hello world\n"
 #+end_src

@@ -88,7 +88,7 @@ the paragraph into two)."
           (cond
             ((looking-at "#\\+BEGIN_SRC ")
               (setq in-src t))
-            ((looking-at "#\\+END_SRC ")
+            ((looking-at "#\\+END_SRC")
               (setq in-src nil))
             ((and (looking-at "# ") (not in-src))
               (while (not (or (eobp) (= (char-after) ?\n)))
