@@ -33,6 +33,10 @@ info = json.loads(argv[1])
 apa = info.get('daylight-apa') is True
 slideshow = info.get('daylight-slideshow') is True
 
+# Remove the class "mcolon", which is needed for intermediate
+# processing but not in the output.
+text = re.sub(r"\s+class='mcolon'", '', text)
+
 # Convert <latexfrag>s and environments to MathML.
 text = re.sub(r'<latexfrag>(.+?)</latexfrag>',
     lambda m: to_mathml(m.group(1), delimited = True),

@@ -210,7 +210,10 @@ results block matching the file name (but without the file extension)."
           (daylight-escape-html raw-link)))
       (t
         ; Pass the buck to `org-html-link'.
-        (org-html-link link desc info)))))
+        (let ((output (org-html-link link desc info)))
+          (if (string-match "\\`<i>" output)
+            (error "Couldn't translate link: %s / %s" raw-link (or desc "[nil]"))
+            output))))))
 
 (org-add-link-type "cls"
   'ignore
@@ -232,7 +235,9 @@ results block matching the file name (but without the file extension)."
       (error "'m' link: Unknown type %S" path))
     (cond
       ((eq format 'html)
-        (format "<%s>%s</%s>" path desc path))
+        (format "<%s class='mcolon'>%s</%s>" path desc path))
+          ; The class is currently necessary to distinguish m:i
+          ; from the failure mode of `org-html-link'.
       ((eq format 'odt)
         (org-odt-format-fontify (daylight-escape-html path) "Emphasis"))
       (t
