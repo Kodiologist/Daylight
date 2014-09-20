@@ -80,11 +80,11 @@ text = re.sub(r'(<caption\b[^>]*) align="[^"]+"', r'\1', text)
 # link text to something like "Figure 3". Otherwise, change it to
 # something like "fig--mona-lisa".
 def f(m):
-    idd = '{}--{}'.format(m.group(1), m.group(2))
+    idd, objnum = '{}--{}'.format(m.group(1), m.group(2)), m.group(3)
     if m.group(1) == 'tab':
         m2 = re.search('<table\s+id="{}">\s+<(\w+)'.format(re.escape(idd)), text)
         if m2.group(1) == 'caption':
-            desc = 'Table {}'.format(m.group(3))
+            desc = 'Table {}'.format(objnum)
             cls = 'table-ref-pretty'
         else:
             desc = idd
@@ -92,7 +92,7 @@ def f(m):
     elif m.group(1) == 'fig':
         m2 = re.search('<figure id="{}">(.+?)</figure>'.format(re.escape(idd)), text, re.DOTALL)
         if '<figcaption>' in m2.group(1):
-            desc = 'Figure {}'.format(m.group(3))
+            desc = 'Figure {}'.format(objnum)
             cls = 'figure-ref-pretty'
         else:
             desc = idd
