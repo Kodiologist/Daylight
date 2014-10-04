@@ -23,12 +23,20 @@ def f(m):
           # We raise Jump when we hit a command we can't fake
           # (meaning that we can't simplify this expression).
           x = m.group(0)
-          if m.group(1):
-              if m.group(1) == 't':
+          command, arg = m.group(1), m.group(2)
+          if command:
+              if command == 'text':
+                # Ordinary text
+                  return arg
+              if command == 't':
                 # Text subscript
-                  return '_{%s}' % m.group(2)
+                  return '_{%s}' % arg
               else:
                   raise Jump
+          elif x == '\\$':
+              return '$'
+          elif x == '\\\\':
+              return '\\'
           elif len(x) > 1:
               return x
           elif x in '«»':
@@ -39,7 +47,7 @@ def f(m):
               return '[[var:' + x + ']]'
           else:
               return x
-       return re.sub(r'\\(\w+)(?:\{([^}]*)\})?|.', g, s)
+       return re.sub(r'\\(\w+)(?:\{([^}]*)\})?|\\\$|\\\\|.', g, s)
    except Jump:
        return m.group(0)
 
