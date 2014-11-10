@@ -62,6 +62,20 @@ paragraph.
 
 Sed dignissim risus et aliquam euismod. Phasellus ultricies consequat odio sed vestibulum. Pellentesque congue egestas aliquet. Fusce aliquam ornare semper. Cras rhoncus egestas ante blandit fermentum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam non enim augue. Pellentesque ut quam eget dolor posuere consequat ac eu dui. Morbi at neque pretium, vestibulum quam eget, rutrum libero. Vestibulum tempor vel nulla id adipiscing. Nunc fringilla diam a ultricies porttitor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus at est ullamcorper, accumsan arcu non, tincidunt tellus. Suspendisse consequat, ligula non pharetra lacinia, justo tellus faucibus lacus, ut rhoncus orci sem eget metus.
 
+*** Section level 3
+
+Morbi quis convallis neque. Quisque molestie imperdiet turpis, quis venenatis mauris luctus eget. Sed laoreet volutpat diam. Morbi ligula enim, consectetur eget nunc nec, mollis aliquet est. Nam sagittis nisl magna, ac viverra enim iaculis et. Integer lorem justo, vehicula a laoreet bibendum, viverra a ante. Vestibulum magna diam, bibendum nec gravida vitae, ullamcorper nec nibh.
+
+**** Section level 4
+
+Phasellus auctor mauris ut ligula aliquam sollicitudin. Aenean accumsan elementum auctor. Praesent gravida dignissim quam non condimentum. Etiam id scelerisque mauris, sit amet ullamcorper ex. Praesent feugiat ligula ornare egestas sagittis.
+
+***** Section level 5
+
+Fusce eget sapien sodales dui maximus sagittis sed in sem. In venenatis risus et erat efficitur, at imperdiet tortor venenatis. Nullam sit amet nisi ullamcorper nunc tempor placerat vitae ut orci.
+
+(I'm leaving the behavior of a six-star headline undefined for now, since HTML5 has no ~<h7>~ element.)
+
 * Horizontal rules and quote blocks
 
 Nam sit amet tempor purus. In rhoncus tempus elementum. Suspendisse congue dictum nisi, ac tincidunt orci sollicitudin ac. Integer suscipit ligula non metus sollicitudin tempus. Proin fermentum imperdiet tincidunt. Sed leo justo, faucibus non mi ac, ultrices consectetur arcu. Etiam vitae nisi vel urna condimentum imperdiet sit amet et magna. Nam nisi lorem, posuere quis libero vitae, ultricies porta velit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut ut pretium turpis, at euismod nulla. Maecenas dictum pellentesque nisl.

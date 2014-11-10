@@ -58,6 +58,7 @@
         :html-head-include-scripts nil
         :html-html5-fancy t
         :section-numbers nil
+        :headline-levels 5
         :with-latex 'daylight
           ; Most of the effect of this option is negated by our
           ; LaTeX processing, but we set it to something to keep
