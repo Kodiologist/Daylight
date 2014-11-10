@@ -111,6 +111,17 @@ This is a sentence.
 # Here's an inline comment after a src block.
 This is another sentence in the same paragraph.
 
+This is a new paragraph.
+# Inline comment 1
+# Inline comment 2
+This is another sentence in the same paragraph.
+
+This yet another paragraph.
+# Inline comment 1
+# Inline comment 2
+# Inline comment 3
+This is another sentence in the same paragraph.
+
 #+begin_src R
 "hello world\n"
 #+end_src

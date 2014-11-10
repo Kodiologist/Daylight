@@ -94,7 +94,10 @@ the paragraph into two)."
               (while (not (or (eobp) (= (char-after) ?\n)))
                 (delete-char 1))
               (unless (eobp)
-                (delete-char 1)))))))))
+                (delete-char 1)
+                (forward-line -1)))))))))
+                  ; The last forward-line is to compensate for
+                  ; the loop and how we just deleted a line.
 
 (defvar daylight-postproc nil)
 (add-hook 'org-export-before-processing-hook 'daylight-get-postproc)
