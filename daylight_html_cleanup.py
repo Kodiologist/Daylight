@@ -37,6 +37,13 @@ slideshow = info.get('daylight-slideshow') is True
 # processing but not in the output.
 text = re.sub(r"\s+class='mcolon'", '', text)
 
+# In APA mode, remove "notapa" blocks.
+if apa:
+    text = re.sub(r'\n<div class="notapa">\n.+?\n\n</div>\n', '', text, flags = re.DOTALL)
+      # Yes, it's only a matter of time before this regex does
+      # the wrong thing. Whatever. I'll cross that bridge when I
+      # come to it.
+
 # Convert <latexfrag>s and environments to MathML.
 text = re.sub(r'<latexfrag>(.+?)</latexfrag>',
     lambda m: to_mathml(m.group(1), delimited = True),
