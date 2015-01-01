@@ -49,7 +49,7 @@ Oh boy, I hope you packed a lunch.
   - ESS 13.09
   - R 3.0.2
 
-- Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
+- Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/.daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
 - Install quickbib and citematic_coins (from `Citematic`_; the Perl parts of Citematic are not required by Daylight).
 - Install `Kodi.R`_ (you must set the R option ``Kodi.R.path`` so R can find it, presumably in your .Rprofile).
 - In your .emacs, write::
@@ -76,7 +76,7 @@ The ``example`` directory contains various informal tests. A few tests of R enca
 License
 ============================================================
 
-This program is copyright 2013–2014 Kodi Arfer.
+This program is copyright 2013–2015 Kodi Arfer.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
