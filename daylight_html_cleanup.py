@@ -279,15 +279,22 @@ if license_url and not apa:
         else None)
     year_modified = date_modified.year
     rep = '<div id="outline-container-sec-1"' if slideshow else '</body>'
-    text = text.replace(rep,
-        '<footer id="license-footer"><p>' +
-        'This work is licensed under {}.'.format(license_html[license_url]) +
-        ' Copyright {} {}.'.format(
+    if info.get('daylight-now-copyright'):
+        cyear, centity = info['daylight-now-copyright'].split(' ', 1)
+        guts = 'This work was licensed irrevocably under {} in {}. It is now copyright {} {}.'.format(
+            license_html[license_url],
+            cyear,
+            cyear,
+            centity)
+    else:
+        guts = 'This work is licensed under {}. Copyright {} {}.'.format(
+            license_html[license_url],
             '{}–{}'.format(year_created, year_modified)
                 if year_created and year_created != year_modified
                 else year_modified,
-            authors_html) +
-        '</p></footer>' +
+            authors_html)
+    text = text.replace(rep,
+        '<footer id="license-footer"><p>{}</p></footer>'.format(guts) +
         rep)
 
 # Apply any post-processing block defined by the file.
