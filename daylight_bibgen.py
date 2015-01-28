@@ -49,6 +49,7 @@ class org_bib_formatter(object):
 
 org = stdin.read()
 apa = argv[1] != 'nil'
+simplified_bibliography_path = argv[2] if len(argv) > 2 else None
 
 m = re.search('\n#\+DAYLIGHT_BIBLIOGRAPHY: (.+)', org, re.IGNORECASE)
 if not m:
@@ -78,9 +79,21 @@ if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path)
 else:
     with open(bib_pickle_path, "rb") as f: database = pickle.load(f)
 
+bib_lookup = lambda c: database[re.sub(',? &', ',', c.lower())]
+
+if simplified_bibliography_path:
+    import json
+    with open(simplified_bibliography_path, 'w') as o: json.dump(
+        {c: bib_lookup(c) for c in set(citations)},
+        o,
+        sort_keys = True,
+        indent = 2,
+        separators = (',', ': '))
+    exit()
+
 cites, ids, bibl = quickbib.bib(
     environ['APA_CSL_PATH'],
-    [database[re.sub(',? &', ',', c.lower())] for c in citations],
+    [bib_lookup(c) for c in citations],
     formatter = org_bib_formatter,
     return_cites_and_keys = True,
     **(dict() if apa else dict(
