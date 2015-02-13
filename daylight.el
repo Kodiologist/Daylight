@@ -161,7 +161,6 @@ results block matching the file name (but without the file extension)."
         "\n<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\">"
         (daylight-escape-html daylight-slideshow-css-href)))))))
 
-(defvar daylight-html-cleanup-path nil)
 (defun daylight-final-function (contents backend info)
   (message "Cleaning up...")
   (let (info2 plist k v)
@@ -186,7 +185,8 @@ results block matching the file name (but without the file extension)."
       (error "non-plain-text #+TITLE not yet implemented"))
     (push (cons :title (car (plist-get info :title))) info2)
     (push (cons :postproc daylight-postproc) info2)
-    (daylight-proc-on-string daylight-html-cleanup-path contents
+    (daylight-proc-on-string "python3" contents
+      "-m" "daylight.html_cleanup"
       (json-encode info2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -295,8 +295,6 @@ results block matching the file name (but without the file extension)."
 ; Math
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar daylight-simplify-math-path nil)
-
 (add-hook 'org-export-before-parsing-hook 'daylight-simplify-math)
 (defun daylight-simplify-math (backend)
   (when (and
@@ -306,7 +304,7 @@ results block matching the file name (but without the file extension)."
         (search-forward-regexp "\\$\\|\\\\(" nil t)))
           ; This regex matches '$' or '\('.
     (message "Simplifying math...")
-    (daylight-proc-buffer daylight-simplify-math-path)))
+    (daylight-proc-buffer "python3" "-m" "daylight.simplify_math")))
 
 (defun daylight-trans-latex-fragment (latex-fragment _ info)
   ; Just format it so daylight-html-cleanup can find it easily.
@@ -434,8 +432,6 @@ printing only happens automatically at top level."
 ; Citematic integration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defvar daylight-bibgen-path nil)
-
 (defun daylight-translate-bib-link (input)
   (setq input (substring-no-properties input))
   (let (key names year title)
@@ -479,7 +475,7 @@ printing only happens automatically at top level."
       (save-excursion
         (search-forward-regexp "\\[\\[bibp?:" nil t)))
     (message "Generating bibliography...")
-    (daylight-proc-buffer daylight-bibgen-path
+    (daylight-proc-buffer "python3" "-m" "daylight.bibgen"
       (format "%s" (plist-get ext-plist :daylight-apa)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

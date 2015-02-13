@@ -7,7 +7,7 @@ from itertools import count
 from datetime import datetime, date
 from cgi import escape
 import json
-from daylight_mathml_worker import to_mathml
+from daylight.mathml_worker import to_mathml
 
 license_html = {
     'http://creativecommons.org/licenses/by-sa/4.0/':

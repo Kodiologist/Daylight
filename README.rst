@@ -49,6 +49,7 @@ Oh boy, I hope you packed a lunch.
   - ESS 13.09
   - R 3.0.2
 
+- Make sure Python can find ``python3-lib/daylight``, as by adding it to your ``PYTHONPATH``.
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/.daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
 - Install quickbib and citematic_coins (from `Citematic`_; the Perl parts of Citematic are not required by Daylight).
 - Install `Kodi.R`_ (you must set the R option ``Kodi.R.path`` so R can find it, presumably in your .Rprofile).
@@ -56,9 +57,6 @@ Oh boy, I hope you packed a lunch.
 
       (require 'daylight) ; And make sure Emacs can find daylight.el.
       (setq daylight-ess t)
-      (setq daylight-simplify-math-path ".../daylight_simplify_math.py")
-      (setq daylight-bibgen-path ".../daylight_bibgen.py")
-      (setq daylight-html-cleanup-path ".../daylight_html_cleanup.py")
       (setq org-export-babel-evaluate nil)
         ; Probably not required, but strongly recommend. If
         ; `org-export-babel-evaluate' is on, exporting can take eons.
