@@ -322,8 +322,8 @@ results block matching the file name (but without the file extension)."
 (add-hook 'org-mode-hook 'daylight-set-babel-default)
 (defun daylight-set-babel-default ()
   (when (daylight-buffer-is-daylit)
-    (make-local-variable 'org-babel-default-header-args)
-    (daylight-update-alist 'org-babel-default-header-args '(    
+    (make-local-variable 'org-babel-default-header-args:R)
+    (daylight-update-alist 'org-babel-default-header-args:R '(
       (:session . "*R*")
       (:colnames . "yes")
       (:rownames . "yes")
