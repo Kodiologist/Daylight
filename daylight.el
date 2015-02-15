@@ -5,12 +5,8 @@
 (require 'json)
 (require 'url-util)
 
-(defvar daylight-css-href "http://arfer.net/daylight.css")
-(defvar daylight-apa-css-href "http://arfer.net/daylight-apa.css")
-(defvar daylight-slideshow-css-href "http://arfer.net/daylight-slideshow.css")
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Backend and end-user functions
+;; * Backend and end-user functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (org-export-define-derived-backend 'daylight 'html
@@ -67,7 +63,7 @@
         :html-postamble nil))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Miscellaneous hooks
+;; * Miscellaneous hooks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'org-mode-hook 'daylight-set-org-table-number-regexp)
@@ -147,6 +143,10 @@ results block matching the file name (but without the file extension)."
       (setq ad-return-value (concat
         "<footenotelabel " label ">" ad-return-value)))))
 
+(defvar daylight-css-href "http://arfer.net/daylight.css")
+(defvar daylight-apa-css-href "http://arfer.net/daylight-apa.css")
+(defvar daylight-slideshow-css-href "http://arfer.net/daylight-slideshow.css")
+
 (defadvice org-html-template (before add-to-html-head activate)
   (when (daylight-buffer-is-daylit)
     (plist-put info :html-head (concat
@@ -190,7 +190,7 @@ results block matching the file name (but without the file extension)."
       (json-encode info2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Links
+;; * Links
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun daylight-trans-link (link desc info)
@@ -292,7 +292,7 @@ results block matching the file name (but without the file extension)."
         ""))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Math
+;; * Math
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'org-export-before-parsing-hook 'daylight-simplify-math)
@@ -312,7 +312,7 @@ results block matching the file name (but without the file extension)."
     (org-element-property :value latex-fragment)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Code blocks
+;; * Code blocks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar daylight-ess nil)
@@ -429,7 +429,7 @@ printing only happens automatically at top level."
     ad-do-it))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Citematic integration
+;; * Citematic integration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun daylight-translate-bib-link (input)
@@ -479,7 +479,7 @@ printing only happens automatically at top level."
       (format "%s" (plist-get ext-plist :daylight-apa)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Utilities
+;; * Utilities
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun daylight-ucfirst (str)
