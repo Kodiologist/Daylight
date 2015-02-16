@@ -45,7 +45,7 @@ Oh boy, I hope you packed a lunch.
 - You'll need Emacs, Org, Emacs Speaks Statistics (ESS), and R. Here's a known-good combination of versions:
 
   - GNU Emacs 24.3.1
-  - Org 8.2.1
+  - Org 8.2.10
   - ESS 13.09
   - R 3.0.2
 

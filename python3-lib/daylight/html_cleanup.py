@@ -82,9 +82,15 @@ if not apa:
 # Remove '<meta name="author" …', which is redundant with dcterms.creator.
 text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, 1)
 
-# Remove 'align' attributes from <caption>s, which are obsolete in
-# HTML5.
-text = re.sub(r'(<caption\b[^>]*) align="[^"]+"', r'\1', text)
+# Fix figure numbers, such that only figures with captions get
+# numbers, and the numbers are in the order that figures are
+# defined.
+figures = []
+def f(m):
+    pre, idd = m.group(1), m.group(2)
+    figures.append(idd)
+    return '{}{}.'.format(pre, len(figures))
+text = re.sub(r'(<figure id="([^"]+)">\s*<p><img[^>]+>\s*</p>\s*<figcaption><span class="figure-number">Figure )\d+\.', f, text)
 
 # Change the text of table and figure references. For each
 # reference, if the table or figure has a caption, change the
@@ -103,7 +109,7 @@ def f(m):
     elif m.group(1) == 'fig':
         m2 = re.search('<figure id="{}">(.+?)</figure>'.format(re.escape(idd)), text, re.DOTALL)
         if '<figcaption>' in m2.group(1):
-            desc = 'Figure {}'.format(objnum)
+            desc = 'Figure {}'.format(figures.index(idd) + 1)
             cls = 'figure-ref-pretty'
         else:
             desc = idd
