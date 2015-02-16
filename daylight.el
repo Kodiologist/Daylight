@@ -2,6 +2,7 @@
 
 (require 'ox)
 (require 'ox-html)
+(require 'ob-R)
 (require 'json)
 (require 'url-util)
 
