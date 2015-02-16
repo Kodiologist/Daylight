@@ -108,6 +108,432 @@ Here is one more citation: [[bib:Wang & Dvorak 2010 "sweet"]].
 
 * Code blocks
 
+** Hy
+
+#+begin_src hy
+(+ 1 1)
+#+end_src
+
+#+RESULTS:
+| 2 |
+
+#+begin_src hy
+3
+; This comment is preserved.
+#+end_src
+
+#+RESULTS:
+| 3 |
+
+#+begin_src hy
+(import time)
+(time.sleep 2)
+1
+#+end_src
+
+#+RESULTS:
+| 1 |
+
+The following two results, for plain strings, should perhaps be changed, but I haven't decided what I want yet.
+
+#+begin_src hy
+"hello"
+#+end_src
+
+#+RESULTS:
+| hello |
+
+#+begin_src hy
+"hello\ngoodbye\n"
+#+end_src
+
+#+RESULTS:
+: hello
+: goodbye
+
+#+begin_src hy
+(defclass Phooey [] [
+  [__repr__ (fn [self]
+    "(Phooey)")]])
+(Phooey)
+#+end_src
+
+#+RESULTS:
+| Python repr |
+|-------------|
+| (Phooey)    |
+
+#+begin_src hy
+{"a" 1 "c" "hello" "b" 2}
+#+end_src
+
+#+RESULTS:
+| K | value |
+|---+-------|
+| a |     1 |
+| b |     2 |
+| c | hello |
+
+#+begin_src hy
+[1 2 3.14 5 None True "" False None]
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 3.14 | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |
+
+The last cell is missing due to a bug in Org 8.2 which should be fixed for 8.3.
+
+In the below, notice the trailing 0s.
+
+#+begin_src hy
+(amap [it] [1 2 3.14 5 None True "" False None])
+#+end_src
+
+#+RESULTS:
+|  1.00 |
+|  2.00 |
+|  3.14 |
+|  5.00 |
+|       |
+|  [[cls:boolean-true][True]] |
+|       |
+| [[cls:boolean-false][False]] |
+|       |
+
+#+begin_src hy
+(np.array [1 2 3])
+#+end_src
+
+#+RESULTS:
+| 1 | 2 | 3 |
+
+#+begin_src hy
+(np.eye 5)
+#+end_src
+
+#+RESULTS:
+| 1 | 0 | 0 | 0 | 0 |
+| 0 | 1 | 0 | 0 | 0 |
+| 0 | 0 | 1 | 0 | 0 |
+| 0 | 0 | 0 | 1 | 0 |
+| 0 | 0 | 0 | 0 | 1 |
+
+#+begin_src hy
+(/ (np.eye 5) 2)
+#+end_src
+
+#+RESULTS:
+| 0.5 | 0.0 | 0.0 | 0.0 | 0.0 |
+| 0.0 | 0.5 | 0.0 | 0.0 | 0.0 |
+| 0.0 | 0.0 | 0.5 | 0.0 | 0.0 |
+| 0.0 | 0.0 | 0.0 | 0.5 | 0.0 |
+| 0.0 | 0.0 | 0.0 | 0.0 | 0.5 |
+
+#+begin_src hy
+(np.array [[True False] [False True]])
+#+end_src
+
+#+RESULTS:
+| [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |
+| [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |
+
+#+begin_src hy
+(pd.Series [3.14 1.12 300.5 400 None])
+#+end_src
+
+#+RESULTS:
+| I |  value |
+|---+--------|
+| 0 |   3.14 |
+| 1 |   1.12 |
+| 2 | 300.50 |
+| 3 | 400.00 |
+| 4 |        |
+
+#+begin_src hy
+(setv x (pd.Series [4 6 8]))
+(setv (. x name) "MyVal")
+(setv (. x index name) "MyIx")
+x
+#+end_src
+
+#+RESULTS:
+| MyIx | MyVal |
+|------+-------|
+|    0 |     4 |
+|    1 |     6 |
+|    2 |     8 |
+
+#+begin_src hy
+(pd.Series [3.14 1.12 300.5 12 None True False "apple" ""])
+#+end_src
+
+#+RESULTS:
+| I |  value |
+|---+--------|
+| 0 |   3.14 |
+| 1 |   1.12 |
+| 2 | 300.50 |
+| 3 |  12.00 |
+| 4 |        |
+| 5 |   [[cls:boolean-true][True]] |
+| 6 |  [[cls:boolean-false][False]] |
+| 7 |  apple |
+| 8 |        |
+
+#+begin_src hy
+(pd.Series [True False False True])
+#+end_src
+
+#+RESULTS:
+| I | value |
+|---+-------|
+| 0 | [[cls:boolean-true][True]]  |
+| 1 | [[cls:boolean-false][False]] |
+| 2 | [[cls:boolean-false][False]] |
+| 3 | [[cls:boolean-true][True]]  |
+
+#+begin_src hy
+(pd.Series (pd.Categorical
+  (qw apple banana apple cantaloupe banana banana banana)))
+#+end_src
+
+#+RESULTS:
+| I | value      |
+|---+------------|
+| 0 | apple      |
+| 1 | banana     |
+| 2 | apple      |
+| 3 | cantaloupe |
+| 4 | banana     |
+| 5 | banana     |
+| 6 | banana     |
+
+#+begin_src hy
+(valcounts (pd.Series (qw
+  apple banana apple cantaloupe banana banana banana)))
+#+end_src
+
+#+RESULTS:
+| I          | value |
+|------------+-------|
+| apple      |     2 |
+| banana     |     4 |
+| cantaloupe |     1 |
+
+#+begin_src hy
+(pd.Series (kwc pd.to-datetime :format "%Y%m%d"
+  (qw 20110101 20120304 20151231 20200101)))
+#+end_src
+
+#+RESULTS:
+| I |      value |
+|---+------------|
+| 0 | 2011-01-01 |
+| 1 | 2012-03-04 |
+| 2 | 2015-12-31 |
+| 3 | 2020-01-01 |
+
+#+begin_src hy
+(import datetime)
+[(datetime.datetime 2014 5 6 7 18 19) (datetime.date 1977 2 15)] 
+#+end_src  
+
+#+RESULTS:
+| 2014-05-06 07:18:19 | 1977-02-15 |
+
+#+begin_src hy
+(import datetime)
+(pd.Series [
+  (kwc pd.to-datetime :format "%Y%m%d%H%M%S" 20110101123456)
+  (datetime.date 1977 2 15)
+  (datetime.datetime 2014 5 6 7 18 19)
+  (datetime.datetime 2014 5 6)])
+#+end_src
+
+#+RESULTS:
+| I | value               |
+|---+---------------------|
+| 0 | 2011-01-01 12:34:56 |
+| 1 | 1977-02-15          |
+| 2 | 2014-05-06 07:18:19 |
+| 3 | 2014-05-06          |
+
+Here is a full ~pandas.DataFrame~. The row for the Batmobile has a missing-data value (of the appropriate kind) in every column (except for the boolean columns, because the pandas dtype "bool" doesn't support missing values).
+
+#+begin_src hy
+mtcars
+#+end_src
+
+#+RESULTS:
+| I           |  mpg | cyl |  disp |  hp |    wt | vs    | am    | gear |       date |
+|-------------+------+-----+-------+-----+-------+-------+-------+------+------------|
+| RX4         | 21.0 | 6c  | 160.0 | 110 | 2.620 | [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |    4 | 1985-02-12 |
+| RX4 Wag     | 21.0 | 6c  | 160.0 | 110 | 2.875 | [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |    4 | 1989-06-11 |
+| 710         | 22.8 | 4c  | 108.0 |  93 | 2.320 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    4 | 1995-10-17 |
+| 4 Drive     | 21.4 | 6c  | 258.0 | 110 | 3.215 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    3 | 1986-09-18 |
+| Sportabout  | 18.7 | 8c  | 360.0 | 175 | 3.440 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2010-05-24 |
+| Valiant     | 18.1 | 6c  | 225.0 | 105 | 3.460 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    3 | 2007-12-06 |
+| 360         | 14.3 | 8c  | 360.0 | 245 | 3.570 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2008-11-22 |
+| 240D        | 24.4 | 4c  | 146.7 |  62 | 3.190 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    4 | 1987-02-22 |
+| 230         | 22.8 | 4c  | 140.8 |  95 | 3.150 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    4 | 2006-10-03 |
+| 280         | 19.2 | 6c  | 167.6 | 123 | 3.440 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    4 | 2010-11-11 |
+| 280C        | 17.8 | 6c  | 167.6 | 123 | 3.440 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    4 | 1994-11-16 |
+| 450SE       | 16.4 | 8c  | 275.8 | 180 | 4.070 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2003-04-12 |
+| 450SL       | 17.3 | 8c  | 275.8 | 180 | 3.730 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2009-07-21 |
+| 450SLC      | 15.2 | 8c  | 275.8 | 180 | 3.780 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2010-07-20 |
+| Fleetwood   | 10.4 | 8c  | 472.0 | 205 | 5.250 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2012-01-10 |
+| Continental | 10.4 | 8c  | 460.0 | 215 | 5.424 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 1979-04-10 |
+| Imperial    | 14.7 | 8c  | 440.0 | 230 | 5.345 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 1972-09-11 |
+| 128         | 32.4 | 4c  |  78.7 |  66 | 2.200 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    4 | 2005-07-21 |
+| Civic       | 30.4 | 4c  |  75.7 |  52 | 1.615 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    4 | 1980-04-06 |
+| Corolla     | 33.9 | 4c  |  71.1 |  65 | 1.835 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    4 | 2012-07-26 |
+| Corona      | 21.5 | 4c  | 120.1 |  97 | 2.465 | [[cls:boolean-true][True]]  | [[cls:boolean-false][False]] |    3 | 1990-05-19 |
+| Challenger  | 15.5 | 8c  | 318.0 | 150 | 3.520 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 2020-04-18 |
+| Javelin     | 15.2 | 8c  | 304.0 | 150 | 3.435 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 1993-03-14 |
+| Z28         | 13.3 | 8c  | 350.0 | 245 | 3.840 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 1977-04-25 |
+| Firebird    | 19.2 | 8c  | 400.0 | 175 | 3.845 | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |    3 | 1972-08-18 |
+| X1-9        | 27.3 | 4c  |  79.0 |  66 | 1.935 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    4 | 2019-09-07 |
+| 914-2       | 26.0 | 4c  | 120.3 |  91 | 2.140 | [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |    5 | 1985-02-15 |
+| Europa      | 30.4 | 4c  |  95.1 | 113 | 1.513 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    5 | 1974-03-17 |
+| Pantera L   | 15.8 | 8c  | 351.0 | 264 | 3.170 | [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |    5 | 1996-04-10 |
+| Dino        | 19.7 | 6c  | 145.0 | 175 | 2.770 | [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |    5 | 1993-01-13 |
+| Bora        | 15.0 | 8c  | 301.0 | 335 | 3.570 | [[cls:boolean-false][False]] | [[cls:boolean-true][True]]  |    5 | 2003-09-06 |
+| 142E        | 21.4 | 4c  | 121.0 | 109 | 2.780 | [[cls:boolean-true][True]]  | [[cls:boolean-true][True]]  |    4 | 2003-08-09 |
+| Batmobile   |      |     |       |     |       | [[cls:boolean-false][False]] | [[cls:boolean-false][False]] |      |            |
+
+#+begin_src hy
+($ (.head mtcars) mpg)
+#+end_src
+
+#+RESULTS:
+| I          |  mpg |
+|------------+------|
+| RX4        | 21.0 |
+| RX4 Wag    | 21.0 |
+| 710        | 22.8 |
+| 4 Drive    | 21.4 |
+| Sportabout | 18.7 |
+
+This DataFrame has a numeric column index.
+
+#+begin_src hy
+(pd.DataFrame (amap (, it (* it 2)) (range 6)))
+#+end_src
+
+#+RESULTS:
+| I | 0 |  1 |
+|---+---+----|
+| 0 | 0 |  0 |
+| 1 | 1 |  2 |
+| 2 | 2 |  4 |
+| 3 | 3 |  6 |
+| 4 | 4 |  8 |
+| 5 | 5 | 10 |
+
+#+begin_src hy
+(kwc pd.DataFrame (amap (, it (* it 2)) (range 8))
+  :index (pd.MultiIndex.from-product
+    [(qw A B C D) (qw black white)]))
+#+end_src
+
+#+RESULTS:
+| i0 | i1    | 0 |  1 |
+|----+-------+---+----|
+| A  | black | 0 |  0 |
+| A  | white | 1 |  2 |
+| B  | black | 2 |  4 |
+| B  | white | 3 |  6 |
+| C  | black | 4 |  8 |
+| C  | white | 5 | 10 |
+| D  | black | 6 | 12 |
+| D  | white | 7 | 14 |
+
+#+begin_src hy
+(kwc pd.Series (range 8)
+  :index (pd.MultiIndex.from-product
+    [(qw A B C D) (qw black white)]))
+#+end_src
+
+#+RESULTS:
+| i0 | i1    | value |
+|----+-------+-------|
+| A  | black |     0 |
+| A  | white |     1 |
+| B  | black |     2 |
+| B  | white |     3 |
+| C  | black |     4 |
+| C  | white |     5 |
+| D  | black |     6 |
+| D  | white |     7 |
+
+#+begin_src hy
+(kwc pd.DataFrame (amap (, it (* it 2)) (range 8))
+  :index (kwc pd.MultiIndex.from-product
+    :names (qw ione itwo)
+    [(qw A B C D) (qw black white)]))
+#+end_src
+
+#+RESULTS:
+| ione | itwo  | 0 |  1 |
+|------+-------+---+----|
+| A    | black | 0 |  0 |
+| A    | white | 1 |  2 |
+| B    | black | 2 |  4 |
+| B    | white | 3 |  6 |
+| C    | black | 4 |  8 |
+| C    | white | 5 | 10 |
+| D    | black | 6 | 12 |
+| D    | white | 7 | 14 |
+
+#+begin_src hy
+(kwc pd.Series (range 8)
+  :index (kwc pd.MultiIndex.from-product
+    :names (qw ione itwo)
+    [(qw A B C D) (qw black white)]))
+#+end_src
+
+#+RESULTS:
+| ione | itwo  | value |
+|------+-------+-------|
+| A    | black |     0 |
+| A    | white |     1 |
+| B    | black |     2 |
+| B    | white |     3 |
+| C    | black |     4 |
+| C    | white |     5 |
+| D    | black |     6 |
+| D    | white |     7 |
+
+#+begin_src hy :file g/foo.png
+(plt.scatter [1 2 3] [4 5 -9])
+#+end_src
+
+#+RESULTS:
+[[file:g/foo.png]]
+
+#+begin_src hy
+(setv xyz 15)
+(cached (do
+  (import time)
+  (time.sleep 2)
+  (inc xyz)))
+#+end_src
+
+#+RESULTS:
+| 16 |
+
+Loading ~another.py~ and running the below code block demonstrates how Python files can be loaded into the Hy session.
+
+#+begin_src hy
+hello-from-python
+#+end_src
+
+#+RESULTS:
+| 12 |
+
+** R
+
 #+begin_src R
 pi
 #+end_src

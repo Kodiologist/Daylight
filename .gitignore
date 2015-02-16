@@ -1,3 +1,4 @@
+*.pyc
 __pycache__/
 /example/g/
 !/example/g/.track-dir

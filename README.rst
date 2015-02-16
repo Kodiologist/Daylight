@@ -2,7 +2,7 @@
   :alt: Princess Celestia raising the sun
   :align: center
 
-Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 (because citeproc-py_ is written in Python 3) and a little bit of R for helping with R code blocks.
+Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 (because citeproc-py_ is written in Python 3) and a little bit of `Hy`_ and R for helping with Hy and R code blocks.
 
 .. __: http://arfer.net/projects
 .. __: http://arfer.net/w
@@ -14,13 +14,22 @@ The features that Daylight provides over plain Org include (see ``example/docume
 - Production of APA-style manuscripts as PDFs
 - Production of slideshows as PDFs (without TeX or an office program)
 - Simplification of LaTeX fragments to other Org constructs (when this is possible, and translation to MathML otherwise)
-- Encapsulation of evaluated R code (so you don't forget to include a dependency, or get surprised by interactions between objects that belong to different projects, or get tripped up by your own .Rprofile)
-- R code blocks evaluated with ``:results silent`` will not print huge assigned objects to the echo area
-- Color-coded ``TRUE`` and ``FALSE`` in R output
-- Streamlined production of graphics from R code blocks
+- `Hy`_ support
 
-  - ``:results graphics`` is implied by ``:file``
-  - No outer ``print(...)`` is needed for ``ggplot2``
+  - ``daylight.el`` provides ``org-babel-execute:hy`` etc. in lieu of a real ``ox-hy.el``
+  - Encapsulation of evaluated code
+  - Pretty-printing of objects from dictionaries to numpy arrays to pandas DataFrames
+  - Easy creation of matplotlib graphics from code blocks (just specify the  ``file:`` header argument)
+
+- New features for R
+
+  - Encapsulation of evaluated R code (so you don't forget to include a dependency, or get surprised by interactions between objects that belong to different projects, or get tripped up by your own .Rprofile)
+  - R code blocks evaluated with ``:results silent`` will not print huge assigned objects to the echo area
+  - Color-coded ``TRUE`` and ``FALSE``
+  - Streamlined production of graphics from R code blocks
+
+    - ``:results graphics`` is implied by ``:file``
+    - No outer ``print(...)`` is needed for ``ggplot2``
 
 - Linkable labels to figures, generated based on the file name
 - Custom postprocessors written in Python
@@ -35,6 +44,8 @@ There's also a variety of tweaks to existing features, from how R objects are re
 
 I've published Daylight more for the sake of making my research reproducible than because I expect other people to use it for their own work. For this reason, no hooks or Custom variables are provided. If you want to change anything, you'll have to edit the code directly. That said, I encourage you to get in contact with me if you're thinking of doing something with Daylight. Then, perhaps, we can make something more generally useful out of it together.
 
+The inclusion of special features for both R and Hy is a reflection of how I used R extensively for data analysis from 2011 to 2014 and have switched over to Hy for new projects starting in 2015. Currently, an ugly consequence of this switch is that Daylight uses both Python 2 (for Hy support) and Python 3 (for `Citematic`_ integration and pre- and post-processors). Clearly I'd be better off switching to one or the other, but I'm not sure which at this point.
+
 Installation and use
 ============================================================
 
@@ -42,15 +53,17 @@ Installation and use
 
 Oh boy, I hope you packed a lunch.
 
-- You'll need Emacs, Org, Emacs Speaks Statistics (ESS), and R. Here's a known-good combination of versions:
+- You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R itself and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
 
   - GNU Emacs 24.3.1
   - Org 8.2.10
-  - ESS 13.09
+  - Hy 0.10.1
   - R 3.0.2
+  - ESS 13.09
 
-- Make sure Python can find ``python3-lib/daylight``, as by adding it to your ``PYTHONPATH``.
+- Make sure Python 3 can find the ``daylight`` package in Daylight's ``python3-lib`` directory, and make sure Hy can find the ``daylight_hy`` package in Daylight's ``hy-lib`` directory. Also get `Kodhy`_ and make sure Hy can find the ``kodhy`` package.
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/.daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
+- Create the directory ``$HOME/.daylight/py-cache``.
 - Install quickbib and citematic_coins (from `Citematic`_; the Perl parts of Citematic are not required by Daylight).
 - Install `Kodi.R`_ (you must set the R option ``Kodi.R.path`` so R can find it, presumably in your .Rprofile).
 - In your .emacs, write::
@@ -61,7 +74,7 @@ Oh boy, I hope you packed a lunch.
         ; Probably not required, but strongly recommend. If
         ; `org-export-babel-evaluate' is on, exporting can take eons.
 
-  Also, add R (and any other languages you need for the document you want to work with) to ``org-babel-load-languages``.
+  Also, add R to ``org-babel-load-languages``.
 
 You should now be able to export a Daylight buffer to HTML with ``(daylight-export-to-file "/tmp/daylight-output.html")``.
 
@@ -69,7 +82,7 @@ To produce a PDF in APA style, say ``(daylight-export-to-file "/tmp/daylight-out
 
 Similarly, if a Daylight buffer has ``daylight_slideshow:t`` in its ``#+OPTIONS`` line, ``daylight-export-to-file`` will produce an HTML file suitable for printing to a file to create a slideshow. Daylight expects the paper size for slideshows to be 10 inches wide by 7½ inches tall.
 
-The ``example`` directory contains various informal tests. A few tests of R encapsulation can be run by doing ``ess-load-file`` on ``tests.R``. As for ``document.org``, try exporting it or evaluating code blocks in it after ``ess-load-file``\-ing ``setup.R``. If you disable syntax highlighting [with, say, ``(daylight-aliasing 'org-html-fontify-code (lambda (code lang) (org-html-encode-plain-text code)) '(daylight-export-to-file "/tmp/daylight-output.html"))``] and ensure your filesystem's modification date for ``document.org`` is set appropriately, the result of exporting ``document.org`` should be identical to ``document.html``.
+The ``example`` directory contains various informal tests. A few tests of R encapsulation can be run by doing ``ess-load-file`` on ``tests.R``. As for ``document.org``, try exporting it or evaluating code blocks in it after ``daylight-hy-load-buffer``\-ing ``setup.hy`` or ``ess-load-file``\-ing ``setup.R``. If you disable syntax highlighting [with, say, ``(daylight-aliasing 'org-html-fontify-code (lambda (code lang) (org-html-encode-plain-text code)) '(daylight-export-to-file "/tmp/daylight-output.html"))``] and ensure your filesystem's modification date for ``document.org`` is set appropriately, the result of exporting ``document.org`` should be identical to ``document.html``.
 
 License
 ============================================================
@@ -85,5 +98,7 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 .. _citeproc-py: https://github.com/brechtm/citeproc-py
 .. _COinS: http://ocoins.info/
 .. _Citematic: https://github.com/Kodiologist/Citematic
+.. _Hy: http://hylang.org
+.. _Kodhy: https://github.com/Kodiologist/Kodhy
 .. _Kodi.R: https://github.com/Kodiologist/Kodi.R
 .. _`GNU General Public License`: http://www.gnu.org/licenses/

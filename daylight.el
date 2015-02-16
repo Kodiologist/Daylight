@@ -312,7 +312,156 @@ results block matching the file name (but without the file extension)."
     (org-element-property :value latex-fragment)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; * Code blocks
+;; * Hy integration
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; This section implements some support for Hy code blocks in
+; Babel but also adds make some adjustments to Hy mode and Python
+; mode (e.g., adding "C-c l" to load Hy and Python files in their
+; own namespace).
+
+(setq daylight-hy-load-command-hy "(import daylight-hy.load) (daylight-hy.load.repl-import \"%s\" None (globals) __name__)\n")
+(setq daylight-hy-load-command-py "(import daylight-hy.load) (daylight-hy.load.repl-import \"%s\" None (globals) __name__ \"python\")\n")
+
+(defvar daylight-hy-init-file nil
+  "File to load after starting an inferior Hy buffer.")
+
+(defun hy ()
+  (interactive)
+  (inferior-lisp "hy")
+  (rename-buffer "*Hy*")
+  (setq inferior-lisp-buffer "*Hy*")
+  (when daylight-hy-init-file
+    (comint-send-string (get-buffer-process (current-buffer))
+      (format daylight-hy-load-command-hy daylight-hy-init-file)))
+  (daylight-inferior-hy-setup))
+
+(defun daylight-inferior-hy-setup ()
+  (add-to-list 'lisp-source-modes 'hy-mode)
+  (setq comint-get-old-input 'comint-get-old-input-default)
+    ; This is supposed to keep the prompt "=>" from showing
+    ; up as input when cycling through the input history.
+  (setq comint-input-ring-file-name (expand-file-name "~/.hy-history"))
+  ; By default, inferior-lisp-mode doesn't recognize braces and
+  ; square brackets as bracketing characters.
+  (modify-syntax-entry ?\{ "(}")
+  (modify-syntax-entry ?\} "){")
+  (modify-syntax-entry ?\[ "(]")
+  (modify-syntax-entry ?\] ")["))
+
+(add-hook 'hy-mode-hook 'daylight-hy-mode-setup)
+(defun daylight-hy-mode-setup ()
+  (dolist (st (list (syntax-table) font-lock-syntax-table))
+    (modify-syntax-entry ?| "_" st))
+    ; However font-lock-syntax-table is normally set for Lisp,
+    ; it seems to demand that ?| remain a quoting character.
+  (setq inferior-lisp-load-command daylight-hy-load-command-hy)
+  (define-key hy-mode-map "\C-cl" 'daylight-hy-load-buffer))
+
+(defun daylight-hy-load-buffer ()
+  (interactive)
+  (save-current-buffer
+    (unless (comint-check-proc "*Hy*")
+      (hy)))
+  (lisp-load-file (buffer-file-name)))
+
+(add-hook 'python-mode-hook 'daylight-py-to-hy-setup)
+(defun daylight-py-to-hy-setup ()
+  (setq inferior-lisp-load-command daylight-hy-load-command-py)
+  (define-key python-mode-map "\C-cl" 'daylight-hy-load-buffer))
+
+(add-to-list 'org-babel-tangle-lang-exts '("hy" . "hy"))
+
+(defvar org-babel-default-header-args:hy '(
+  (:width . 800)
+  (:height . 500)
+  (:exports . "both")))
+
+(defvar daylight-hy-buffers '((:default . "*Hy*")))
+
+(defvar daylight-hy-image-file-output-fmt "
+  (import [matplotlib.pyplot :as plt] daylight-hy.babel)
+  (plt.ioff)
+  (apply plt.figure [\"daylight-file-output\"] {
+    \"figsize\" (, (/ %s 100) (/ %s 100))})
+  (daylight-hy.babel.matplotlib-prelude)
+  %s
+  (apply plt.savefig [%S] {\"bbox_inches\" \"tight\" \"pad_inches\" .05})
+  (plt.close \"daylight-file-output\")
+  (plt.ion)")
+
+(defun org-babel-execute:hy (body params)
+"Execute a block of Hy code with org-babel.
+This function is called by `org-babel-execute-src-block'."
+  (let* (
+      (processed-params (org-babel-process-params params))
+      (session (daylight-hy-initiate-session (cdr (assq :session processed-params))))
+      ;(vars ...)   ; Not implemented.
+      (result-params (cdr (assq :result-params processed-params)))
+      (result-type (cdr (assq :result-type processed-params)))
+      (full-body (org-babel-expand-body:hy
+        body params processed-params))
+      (session-buffer (get-buffer (cdr
+        (assq session daylight-hy-buffers))))
+      tmp-file)
+    (when (and (assq :file processed-params) (cdr (assq :file processed-params)))
+      (setq result-type 'matplotlib))
+    (unless (or (eq result-type 'value) (eq result-type 'matplotlib))
+      (error "Unimplemented :results type."))
+    (process-send-string (get-buffer-process session-buffer)
+      "(when True None (setv (get __builtins__ \"_\") [\"\"]))\n")
+      ; This should ensure that if the code block fails, '_' will
+      ; be left as [""], so the RESULTS will be blank, alerting
+      ; the user that something's gone wrong.
+    (when (eq result-type 'matplotlib)
+      (setq full-body (format daylight-hy-image-file-output-fmt
+        (cdr (assq :width processed-params))
+        (cdr (assq :height processed-params))
+        full-body
+        (cdr (assq :file processed-params)))))
+    (setq full-body (format "(import daylight-hy.load) [(daylight-hy.load.repl-import %S '(do %s\n) (globals) __name__)]\n"
+      ; The square brackets serve to keep the Hy REPL from hanging
+      ; if the user forgot a close-parenthesis.
+      (buffer-file-name)
+      full-body))
+    (process-send-string (get-buffer-process session-buffer)
+      full-body)
+    (setq tmp-file (org-babel-temp-file "hy-"))
+    (org-babel-comint-eval-invisibly-and-wait-for-file
+      session-buffer
+      tmp-file
+      (format
+        (if (eq result-type 'matplotlib)
+          "(with [[o (open %S \"w\")]] (.write o \"done\\n\"))"
+          "(do (import daylight-hy.babel) (with [[o (open %S \"w\")]] (.write o (daylight-hy.babel.to-el (get _ 0)))))")
+        (org-babel-process-file-name tmp-file t)))
+    (if (eq result-type 'matplotlib)
+      nil
+       ; If we return something other than nil,
+       ; org-babel-execute-src-block will write it to the file,
+       ; clobbering the image we just made.
+      (read (org-babel-eval-read-file tmp-file)))))
+        ; Debugging tip: use M-: (org-table-to-lisp) to
+        ; investigate table structure.
+
+(defun org-babel-expand-body:hy (body params &optional processed-params)
+  "Expand BODY according to PARAMS. Return the expanded body.
+
+Currently, no expansion is implemented, so this is a no-op."
+  body)
+
+(defun daylight-hy-initiate-session (&optional session)
+  "If there isn't a current inferior-process-buffer in SESSION, then create one.
+Return the initialized session.
+
+Currently, only a single session is supported."
+  (unless (get-buffer "*Hy*")
+    (save-current-buffer
+      (hy)))
+  :default)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; * R code blocks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar daylight-ess nil)
