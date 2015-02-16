@@ -189,9 +189,17 @@ text = re.sub(r'<a href="#(sec-[^"]+)"',
     lambda m: '<a href="#{}"'.format(sections[m.group(1)]),
     text)
 
+# Remove unnecessary numeric IDs, which create noise in diffs
+# of output documents.
+text = re.sub(r'<a id="sec-\d+"></a>', '', text)
+text = re.sub(r'<div id="outline-container-[^"]+" (class="outline-[-0-9]+")>',
+    r'<div \1>', text)
+text = re.sub(r'<div (class="outline-text-[-0-9]+") id="text-[^"]+">',
+    r'<div \1>', text)
+
 if '<div id="footnotes">' in text:
     # Get rid of the redundant "Notes" header.
-    text = re.sub(r'<div id="outline-container-sec-\d+" class="outline-2">\s*<h2 id="[^"]+">Notes</h2>\s*<div [^>]+>\s*</div>\s*</div>', '', text)
+    text = re.sub(r'<div class="outline-2">\s*<h2 id="[^"]+">Notes</h2>\s*<div [^>]+>\s*</div>\s*</div>', '', text)
     # Fix the link in the table of contents.
     text = re.sub(r'<li><a href="[^"]+">Notes(</a></li>\s*</ul>\s*</div>)',
         r'<li><a href="#footnotes">Notes\1',
@@ -262,7 +270,7 @@ text = re.sub(
         r'</ul>\s*</div>\s*</nav>',
     f, text, 1, re.DOTALL)
 if contents and not (apa or slideshow):
-   text = re.sub('<div id="outline-container-sec-1" class="outline-2">',
+   text = re.sub('<div class="outline-2">',
        lambda mo: contents + mo.group(0),
        text, 1)
 
