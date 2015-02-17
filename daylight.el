@@ -342,7 +342,6 @@ results block matching the file name (but without the file extension)."
   (setq comint-get-old-input 'comint-get-old-input-default)
     ; This is supposed to keep the prompt "=>" from showing
     ; up as input when cycling through the input history.
-  (setq comint-input-ring-file-name (expand-file-name "~/.hy-history"))
   ; By default, inferior-lisp-mode doesn't recognize braces and
   ; square brackets as bracketing characters.
   (modify-syntax-entry ?\{ "(}")
