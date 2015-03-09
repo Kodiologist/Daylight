@@ -60,13 +60,15 @@ text = re.sub(r'^\\begin\{aligned\}$.+?^\\end\{aligned\}$',
 # but at least it's valid HTML5.
 if not apa:
     date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
+    date_created_str = info.get('daylight-date-created')
     date_created = None
-    if info.get('daylight-date-created'):
+    if date_created_str:
         try:
-            date_created = datetime.strptime(info['daylight-date-created'], "%d %b %Y").date()
+            date_created = datetime.strptime(date_created_str, "%d %b %Y").date()
         except ValueError:
-          # We failed to parse the creation date. We can still use
-          # it in the subtitle, but not in a meta tag.
+          # We failed to parse the creation date. Probably it's
+          # an imprecise date like "Jan 2010". We can't use it in
+          # a meta tag, but we can put it in the subtitle.
             pass
     if info.get('daylight-include-meta'):
         text = text.replace('</head>',
@@ -147,13 +149,16 @@ else:
     authors_html = escape(english_list(
         [undo_name_inversion(a) for a in info['author'].split('; ')]))
     if not slideshow and info['daylight-include-meta']:
+        show_c = bool(date_created_str)
+        show_m = not date_created or date_modified != date_created
         subtitle = '<p class="subtitle">{}<br>{}{}{}</p>'.format(
             authors_html,
-            'Created {}'.format(info['daylight-date-created'])
-                if date_created else '',
-            ' • ' if date_created and date_modified != date_created else '',
+            'Created {}'.format(date_created_str)
+                if show_c else '',
+            ' • '
+                if show_c and show_m else '',
             'Last modified {}'.format(date_modified.strftime("%d %b %Y").lstrip('0'))
-                if date_modified != date_created else '')
+                if show_m else '')
     else:
         subtitle = ''
     text = re.sub('<h1 class="title">(.+?)</h1>',
