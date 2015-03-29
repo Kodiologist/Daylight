@@ -21,6 +21,7 @@
     (:daylight-bibliography-url "DAYLIGHT_BIBLIOGRAPHY" nil nil)
     (:daylight-license-url "DAYLIGHT_LICENSE" nil nil)
     (:daylight-now-copyright "DAYLIGHT_NOW_COPYRIGHT" nil nil)
+    (:daylight-citation-meta "DAYLIGHT_CITATION_META" nil nil)
     (:daylight-include-meta nil "daylight-include-meta" t)
     (:daylight-apa nil "daylight-apa" nil t)
     (:daylight-slideshow nil "daylight-slideshow" nil t)))

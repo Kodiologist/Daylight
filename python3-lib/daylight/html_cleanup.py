@@ -54,34 +54,53 @@ text = re.sub(r'^\\begin\{aligned\}$.+?^\\end\{aligned\}$',
     text,
     flags = re.DOTALL | re.MULTILINE)
 
-# Add <meta>s for Google Scholar.
-# http://scholar.google.com/intl/en-US/scholar/inclusion.html#indexing
-# I don't think Google Scholar actually supports dcterms.* (yet),
-# but at least it's valid HTML5.
-if not apa:
-    date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
-    date_created_str = info.get('daylight-date-created')
-    date_created = None
-    if date_created_str:
-        try:
-            date_created = datetime.strptime(date_created_str, "%d %b %Y").date()
-        except ValueError:
-          # We failed to parse the creation date. Probably it's
-          # an imprecise date like "Jan 2010". We can't use it in
-          # a meta tag, but we can put it in the subtitle.
-            pass
-    if info.get('daylight-include-meta'):
+# If daylight-citation-meta is provided, add <meta>s for Google
+# Scholar.
+#
+# daylight-citation-meta can be "t" to use just information
+# provided by the file itself, or a "[[bib:…]]" link to use
+# information from that bibliography entry. In the latter case,
+# daylight.bibgen has already replaced the link with
+# JSON-formatted bibliographic data so we don't have to open the
+# bibliographic database ourselves.
+date_modified = date.fromtimestamp(os.path.getmtime(info['input-file']))
+date_created_str = info.get('daylight-date-created')
+if date_created_str:
+    try:
+        date_created = datetime.strptime(date_created_str, "%d %b %Y").date()
+    except ValueError:
+      # We failed to parse the creation date. Probably it's
+      # an imprecise date like "Jan 2010".
+        date_created = None
+if info.get('daylight-citation-meta'):
+    text = text.replace('</head>',
+        '<meta name="citation_title" content="{}">\n'.format(escape(info['title'])) +
+        ''.join(['<meta name="citation_author" content="{}">\n'.format(escape(a))
+            for a in info['author'].split('; ')]) +
+        '</head>')
+    if info['daylight-citation-meta'] == 't':
+      # Use the full date modified (to the day) for the citation day.
         text = text.replace('</head>',
-            '<link rel="schema.dcterms" href="http://purl.org/dc/terms/">\n' +
-            '<meta name="dcterms.title" content="{}">\n'.format(escape(info['title'])) +
-                ''.join(['<meta name="dcterms.creator" content="{}">\n'.format(escape(a))
-                    for a in info['author'].split('; ')]) +
-                ('<meta name="dcterms.created" content="{}">\n'.format(date_created)
-                    if date_created else '') +
-                '<meta name="dcterms.modified" content="{}">\n'.format(date_modified) +
+            '<meta name="citation_date" content="{}">\n'.format(date_modified) +
             '</head>')
+    else:
+      # Fill in other citation_ tags from the provided bibliographic data.
+      # http://wiki.whatwg.org/wiki/MetaExtensions
+      # http://www.monperrus.net/martin/accurate+bibliographic+metadata+and+google+scholar
+        cm = json.loads(info['daylight-citation-meta'])
+        text = text.replace('</head>',
+            '{}</head>'.format('\n'.join(
+                '<meta name="{}" content="{}">'.format(k, escape(v))
+                for k, v in [
+                    ('citation_date', '-'.join(cm['issued']['date-parts'][0])),
+                    ('citation_journal_title', cm.get('container-title')),
+                    ('citation_volume', cm.get('volume')),
+                    ('citation_issue', cm.get('issue')),
+                    ('citation_firstpage', cm.get('page') and cm['page'].split('–')[0]),
+                    ('citation_lastpage', cm.get('page') and cm['page'].split('–')[1])]
+                if v)))
 
-# Remove '<meta name="author" …', which is redundant with dcterms.creator.
+# Remove '<meta name="author" …'.
 text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, 1)
 
 # Fix figure numbers, such that only figures with captions get

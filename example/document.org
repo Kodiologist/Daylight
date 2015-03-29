@@ -6,6 +6,7 @@
 #+daylight_created: 3 Oct 2009
 #+daylight_license: http://creativecommons.org/licenses/by-sa/4.0/
 #+daylight_bibliography: http://arfer.net/daylight/kodi-bibliography.yaml
+#+daylight_citation_meta: [[bib:Nisbett & Wilson 1977 "telling more"]]
 
 #+begin_wabstract
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non nulla neque. Praesent justo felis, vulputate id augue eu, condimentum consectetur augue. Sed at suscipit felis. Nam fringilla tempor erat. Phasellus dictum mattis neque. Integer dapibus commodo fermentum. Sed dapibus, quam a accumsan fringilla, tellus lectus tincidunt nisi, sed accumsan ante nulla eget tortor. Aenean eleifend eget urna et ultricies. Curabitur rutrum lacus non feugiat gravida. Quisque quis congue lectus. Donec sit amet libero ut purus ultricies ultrices sed quis libero. Vestibulum tincidunt molestie molestie. Vivamus lacinia neque sit amet ante posuere, id ultrices nulla consequat.

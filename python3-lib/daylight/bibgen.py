@@ -5,7 +5,7 @@ from os import environ
 from os.path import join, getmtime, exists
 import re
 from cgi import escape
-import pickle
+import pickle, json
 import quickbib, citematic_coins
 
 abbreviate_subsequent_authors = 3
@@ -62,11 +62,6 @@ bib_pickle_path = bib_path + '.pkl'
   # A pickled cache of the bibliography, which we create
   # and update.
 
-# ------------------------------------------------------------
-
-citations = re.findall(r'\[\[bibp?:(.+?)\]\]',
-    re.sub(r'^# .*', '', org, flags = re.MULTILINE))
-
 if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path):
     import yaml
     with open(bib_path) as f: old_database = yaml.load(f)
@@ -81,6 +76,18 @@ else:
 
 bib_lookup = lambda c: database[re.sub(',? &', ',', c.lower())]
 
+# ------------------------------------------------------------
+
+# If daylight_citation_meta has a citation in it, replace
+# the link with a JSON dump of our bibliographical data for
+# that reference.
+org = re.sub(r'(\n#\+daylight_citation_meta: )\[\[bib:(.+?)\]\]',
+    lambda mo: mo.group(1) + json.dumps(bib_lookup(mo.group(2))),
+    org, count = 1, flags = re.IGNORECASE)
+
+citations = re.findall(r'\[\[bibp?:(.+?)\]\]',
+    re.sub(r'^# .*', '', org, flags = re.MULTILINE))
+
 if simplified_bibliography_path:
     import json
     with open(simplified_bibliography_path, 'w') as o: json.dump(
@@ -90,6 +97,8 @@ if simplified_bibliography_path:
         indent = 2,
         separators = (',', ': '))
     exit()
+
+# ------------------------------------------------------------
 
 cites, ids, bibl = quickbib.bib(
     environ['APA_CSL_PATH'],
