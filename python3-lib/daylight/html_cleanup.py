@@ -220,6 +220,10 @@ text = re.sub(r'<div id="outline-container-[^"]+" (class="outline-[-0-9]+")>',
     r'<div \1>', text)
 text = re.sub(r'<div (class="outline-text-[-0-9]+") id="text-[^"]+">',
     r'<div \1>', text)
+# But add an ID for the bibliography content.
+text = re.sub(r'( id="bibliography".+?class="outline-text-\d+")',
+    r'\1 id="text-bibliography"',
+    text, count = 1, flags = re.DOTALL)
 
 if '<div id="footnotes">' in text:
     # Get rid of the redundant "Notes" header.
