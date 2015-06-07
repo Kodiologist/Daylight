@@ -85,8 +85,11 @@ org = re.sub(r'(\n#\+daylight_citation_meta: )\[\[bib:(.+?)\]\]',
     lambda mo: mo.group(1) + json.dumps(bib_lookup(mo.group(2))),
     org, count = 1, flags = re.IGNORECASE)
 
-citations = re.findall(r'\[\[bibp?:(.+?)\]\]',
-    re.sub(r'^# .*', '', org, flags = re.MULTILINE))
+for start, link in re.findall(r'(..)(bibp?:\w\w\S*)', org, re.UNICODE):
+    if start != '[[' and not re.match('\w', start[1], re.UNICODE):
+        raise ValueError("Unbracketed link: " + link)
+
+citations = re.findall(r'\[\[bibp?:(.+?)\]\]', org)
 
 if simplified_bibliography_path:
     import json
