@@ -615,6 +615,9 @@ printing only happens automatically at top level."
                 (replace-regexp-in-string "[^-[:alnum:] ]" ""
                 path)))
               text))
+          ((eq format 'latex)
+            (format "\\cite{%s}"
+              (replace-regexp-in-string "[&, ]" "" path)))
           (t
             (daylight-escape-html text)))))))
 
