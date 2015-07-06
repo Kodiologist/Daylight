@@ -12,6 +12,8 @@ from daylight.mathml_worker import to_mathml
 license_html = {
     'http://creativecommons.org/licenses/by-sa/4.0/':
         'a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>',
+    'http://creativecommons.org/licenses/by/4.0/':
+        'a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution 4.0 International License</a>',
     'http://creativecommons.org/licenses/by-sa/3.0/us/deed.en_US':
         'a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/us/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 United States License</a>'}
 
