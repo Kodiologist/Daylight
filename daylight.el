@@ -575,7 +575,8 @@ printing only happens automatically at top level."
             org-babel-R-write-object-command
             t t)))
       (daylight-aliasing 'org-babel-number-p (lambda (string) nil)
-        'ad-do-it))
+        '(daylight-aliasing 'org-babel-string-read (lambda (cell) (org-babel-read cell t))
+          'ad-do-it)))
     ad-do-it))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

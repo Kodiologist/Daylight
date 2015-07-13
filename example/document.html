@@ -2241,6 +2241,57 @@ I'm not sure what a string without a trailing newline should do, but here's what
 </tbody>
 </table>
 
+<p>
+Double quotes in strings work okay:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">c(
+    "hello cool world",
+    "hello 'cool' world",
+    'hello "cool" world',
+    'hello \\"cool\\" world')
+</pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="right">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">&#xa0;</th>
+<th scope="col" class="left">x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">1</td>
+<td class="left">hello cool world</td>
+</tr>
+
+<tr>
+<td class="right">2</td>
+<td class="left">hello 'cool' world</td>
+</tr>
+
+<tr>
+<td class="right">3</td>
+<td class="left">hello "cool" world</td>
+</tr>
+
+<tr>
+<td class="right">4</td>
+<td class="left">hello \"cool\" world</td>
+</tr>
+</tbody>
+</table>
+
 <div class="org-src-container">
 
 <pre class="src src-R">c(2 + 2, 3)

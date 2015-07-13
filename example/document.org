@@ -593,6 +593,24 @@ I'm not sure what a string without a trailing newline should do, but here's what
 |---+-------------|
 | 1 | hello world |
 
+Double quotes in strings work okay:
+
+#+begin_src R
+c(
+    "hello cool world",
+    "hello 'cool' world",
+    'hello "cool" world',
+    'hello \\"cool\\" world')
+#+end_src
+
+#+RESULTS:
+|   | x                    |
+|---+----------------------|
+| 1 | hello cool world     |
+| 2 | hello 'cool' world   |
+| 3 | hello "cool" world   |
+| 4 | hello \"cool\" world |
+
 #+begin_src R
 c(2 + 2, 3)
 #+end_src
