@@ -145,9 +145,9 @@ results block matching the file name (but without the file extension)."
       (setq ad-return-value (concat
         "<footenotelabel " label ">" ad-return-value)))))
 
-(defvar daylight-css-href "http://arfer.net/daylight.css")
-(defvar daylight-apa-css-href "http://arfer.net/daylight-apa.css")
-(defvar daylight-slideshow-css-href "http://arfer.net/daylight-slideshow.css")
+(defvar daylight-css-href "https://arfer.net/daylight.css")
+(defvar daylight-apa-css-href "https://arfer.net/daylight-apa.css")
+(defvar daylight-slideshow-css-href "https://arfer.net/daylight-slideshow.css")
 
 (defadvice org-html-template (before add-to-html-head activate)
   (when (daylight-buffer-is-daylit)
