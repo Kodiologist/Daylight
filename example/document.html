@@ -436,7 +436,7 @@ goodbye
 
 <div class="org-src-container">
 
-<pre class="src src-hy">[1 2 3.14 5 None True "" False None]
+<pre class="src src-hy">[1 2 3.14 "I like π" 5 None True "" False None]
 </pre>
 </div>
 
@@ -449,6 +449,8 @@ goodbye
 <col  class="right">
 
 <col  class="right">
+
+<col  class="left">
 
 <col  class="right">
 
@@ -465,6 +467,7 @@ goodbye
 <td class="right">1</td>
 <td class="right">2</td>
 <td class="right">3.14</td>
+<td class="left">I like π</td>
 <td class="right">5</td>
 <td class="left">&#xa0;</td>
 <td class="left"><span class='boolean-true'>True</span></td>
@@ -484,7 +487,7 @@ In the below, notice the trailing 0s.
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(amap [it] [1 2 3.14 5 None True "" False None])
+<pre class="src src-hy">(amap [it] [1 2 3.14 "I like π" 5 None True "" False None])
 </pre>
 </div>
 
@@ -505,6 +508,10 @@ In the below, notice the trailing 0s.
 
 <tr>
 <td class="right">3.14</td>
+</tr>
+
+<tr>
+<td class="right">I like π</td>
 </tr>
 
 <tr>

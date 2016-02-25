@@ -180,30 +180,31 @@ The following two results, for plain strings, should perhaps be changed, but I h
 | c | hello |
 
 #+begin_src hy
-[1 2 3.14 5 None True "" False None]
+[1 2 3.14 "I like π" 5 None True "" False None]
 #+end_src
 
 #+RESULTS:
-| 1 | 2 | 3.14 | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |
+| 1 | 2 | 3.14 | I like π | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |
 
 The last cell is missing due to a bug in Org 8.2 which should be fixed for 8.3.
 
 In the below, notice the trailing 0s.
 
 #+begin_src hy
-(amap [it] [1 2 3.14 5 None True "" False None])
+(amap [it] [1 2 3.14 "I like π" 5 None True "" False None])
 #+end_src
 
 #+RESULTS:
-|  1.00 |
-|  2.00 |
-|  3.14 |
-|  5.00 |
-|       |
-|  [[cls:boolean-true][True]] |
-|       |
-| [[cls:boolean-false][False]] |
-|       |
+|     1.00 |
+|     2.00 |
+|     3.14 |
+| I like π |
+|     5.00 |
+|          |
+|     [[cls:boolean-true][True]] |
+|          |
+|    [[cls:boolean-false][False]] |
+|          |
 
 #+begin_src hy
 (np.array [1 2 3])
