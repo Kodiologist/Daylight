@@ -283,6 +283,9 @@ results block matching the file name (but without the file extension)."
   (lambda (path)
     (browse-url (concat org-doi-server-url path)))
   (lambda (path desc format)
+    ; Unescape square brackets that were escaped in daylight.html_cleanup.
+    (setq path (replace-regexp-in-string "\ue006" "["
+      (replace-regexp-in-string "\ue007" "]" path)))
     (cond
       ((eq format 'html)
         (format "<a class='doi' href='http://dx.doi.org/%s'>doi:%s</a>"

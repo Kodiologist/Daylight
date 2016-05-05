@@ -25,8 +25,15 @@ def digest_citation(text):
     return (
         re.sub(r'`(.+?)`', r'[[m:i][\1]]',
         re.sub(r'(\[\[m:i\]\[[^\]]+)\]\], \[\[m:i\]\[', r'\1, ',
-        re.sub(r'(doi:10\.[^ ]+[^ .])', r'[[\1]]',
+        re.sub(r'(doi:10\.[^ ]+[^ .])', lambda mo:
+            '[[{}]]'.format(doi_escape(mo.group(1))),
         text))))
+
+def doi_escape(text):
+  # We have to escape square brackets (and then unescape them
+  # back in Emacs Lisp) to work around a limitation of how Org-mode
+  # parses links.
+    return text.replace('[', '\ue006').replace(']', '\ue007')
 
 class org_bib_formatter(object):
 

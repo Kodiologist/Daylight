@@ -111,6 +111,8 @@ One of my favorite articles is [[bib:Nisbett & Wilson 1977 "telling more"]]. Wit
 
 Here is one more citation: [[bib:Wang & Dvorak 2010 "sweet"]].
 
+[[bib:SallowsG 2005]] has a DOI that has both parentheses and square brackets.
+
 * Code blocks
 
 ** Hy
