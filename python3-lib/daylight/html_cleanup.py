@@ -122,7 +122,7 @@ text = re.sub(r'(<figure id="([^"]+)">\s*<p><img[^>]+>\s*</p>\s*<figcaption><spa
 def f(m):
     idd, objnum = '{}--{}'.format(m.group(1), m.group(2)), m.group(3)
     if m.group(1) == 'tab':
-        m2 = re.search('<table\s+id="{}">\s+<(\w+)'.format(re.escape(idd)), text)
+        m2 = re.search('<table\s+id="{}"[^>]*>\s+<(\w+)'.format(re.escape(idd)), text)
         if m2.group(1) == 'caption':
             desc = 'Table {}'.format(objnum)
             cls = 'table-ref-pretty'
