@@ -71,7 +71,7 @@
 (add-hook 'org-mode-hook 'daylight-set-org-table-number-regexp)
 (defun daylight-set-org-table-number-regexp ()
   (setq org-table-number-regexp
-    "^\\([$<>]?[-+^.0-9]*[0-9][-+^.,0-9eEdDx()%:]*\\|[<>]?[-+]?0[xX][0-9a-fA-F.]+\\|[<>]?[-+]?[0-9]+#[0-9a-zA-Z.]+\\|nan\\|[-+u]?inf\\)$"))
+    "^\\([$<>]?[-−+^.0-9]*[0-9][-−+^.,0-9eEdDx()%:]*\\|[<>]?[-−+]?0[xX][0-9a-fA-F.]+\\|[<>]?[-−+]?[0-9]+#[0-9a-zA-Z.]+\\|nan\\|[-−+u]?inf\\)$"))
       ; This is the same as the default except that leading
       ; dollar signs and thousands separators are also allowed.
 

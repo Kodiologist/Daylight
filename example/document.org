@@ -748,13 +748,13 @@ Here is a reference to a table without a caption: [[tab--nocap]]. Notice how the
 | TR  | Build a canal | Panama  |
 | LBJ | Win a war     | Vietnam |
 
-In the table below, the first column contains dollar signs but is right-aligned.
+In the table below, the first column contains dollar signs and Unicode minus signs but is right-aligned.
 
 | price | item      |
 |-------+-----------|
-|    $1 | apple     |
-|    $3 | popcorn   |
-|   $20 | olive oil |
+|   $−1 | apple     |
+|   $−3 | popcorn   |
+|  $−20 | olive oil |
 
 * Images
 
