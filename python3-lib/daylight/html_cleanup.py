@@ -80,7 +80,7 @@ if info.get('daylight-citation-meta'):
         ''.join(['<meta name="citation_author" content="{}">\n'.format(escape(a))
             for a in info['author'].split('; ')]) +
         '</head>')
-    if info['daylight-citation-meta'] == 't':
+    if info['daylight-show-mdate'] == 't' and info['daylight-citation-meta'] == 't':
       # Use the full date modified (to the day) for the citation day.
         text = text.replace('</head>',
             '<meta name="citation_date" content="{}">\n'.format(date_modified) +
@@ -171,7 +171,8 @@ else:
         [undo_name_inversion(a) for a in info['author'].split('; ')]))
     if not slideshow and info['daylight-include-meta']:
         show_c = bool(date_created_str)
-        show_m = not date_created or date_modified != date_created
+        show_m = info['daylight-show-mdate'] == 't' and (
+            not date_created or date_modified != date_created)
         subtitle = '<p class="subtitle">{}<br>{}{}{}</p>'.format(
             authors_html,
             'Created {}'.format(date_created_str)
