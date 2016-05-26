@@ -334,7 +334,9 @@ if license_url and not apa:
     else:
         guts = 'This work is licensed under {}. Copyright {} {}.'.format(
             license_html[license_url],
-            '{}–{}'.format(year_created, year_modified)
+            year_created
+                if year_created and not info['daylight-show-mdate']
+                else '{}–{}'.format(year_created, year_modified)
                 if year_created and year_created != year_modified
                 else year_modified,
             authors_html)
