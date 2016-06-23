@@ -113,6 +113,8 @@ Here is one more citation: [[bib:Wang & Dvorak 2010 "sweet"]].
 
 [[bib:SallowsG 2005]] has a DOI that has both parentheses and square brackets.
 
+[[bib:Arfer-42]] has a question mark at the end of its italicized title.
+
 * Code blocks
 
 ** Hy

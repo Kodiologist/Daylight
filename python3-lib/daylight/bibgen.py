@@ -23,11 +23,12 @@ def encode_bibref(s):
 
 def digest_citation(text):
     return (
+        re.sub(r'([.!?…]\]+)\.', r'\1',
         re.sub(r'`(.+?)`', r'[[m:i][\1]]',
         re.sub(r'(\[\[m:i\]\[[^\]]+)\]\], \[\[m:i\]\[', r'\1, ',
         re.sub(r'(doi:10\.[^ ]+[^ .])', lambda mo:
             '[[{}]]'.format(doi_escape(mo.group(1))),
-        text))))
+        text)))))
 
 def doi_escape(text):
   # We have to escape square brackets (and then unescape them
