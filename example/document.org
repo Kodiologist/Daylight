@@ -135,6 +135,21 @@ Here is one more citation: [[bib:Wang & Dvorak 2010 "sweet"]].
 | 3 |
 
 #+begin_src hy
+(setv saved-value 19)
+saved-value
+#+end_src
+
+#+RESULTS:
+| 19 |
+
+#+begin_src hy
+(+ saved-value 1)
+#+end_src
+
+#+RESULTS:
+| 20 |
+
+#+begin_src hy
 (import time)
 (time.sleep 2)
 1

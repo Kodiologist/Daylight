@@ -63,7 +63,10 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
     else:
         if lang != 'hy':
             raise NotImplementedError
-        m = sys.modules.get(mname) or imp.new_module(mname)
+        m = sys.modules.get(mname)
+        if not m:
+            m = imp.new_module(mname)
+            sys.modules[mname] = m
         returnval = hy_eval(code, m.__dict__, mname)
     # Copy the module's names (except for names starting with "_")
     # into our globals.
