@@ -59,7 +59,8 @@
       int
       ; Otherwise, give all the numbers the same number of
       ; decimal digits as the one with the most.
-      (let [[n (max (map len decimals))]]
+      (do
+        (setv n (max (map len decimals)))
         (λ (.--format-- (float it) (.format ".{}f" n))))))
     (for [[row-i x] (enumerate col)]
       (when (regnum? x)
@@ -96,7 +97,7 @@
     [(numeric? x)
       (str x)]
     [(instance? HySymbol x)
-      (unicode x)]
+      (str x)]
     [(string? x)
       (double-quote x)]
     [True
