@@ -389,10 +389,12 @@ results block matching the file name (but without the file extension)."
   (plt.ioff)
   (apply plt.figure [\"daylight-file-output\"] {
     \"figsize\" (, (/ %s 100) (/ %s 100))})
+  (plt.hold True)
   (daylight-hy.babel.matplotlib-prelude)
   %s
   (apply plt.savefig [%S] {\"bbox_inches\" \"tight\" \"pad_inches\" .05})
   (plt.close \"daylight-file-output\")
+  (plt.hold False)
   (plt.ion)")
 
 (defun org-babel-execute:hy (body params)
