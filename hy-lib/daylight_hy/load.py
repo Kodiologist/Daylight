@@ -22,7 +22,7 @@ def import_file_to_module(module_name, fpath, lang):
         if lang == "hy":
             eval(ast_compile(_ast, fpath, "exec"), mod.__dict__)
         elif lang == "python":
-            execfile(fpath, mod.__dict__)
+            exec(compile(open(fpath).read(), fpath, 'exec'), mod.__dict__)
         else:
             raise ValueError("Unknown language: {}".format(lang))
         sys.modules[module_name] = mod
