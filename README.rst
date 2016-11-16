@@ -44,7 +44,7 @@ There's also a variety of tweaks to existing features, from how R objects are re
 
 I've published Daylight more for the sake of making my research reproducible than because I expect other people to use it for their own work. For this reason, no hooks or Custom variables are provided. If you want to change anything, you'll have to edit the code directly. That said, I encourage you to get in contact with me if you're thinking of doing something with Daylight. Then, perhaps, we can make something more generally useful out of it together.
 
-The inclusion of special features for both R and Hy is a reflection of how I used R extensively for data analysis from 2011 to 2014 and have switched over to Hy for new projects starting in 2015. Currently, an ugly consequence of this switch is that Daylight uses both Python 2 (for Hy support) and Python 3 (for `Citematic`_ integration and pre- and post-processors). Clearly I'd be better off switching to one or the other, but I'm not sure which at this point.
+The inclusion of special features for both R and Hy is a reflection of how I used R extensively for data analysis from 2011 to 2014 and have switched over to Hy for new projects starting in 2015.
 
 Installation and use
 ============================================================
@@ -55,11 +55,11 @@ Oh boy, I hope you packed a lunch.
 
 - You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R itself and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
 
-  - GNU Emacs 24.3.1
+  - GNU Emacs 24.5.1
   - Org 8.2.10
-  - Hy 0.10.1
+  - Hy 2242097b6b73d9cf10b9db0c3c514721f8b2d8df
   - R 3.0.2
-  - ESS 13.09
+  - ESS 16.04
 
 - Make sure Python 3 can find the ``daylight`` package in Daylight's ``python3-lib`` directory, and make sure Hy can find the ``daylight_hy`` package in Daylight's ``hy-lib`` directory. Also get `Kodhy`_ and make sure Hy can find the ``kodhy`` package.
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/.daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
