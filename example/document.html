@@ -419,8 +419,8 @@ goodbye
 <div class="org-src-container">
 
 <pre class="src src-hy">(defclass Phooey [] [
-  [__repr__ (fn [self]
-    "(Phooey)")]])
+  __repr__ (fn [self]
+    "(Phooey)")])
 (Phooey)
 </pre>
 </div>
@@ -1026,8 +1026,8 @@ x
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(valcounts (pd.Series (qw
-  apple banana apple cantaloupe banana banana banana)))
+<pre class="src src-hy">(.sort-index (valcounts (pd.Series (qw
+  apple banana apple cantaloupe banana banana banana))))
 </pre>
 </div>
 
@@ -1065,7 +1065,7 @@ x
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(pd.Series (kwc pd.to-datetime :format "%Y%m%d"
+<pre class="src src-hy">(pd.Series (pd.to-datetime :format "%Y%m%d"
   (qw 20110101 20120304 20151231 20200101)))
 </pre>
 </div>
@@ -1134,7 +1134,7 @@ x
 
 <pre class="src src-hy">(import datetime)
 (pd.Series [
-  (kwc pd.to-datetime :format "%Y%m%d%H%M%S" 20110101123456)
+  (pd.to-datetime :format "%Y%m%d%H%M%S" 20110101123456)
   (datetime.date 1977 2 15)
   (datetime.datetime 2014 5 6 7 18 19)
   (datetime.datetime 2014 5 6)])
@@ -1774,7 +1774,7 @@ This DataFrame has a numeric column index.
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(kwc pd.DataFrame (amap (, it (* it 2)) (range 8))
+<pre class="src src-hy">(pd.DataFrame (amap (, it (* it 2)) (range 8))
   :index (pd.MultiIndex.from-product
     [(qw A B C D) (qw black white)]))
 </pre>
@@ -1861,7 +1861,7 @@ This DataFrame has a numeric column index.
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(kwc pd.Series (range 8)
+<pre class="src src-hy">(pd.Series (range 8)
   :index (pd.MultiIndex.from-product
     [(qw A B C D) (qw black white)]))
 </pre>
@@ -1937,8 +1937,8 @@ This DataFrame has a numeric column index.
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(kwc pd.DataFrame (amap (, it (* it 2)) (range 8))
-  :index (kwc pd.MultiIndex.from-product
+<pre class="src src-hy">(pd.DataFrame (amap (, it (* it 2)) (range 8))
+  :index (pd.MultiIndex.from-product
     :names (qw ione itwo)
     [(qw A B C D) (qw black white)]))
 </pre>
@@ -2025,8 +2025,8 @@ This DataFrame has a numeric column index.
 
 <div class="org-src-container">
 
-<pre class="src src-hy">(kwc pd.Series (range 8)
-  :index (kwc pd.MultiIndex.from-product
+<pre class="src src-hy">(pd.Series (range 8)
+  :index (pd.MultiIndex.from-product
     :names (qw ione itwo)
     [(qw A B C D) (qw black white)]))
 </pre>

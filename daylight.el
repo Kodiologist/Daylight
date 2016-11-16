@@ -439,8 +439,8 @@ This function is called by `org-babel-execute-src-block'."
       tmp-file
       (format
         (if (eq result-type 'matplotlib)
-          "(with [[o (open %S \"w\")]] (.write o \"done\\n\"))"
-          "(do (import daylight-hy.babel codecs) (with [[o (codecs.open %S \"w\" \"UTF-8\")]] (.write o (daylight-hy.babel.to-el (get _ 0)))))")
+          "(with [o (open %S \"w\")] (.write o \"done\\n\"))"
+          "(do (import daylight-hy.babel codecs) (with [o (codecs.open %S \"w\" \"UTF-8\")] (.write o (daylight-hy.babel.to-el (get _ 0)))))")
         (org-babel-process-file-name tmp-file t)))
     (if (eq result-type 'matplotlib)
       nil

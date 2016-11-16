@@ -1,11 +1,11 @@
-(require kodhy.macros)
+(require [kodhy.macros [lc amap fmap λ getl]])
 
 (import
   [hy [HySymbol]]
   [datetime [datetime date]]
   [numpy :as np]
   [pandas :as pd]
-  [kodhy.util [double-quote]])
+  [kodhy.util [T F double-quote]])
 
 (defn to-el [x]
   "Returns a string for digestion by Daylight in org-babel-execute:hy."
@@ -36,7 +36,7 @@
         (el-table (lc [col-i (range (len head))]
           [:no-head (amap (get it col-i) x)]))
         (el-row x)))]
-    [True
+    [T
       (el-table [["Python repr" [(repr x)]]])]))
 
 (defn pandas-index-as-cols [ix]
@@ -59,7 +59,8 @@
       int
       ; Otherwise, give all the numbers the same number of
       ; decimal digits as the one with the most.
-      (let [[n (max (map len decimals))]]
+      (do
+        (setv n (max (map len decimals)))
         (λ (.--format-- (float it) (.format ".{}f" n))))))
     (for [[row-i x] (enumerate col)]
       (when (regnum? x)
@@ -79,9 +80,9 @@
   (cond
     [(pd.isnull x)
       "\"\""]
-    [(or (is x True) (and (instance? np.bool_ x) x))
+    [(or (is x T) (and (instance? np.bool_ x) x))
       "\"[[cls:boolean-true][True]]\""]
-    [(or (is x False) (and (instance? np.bool_ x) (not x)))
+    [(or (is x F) (and (instance? np.bool_ x) (not x)))
       "\"[[cls:boolean-false][False]]\""]
     [(instance? datetime x)
       (double-quote (str (cond
@@ -89,17 +90,17 @@
           (.date x)]
         [(instance? pd.tslib.Timestamp x)
           (.to-datetime x)]
-        [True
+        [T
           x])))]
     [(instance? date x)
       (double-quote (str x))]
     [(numeric? x)
       (str x)]
     [(instance? HySymbol x)
-      (unicode x)]
+      (str x)]
     [(string? x)
       (double-quote x)]
-    [True
+    [T
       (double-quote (repr x))]))
 
 (defn regnum? [x]
@@ -112,6 +113,6 @@
 
 (defn matplotlib-prelude []
   (import [matplotlib.pyplot :as plt])
-  (kwc plt.tick-params :!right :!top)
-  (.set-visible (get (. (plt.gca) spines) "top") False)
-  (.set-visible (get (. (plt.gca) spines) "right") False))
+  (plt.tick-params :right F :top F)
+  (.set-visible (get (. (plt.gca) spines) "top") F)
+  (.set-visible (get (. (plt.gca) spines) "right") F))
