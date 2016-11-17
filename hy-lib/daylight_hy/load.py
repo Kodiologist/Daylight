@@ -74,5 +74,5 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
        if not k.startswith('_'):
            globals_d[k] = getattr(m, k)
     # Import macros, too.
-    hy.macros.require(mname, context_name)
+    hy.macros.require(mname, context_name, all_macros = True)
     return returnval
