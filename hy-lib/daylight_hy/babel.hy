@@ -1,4 +1,4 @@
-(require [kodhy.macros [lc amap fmap λ getl]])
+(require [kodhy.macros [lc amap rmap fmap λ getl]])
 
 (import
   [hy [HySymbol]]
@@ -24,11 +24,11 @@
     [(instance? pd.Series x)
       (el-table (+
         (pandas-index-as-cols x.index)
-        [[(or x.name "value") (list x)]]))]
+        [[(or x.name "value") (.tolist x)]]))]
     [(instance? pd.DataFrame x)
       (el-table (+
         (pandas-index-as-cols x.index)
-        (amap [it (list (getl x : it))] x)))]
+        (rmap [[vname v] (.iteritems x)] [vname (.tolist v)])))]
     [(iterable? x) (do
       (setv x (list x))
       (setv head (get x 0))

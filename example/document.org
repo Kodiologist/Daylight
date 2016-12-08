@@ -530,6 +530,20 @@ This DataFrame has a numeric column index.
 | D    | black |     6 |
 | D    | white |     7 |
 
+This DataFrame has duplicate column names.
+
+#+begin_src hy
+(pd.DataFrame :columns (qw a b a b a b) [
+  [1 2 3  4  5  6]
+  [7 8 9 10 11 12]])
+#+end_src
+
+#+RESULTS:
+| I | a | b | a |  b |  a |  b |
+|---+---+---+---+----+----+----|
+| 0 | 1 | 2 | 3 |  4 |  5 |  6 |
+| 1 | 7 | 8 | 9 | 10 | 11 | 12 |
+
 #+begin_src hy :file g/foo.png
 (plt.scatter [1 2 3] [4 5 -9])
 #+end_src
