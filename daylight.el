@@ -481,6 +481,13 @@ Currently, only a single session is supported."
       (hy)))
   :default)
 
+(defadvice orgtbl-to-orgtbl (around FOO activate)
+  ; This adds :raw t to the arguments of `orgtbl-to-generic'
+  ; because otherwise, links inside cells will get thrown out.
+  (if (daylight-buffer-is-daylit)
+    (setq ad-return-value (orgtbl-to-generic table (org-combine-plists params (list :backend 'org :raw t))))
+    ad-do-it))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; * R code blocks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

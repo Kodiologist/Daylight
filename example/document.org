@@ -203,9 +203,7 @@ The following two results, for plain strings, should perhaps be changed, but I h
 #+end_src
 
 #+RESULTS:
-| 1 | 2 | 3.14 | I like π | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |
-
-The last cell is missing due to a bug in Org 8.2 which should be fixed for 8.3.
+| 1 | 2 | 3.14 | I like π | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |   |
 
 In the below, notice the trailing 0s.
 
