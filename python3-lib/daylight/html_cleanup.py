@@ -166,7 +166,7 @@ if apa:
        r'\1{}</h2>'.format(title_html),
        text, count = 1)
 else:
-    # Put the title in a <header> and add the subtitle.
+    # Add the subtitle.
     authors_html = escape(english_list(
         [undo_name_inversion(a) for a in info['author'].split('; ')]))
     if not slideshow and info['daylight-include-meta']:
@@ -183,8 +183,8 @@ else:
                 if show_m else '')
     else:
         subtitle = ''
-    text = re.sub('<h1 class="title">(.+?)</h1>',
-        r'<header><h1 class="title">\1</h1>' + subtitle + '</header>',
+    text = re.sub('(<h1 class="title">.+?</h1>)',
+        r'\1' + subtitle,
         text)
 
 # Use names instead of numbers for section IDs.
@@ -210,23 +210,28 @@ def f(m):
        name = basename
    sections[ident] = name
    return '<h{} id="{}">{}</h{}>'.format(hn, name, title, hn)
-text = re.sub(r'<h(\d) id="(sec-[^"]+)">(.+?)</h\1>',
+text = re.sub(r'<h(\d) id="(org[^"]+)">(.+?)</h\1>',
     f, text, flags = re.DOTALL)
-text = re.sub(r'<a href="#(sec-[^"]+)"',
-    lambda m: '<a href="#{}"'.format(sections[m.group(1)]),
+text = re.sub(r'<a href="#(org[^"]+)"',
+    lambda m: '<a href="#{}"'.format(sections.get(m.group(1), m.group(1))),
     text)
 
-# Remove unnecessary numeric IDs, which create noise in diffs
+# Remove unnecessary hexadecimal IDs, which create noise in diffs
 # of output documents.
-text = re.sub(r'<a id="sec-\d+"></a>', '', text)
 text = re.sub(r'<div id="outline-container-[^"]+" (class="outline-[-0-9]+")>',
     r'<div \1>', text)
 text = re.sub(r'<div (class="outline-text-[-0-9]+") id="text-[^"]+">',
     r'<div \1>', text)
+text = re.sub(r'<a id="[^"]+"></a>References</h2>',
+  'References</h2>', text, count = 1)
 # But add an ID for the bibliography content.
 text = re.sub(r'( id="bibliography".+?class="outline-text-\d+")',
     r'\1 id="text-bibliography"',
     text, count = 1, flags = re.DOTALL)
+
+# Change table alignment classes to their old names.
+text = re.sub(r'(<(?:td|th|col) [^>]*class=")org-(left|right)"',
+    r'\1\2"', text)
 
 if '<div id="footnotes">' in text:
     # Get rid of the redundant "Notes" header.
@@ -247,7 +252,7 @@ if '<div id="footnotes">' in text:
             footnotes[fn_n] = dict(seen = 1, label = label)
         return '{}<a id="{}"{} href="#fn--{}">'.format(
             preface, escape(r_id), rest, escape(label))
-    text = re.sub(r'<footenotelabel fn:([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+">',
+    text = re.sub(r'<footenotelabel ([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+">',
         f, text)
     text = re.sub(r'<a id="fn.(\d+)"([^>]+?) href="[^"]+">',
         lambda m: '<a id="fn--{0}"{1} href="#fnr--{0}">'.format(

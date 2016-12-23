@@ -53,13 +53,13 @@ Installation and use
 
 Oh boy, I hope you packed a lunch.
 
-- You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R itself and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
+- You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
 
-  - GNU Emacs 24.5.1
-  - Org 8.2.10
-  - Hy 2242097b6b73d9cf10b9db0c3c514721f8b2d8df
-  - R 3.0.2
-  - ESS 16.04
+  - GNU Emacs 25.1.2
+  - Org 9.0.2
+  - Hy ca6fd66606c1bf4c6a2a415cf469b1d4a36ea715
+  - R 3.3.1
+  - ESS 16.10-1
 
 - Make sure Python 3 can find the ``daylight`` package in Daylight's ``python3-lib`` directory, and make sure Hy can find the ``daylight_hy`` package in Daylight's ``hy-lib`` directory. Also get `Kodhy`_ and make sure Hy can find the ``kodhy`` package.
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/.daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
