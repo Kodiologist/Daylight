@@ -485,7 +485,9 @@ Currently, only a single session is supported."
   ; This adds :raw t to the arguments of `orgtbl-to-generic'
   ; because otherwise, links inside cells will get thrown out.
   (if (daylight-buffer-is-daylit)
-    (setq ad-return-value (orgtbl-to-generic table (org-combine-plists params (list :backend 'org :raw t))))
+    (progn
+      (require 'ox-org)
+      (setq ad-return-value (orgtbl-to-generic table (org-combine-plists params (list :backend 'org :raw t)))))
     ad-do-it))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
