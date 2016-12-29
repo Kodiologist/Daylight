@@ -537,17 +537,17 @@ Currently, only a single session is supported."
 ;      (cdr (assoc :auto params)))
 ;    (setcar (cdr (assoc :result-params params)) "silent")))
 
-;(defadvice org-babel-R-graphical-output-file (before infer-graphics-results activate)
-;"Assume ':results graphics' when ':file' is given and has
-;the file extension of an image."
-;  (when (and
-;      daylight-ess
-;      (assq :file params)
-;      (string-match ".+\\.\\([^.]+\\)" (cdr (assoc :file params)))
-;      (assq
-;        (intern (concat ":" (match-string 1 (cdr (assoc :file params)))))
-;        org-babel-R-graphics-devices))
-;    (push "graphics" (cdr (assq :result-params params)))))
+(defadvice org-babel-execute:R (before infer-graphics-results activate)
+"Assume ':results graphics' when ':file' is given and has
+the file extension of an image."
+  (when (and
+      daylight-ess
+      (assq :file params)
+      (string-match ".+\\.\\([^.]+\\)" (cdr (assoc :file params)))
+      (assq
+        (intern (concat ":" (match-string 1 (cdr (assoc :file params)))))
+        org-babel-R-graphics-devices))
+    (push "graphics" (cdr (assq :result-params params)))))
 
 ;(defadvice org-babel-expand-body:R (before print-graphics activate)
 ;"Wrap code in a 'print' when graphics are requested. This is

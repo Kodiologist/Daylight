@@ -56,7 +56,7 @@ Oh boy, I hope you packed a lunch.
 - You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
 
   - GNU Emacs 25.1.2
-  - Org 9.0.2
+  - Org ed0c8cb995329c05058739b98d68e879b1db7e95
   - Hy ca6fd66606c1bf4c6a2a415cf469b1d4a36ea715
   - R 3.3.1
   - ESS 16.10-1

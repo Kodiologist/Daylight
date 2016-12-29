@@ -28,7 +28,7 @@ Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http:
 # Here is an "inline" comment. It doesn't separate paragraphs.
 The kinds of emphasis: *stars*, /slashes/, _underscores_, =equals signs=, ~tildes~, +strikethrough+.
 
-Here's [[m:i][italics]] implemented with ~m:i~. The value of this alternative notation is that it can be used in contexts real emphasis markup can't—[[m:i][like this]]—and also like \slash{}home\slash{}[[m:i][username]]/this. Here's [[m:code][computer-code markup]] implemented with ~m:code~. Here we try using an unbracketed link inside an ~m:i~ link: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
+Here's [[m:i][italics]] implemented with ~m:i~. The value of this alternative notation is that it can be used in contexts real emphasis markup can't—[[m:i][like this]]—and also like \slash{}home\slash{}[[m:i][username]]/this. Here's [[m:code][computer-code markup]] implemented with ~m:code~.
 
 Here we will test the ~wp~ link type:
 - [[wp:Gilbert & Sullivan]]
