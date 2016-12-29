@@ -2,7 +2,7 @@
   :alt: Princess Celestia raising the sun
   :align: center
 
-Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 (because citeproc-py_ is written in Python 3) and a little bit of `Hy`_ and R for helping with Hy and R code blocks.
+Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 and a little bit of `Hy`_ and R for helping with Hy and R code blocks.
 
 .. __: http://arfer.net/projects
 .. __: http://arfer.net/w
@@ -23,13 +23,9 @@ The features that Daylight provides over plain Org include (see ``example/docume
 
 - New features for R
 
-  - Encapsulation of evaluated R code (so you don't forget to include a dependency, or get surprised by interactions between objects that belong to different projects, or get tripped up by your own .Rprofile)
   - R code blocks evaluated with ``:results silent`` will not print huge assigned objects to the echo area
   - Color-coded ``TRUE`` and ``FALSE``
-  - Streamlined production of graphics from R code blocks
-
-    - ``:results graphics`` is implied by ``:file``
-    - No outer ``print(...)`` is needed for ``ggplot2``
+  - ``:results graphics`` is implied by ``:file``
 
 - Linkable labels to figures, generated based on the file name
 - Custom postprocessors written in Python
@@ -70,9 +66,6 @@ Oh boy, I hope you packed a lunch.
 
       (require 'daylight) ; And make sure Emacs can find daylight.el.
       (setq daylight-ess t)
-      (setq org-export-babel-evaluate nil)
-        ; Probably not required, but strongly recommend. If
-        ; `org-export-babel-evaluate' is on, exporting can take eons.
 
   Also, add R to ``org-babel-load-languages``.
 
