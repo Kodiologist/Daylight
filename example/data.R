@@ -1,1 +1,3 @@
-mov = {set.seed(1); samprows(movies, 1000)}
+library(ggplot2movies)
+
+mov = {set.seed(1); as.data.frame(samprows(movies, 1000))}

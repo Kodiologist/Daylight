@@ -28,7 +28,7 @@ Here's a *paragraph* with some /emphasized/ *snippets ~of~ text*. How do [[http:
 # Here is an "inline" comment. It doesn't separate paragraphs.
 The kinds of emphasis: *stars*, /slashes/, _underscores_, =equals signs=, ~tildes~, +strikethrough+.
 
-Here's [[m:i][italics]] implemented with ~m:i~. The value of this alternative notation is that it can be used in contexts real emphasis markup can't—[[m:i][like this]]—and also like /home/[[m:i][username]]/this. Here's [[m:code][computer-code markup]] implemented with ~m:code~. Here we try using an unbracketed link inside an ~m:i~ link: [[m:i][http://google.com]]. (Unfortunately, Org can't handle nested double brackets.)
+Here's [[m:i][italics]] implemented with ~m:i~. The value of this alternative notation is that it can be used in contexts real emphasis markup can't—[[m:i][like this]]—and also like \slash{}home\slash{}[[m:i][username]]/this. Here's [[m:code][computer-code markup]] implemented with ~m:code~.
 
 Here we will test the ~wp~ link type:
 - [[wp:Gilbert & Sullivan]]
@@ -203,9 +203,7 @@ The following two results, for plain strings, should perhaps be changed, but I h
 #+end_src
 
 #+RESULTS:
-| 1 | 2 | 3.14 | I like π | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |
-
-The last cell is missing due to a bug in Org 8.2 which should be fixed for 8.3.
+| 1 | 2 | 3.14 | I like π | 5 |   | [[cls:boolean-true][True]] |   | [[cls:boolean-false][False]] |   |
 
 In the below, notice the trailing 0s.
 
@@ -690,13 +688,13 @@ mov[1:5, 1:5]
 #+end_src
 
 #+RESULTS:
-|       | title                                   | year | length | budget | rating |
-|-------+-----------------------------------------+------+--------+--------+--------|
-| 15609 | Ei ist eine geschissene Gottesgabe, Das | 1993 |     90 |        |    8.4 |
-| 21877 | Hamos sto aigaio                        | 1985 |    109 |        |    5.5 |
-| 33676 | Mind Benders, The                       | 1963 |     99 |        |    6.4 |
-| 53389 | Trop (peu) d'amour                      | 1998 |    119 |        |    4.5 |
-| 11856 | Crystania no densetsu                   | 1995 |     85 |        |    6.1 |
+|   | title                                   | year | length | budget | rating |
+|---+-----------------------------------------+------+--------+--------+--------|
+| 1 | Ei ist eine geschissene Gottesgabe, Das | 1993 |     90 |        |    8.4 |
+| 2 | Hamos sto aigaio                        | 1985 |    109 |        |    5.5 |
+| 3 | Mind Benders, The                       | 1963 |     99 |        |    6.4 |
+| 4 | Trop (peu) d'amour                      | 1998 |    119 |        |    4.5 |
+| 5 | Crystania no densetsu                   | 1995 |     85 |        |    6.1 |
 
 Observe how TRUE and FALSE are color-coded in the HTML output:
 
@@ -705,22 +703,13 @@ transform(mov[1:5, 1:5], year = year > 1990)
 #+end_src
 
 #+RESULTS:
-|       | title                                   | year  | length | budget | rating |
-|-------+-----------------------------------------+-------+--------+--------+--------|
-| 15609 | Ei ist eine geschissene Gottesgabe, Das | [[cls:boolean-true][TRUE]]  |     90 |        |    8.4 |
-| 21877 | Hamos sto aigaio                        | [[cls:boolean-false][FALSE]] |    109 |        |    5.5 |
-| 33676 | Mind Benders, The                       | [[cls:boolean-false][FALSE]] |     99 |        |    6.4 |
-| 53389 | Trop (peu) d'amour                      | [[cls:boolean-true][TRUE]]  |    119 |        |    4.5 |
-| 11856 | Crystania no densetsu                   | [[cls:boolean-true][TRUE]]  |     85 |        |    6.1 |
-
-#+begin_src R
-paste0(format(environment(function () {})), "\n")
-#+end_src
-
-#+RESULTS:
-|   |                          |
-|---+--------------------------|
-|   | <environment: 0x3e0b848> |
+|   | title                                   | year  | length | budget | rating |
+|---+-----------------------------------------+-------+--------+--------+--------|
+| 1 | Ei ist eine geschissene Gottesgabe, Das | [[cls:boolean-true][TRUE]]  |     90 |        |    8.4 |
+| 2 | Hamos sto aigaio                        | [[cls:boolean-false][FALSE]] |    109 |        |    5.5 |
+| 3 | Mind Benders, The                       | [[cls:boolean-false][FALSE]] |     99 |        |    6.4 |
+| 4 | Trop (peu) d'amour                      | [[cls:boolean-true][TRUE]]  |    119 |        |    4.5 |
+| 5 | Crystania no densetsu                   | [[cls:boolean-true][TRUE]]  |     85 |        |    6.1 |
 
 Evaluating the following does *not* print ~mov~ in the echo area.
 

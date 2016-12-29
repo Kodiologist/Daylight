@@ -2,7 +2,7 @@
   :alt: Princess Celestia raising the sun
   :align: center
 
-Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 (because citeproc-py_ is written in Python 3) and a little bit of `Hy`_ and R for helping with Hy and R code blocks.
+Daylight is the software package I use to produce `research notebooks, research papers, presentations`__, and `essays`__ in HTML5 and PDF. I use it for pretty much all my documents, but it's especially suited for `open-notebook science`_, hence its name: it casts research into the harsh glare of public scrutiny. It's implemented as an export backend for `Org mode`_. The Emacs Lisp code is supplemented with pre- and post-processors written in Python 3 and a little bit of `Hy`_ and R for helping with Hy and R code blocks.
 
 .. __: http://arfer.net/projects
 .. __: http://arfer.net/w
@@ -23,13 +23,9 @@ The features that Daylight provides over plain Org include (see ``example/docume
 
 - New features for R
 
-  - Encapsulation of evaluated R code (so you don't forget to include a dependency, or get surprised by interactions between objects that belong to different projects, or get tripped up by your own .Rprofile)
   - R code blocks evaluated with ``:results silent`` will not print huge assigned objects to the echo area
   - Color-coded ``TRUE`` and ``FALSE``
-  - Streamlined production of graphics from R code blocks
-
-    - ``:results graphics`` is implied by ``:file``
-    - No outer ``print(...)`` is needed for ``ggplot2``
+  - ``:results graphics`` is implied by ``:file``
 
 - Linkable labels to figures, generated based on the file name
 - Custom postprocessors written in Python
@@ -53,13 +49,13 @@ Installation and use
 
 Oh boy, I hope you packed a lunch.
 
-- You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R itself and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
+- You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
 
-  - GNU Emacs 24.5.1
-  - Org 8.2.10
-  - Hy 2242097b6b73d9cf10b9db0c3c514721f8b2d8df
-  - R 3.0.2
-  - ESS 16.04
+  - GNU Emacs 25.1.2
+  - Org ed0c8cb995329c05058739b98d68e879b1db7e95
+  - Hy ca6fd66606c1bf4c6a2a415cf469b1d4a36ea715
+  - R 3.3.1
+  - ESS 16.10-1
 
 - Make sure Python 3 can find the ``daylight`` package in Daylight's ``python3-lib`` directory, and make sure Hy can find the ``daylight_hy`` package in Daylight's ``hy-lib`` directory. Also get `Kodhy`_ and make sure Hy can find the ``kodhy`` package.
 - Download http://arfer.net/daylight/kodi-bibliography.yaml. Move it to ``$HOME/.daylight/bibliographies/arfer.net:daylight:kodi-bibliography.yaml``. (Daylight identifies bibliographies by URL, but I haven't implemented automatic retrieval of them.)
@@ -70,9 +66,6 @@ Oh boy, I hope you packed a lunch.
 
       (require 'daylight) ; And make sure Emacs can find daylight.el.
       (setq daylight-ess t)
-      (setq org-export-babel-evaluate nil)
-        ; Probably not required, but strongly recommend. If
-        ; `org-export-babel-evaluate' is on, exporting can take eons.
 
   Also, add R to ``org-babel-load-languages``.
 

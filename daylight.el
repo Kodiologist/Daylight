@@ -29,6 +29,7 @@
 
 (defun daylight-export-to-file (file &optional ext-plist)
   (let (
+        (exporting-daylight t)
         (org-html-text-markup-alist
         '((bold . "<em>%s</em>")
           (code . "<code>%s</code>")
@@ -36,6 +37,7 @@
           (strike-through . "(RESERVED: %s)")
           (underline . "<var>%s</var>")
           (verbatim . "(RESERVED: %s)")))
+        (org-html-viewport nil)
         (org-export-with-sub-superscripts '{})
         (org-html-inline-images t)
         (org-html-allow-name-attribute-in-anchors nil)
@@ -141,7 +143,7 @@ results block matching the file name (but without the file extension)."
 ; Prepend to each footnote reference some fake HTML with the
 ; footnote label, so daylight-html-cleanup can replace numeric
 ; footnote IDs with labels.
-  (if (org-export-derived-backend-p backend 'daylight)
+  (when (bound-and-true-p exporting-daylight)
     (let ((label (org-element-property :label footnote-reference)))
       (setq ad-return-value (concat
         "<footenotelabel " label ">" ad-return-value)))))
@@ -222,6 +224,18 @@ results block matching the file name (but without the file extension)."
           (if (string-match "\\`<i>" output)
             (error "Couldn't translate link: %s / %s" raw-link (or desc "[nil]"))
             output))))))
+
+(defadvice org-export-get-reference (around use-pretty-names activate)
+  (cond
+    ((not (bound-and-true-p exporting-daylight))
+      ad-do-it)
+    ((eq (org-element-type datum) 'target)
+      (setq ad-return-value (org-element-property :value datum)))
+    ((and (memq (org-element-type datum) '(table paragraph))
+        (org-element-property :name datum))
+      (setq ad-return-value (org-element-property :name datum)))
+    (t
+      ad-do-it)))
 
 (org-add-link-type "cls"
   'ignore
@@ -467,6 +481,15 @@ Currently, only a single session is supported."
       (hy)))
   :default)
 
+(defadvice orgtbl-to-orgtbl (around FOO activate)
+  ; This adds :raw t to the arguments of `orgtbl-to-generic'
+  ; because otherwise, links inside cells will get thrown out.
+  (if (daylight-buffer-is-daylit)
+    (progn
+      (require 'ox-org)
+      (setq ad-return-value (orgtbl-to-generic table (org-combine-plists params (list :backend 'org :raw t)))))
+    ad-do-it))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; * R code blocks
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -506,41 +529,7 @@ Currently, only a single session is supported."
     (ess-eval-linewise
       daylight-ess-initial-R t nil nil t)))
 
-(add-hook 'ess-tracebug-enter-hook (lambda ()
-  ; `ess-post-run-hook' runs too late.
-  (when daylight-ess
-    (ess-process-put 'source-file-function 'daylight-R-source-current-file))))
-
-(defun daylight-R-source-current-file (&optional filename)
-; This is derivative of ESS 13.05's `ess--tb-R-source-current-file'.
-; Its only purpose (compared to just using `ess--tb-R-source-current-file'
-; is to use 'ksource' instead of 'source'.
-  (ess-force-buffer-current "R process to use: ")
-  (let (
-      (proc (get-process ess-local-process-name))
-      (file (or filename buffer-file-name)))
-    (when (process-get proc 'developer)
-      (error "Daylight: ess-developer not supported"))
-    (unless file
-      (error "Daylight: ESS source buffers must have an associated file"))
-    (when (buffer-modified-p)
-      (save-buffer))
-    (save-selected-window
-      (ess-switch-to-ESS t))
-    (ess-send-string
-      (get-process ess-current-process-name)
-      (format "\ninvisible(get('Daylight.Kodi', 'ESSR')$ksource(file = %S))"
-        file))))
-
-(defadvice org-babel-execute:R (before auto-implies-silent activate)
-"Make ':auto t' imply ':results silent'."
-  (when (and
-      daylight-ess
-      (assoc :auto params)
-      (cdr (assoc :auto params)))
-    (setcar (cdr (assoc :result-params params)) "silent")))
-
-(defadvice org-babel-R-graphical-output-file (before infer-graphics-results activate)
+(defadvice org-babel-execute:R (before infer-graphics-results activate)
 "Assume ':results graphics' when ':file' is given and has
 the file extension of an image."
   (when (and
@@ -552,35 +541,20 @@ the file extension of an image."
         org-babel-R-graphics-devices))
     (push "graphics" (cdr (assq :result-params params)))))
 
-(defadvice org-babel-expand-body:R (before print-graphics activate)
-"Wrap code in a 'print' when graphics are requested. This is
-necessary for ggplot2, for which (unlike, e.g., graphics::plot)
-printing only happens automatically at top level."
-  (when (and daylight-ess (or graphics-file (org-babel-R-graphical-output-file params)))
-    (setq body (format "print({\n%s\n})" body))))
-
 (defadvice org-babel-R-evaluate-session (around use-kodi-eval activate)
-"Do three things:
-- Wrap the code in 'kodi.eval'. Besides the compartmentalizing
-  effect of 'ksource', 'kodi.eval' replaces invisible return values
-  with the empty string, to keep Babel from trying to print
-  assignments of huge objects.
+"Do two things:
 - Keep Babel from messing up numbers that were formatted at the
-  R level. Otherwise, Babel may, e.g., throw away some trailing 0s.
+  R level. Otherwise, Babel may, e.g., throw away some leading 0s.
 - For output, use org.write.table (from Kodi.R) instead of
   write.table."
   (if daylight-ess
-    (let (
-        (body (format "get('Daylight.Kodi', 'ESSR')$kodi.eval({\n%s\n}, %S)"
-          body
-          (directory-file-name (file-name-directory (buffer-file-name)))))
-        (org-babel-R-write-object-command
-          (replace-regexp-in-string
-            "\\bwrite\\.table("
-            "get('Daylight.Kodi', 'ESSR')$org.write.table("
-            org-babel-R-write-object-command
-            t t)))
-      (daylight-aliasing 'org-babel-number-p (lambda (string) nil)
+    (let ((org-babel-R-write-object-command
+        (replace-regexp-in-string
+          "\\bwrite\\.table("
+          "get('Daylight.Kodi', 'ESSR')$org.write.table("
+          org-babel-R-write-object-command
+          t t)))
+      (daylight-aliasing 'org-babel--string-to-number (lambda (string) nil)
         '(daylight-aliasing 'org-babel-string-read (lambda (cell) (org-babel-read cell t))
           'ad-do-it)))
     ad-do-it))
