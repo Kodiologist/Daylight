@@ -529,14 +529,6 @@ Currently, only a single session is supported."
     (ess-eval-linewise
       daylight-ess-initial-R t nil nil t)))
 
-;(defadvice org-babel-execute:R (before auto-implies-silent activate)
-;"Make ':auto t' imply ':results silent'."
-;  (when (and
-;      daylight-ess
-;      (assoc :auto params)
-;      (cdr (assoc :auto params)))
-;    (setcar (cdr (assoc :result-params params)) "silent")))
-
 (defadvice org-babel-execute:R (before infer-graphics-results activate)
 "Assume ':results graphics' when ':file' is given and has
 the file extension of an image."
@@ -548,13 +540,6 @@ the file extension of an image."
         (intern (concat ":" (match-string 1 (cdr (assoc :file params)))))
         org-babel-R-graphics-devices))
     (push "graphics" (cdr (assq :result-params params)))))
-
-;(defadvice org-babel-expand-body:R (before print-graphics activate)
-;"Wrap code in a 'print' when graphics are requested. This is
-;necessary for ggplot2, for which (unlike, e.g., graphics::plot)
-;printing only happens automatically at top level."
-;  (when (and daylight-ess (or graphics-file (org-babel-R-graphical-output-file params)))
-;    (setq body (format "print({\n%s\n})" body))))
 
 (defadvice org-babel-R-evaluate-session (around use-kodi-eval activate)
 "Do two things:
