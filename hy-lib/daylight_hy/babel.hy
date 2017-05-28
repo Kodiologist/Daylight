@@ -2,6 +2,7 @@
 
 (import
   [hy [HySymbol]]
+  [collections [OrderedDict]]
   [datetime [datetime date]]
   [numpy :as np]
   [pandas :as pd]
@@ -17,7 +18,7 @@
     [(numeric? x)
       (el-row [x])]
     [(instance? dict x) (do
-      (setv ks (sorted (.keys x)))
+      (setv ks (list ((if (instance? OrderedDict x) identity sorted) (.keys x))))
       (el-table [
         ["K" ks]
         ["value" (amap (get x it) ks)]]))]
