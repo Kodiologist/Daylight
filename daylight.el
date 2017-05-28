@@ -360,7 +360,7 @@ results block matching the file name (but without the file extension)."
 
 (defun hy ()
   (interactive)
-  (inferior-lisp "hy")
+  (inferior-lisp "hy --repl-output-fn=hy.contrib.hy-repr.hy-repr")
   (rename-buffer "*Hy*")
   (setq inferior-lisp-buffer "*Hy*")
   (when daylight-hy-init-file
