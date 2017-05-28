@@ -245,6 +245,8 @@ results block matching the file name (but without the file extension)."
         (format "<span class='%s'>%s</span>"
           (daylight-escape-html path)
           desc))
+      ((eq format 'latex)
+        (debug path desc))
       (t
         ""))))
 
@@ -262,8 +264,14 @@ results block matching the file name (but without the file extension)."
           ; from the failure mode of `org-html-link'.
       ((eq format 'odt)
         (org-odt-format-fontify (daylight-escape-html path) "Emphasis"))
+      ((eq format 'latex)
+        (cond
+          ((string= path "i")
+            (format "\\emph{%s}" desc))
+          ((string= path "code")
+            (format "\\texttt{%s}" desc))
       (t
-        ""))))
+        ""))))))
 
 (org-add-link-type "var"
   'ignore
@@ -273,6 +281,8 @@ results block matching the file name (but without the file extension)."
         (format "<var>%s</var>" (daylight-escape-html path)))
       ((eq format 'odt)
         (org-odt-format-fontify (daylight-escape-html path) "Emphasis"))
+      ((eq 'format "latex")
+        (format "\\emph{%s}" desc))
       (t
         ""))))
 
@@ -308,6 +318,8 @@ results block matching the file name (but without the file extension)."
           (daylight-escape-html path)))
       ((eq format 'odt)
         (daylight-escape-html (concat "doi:" path)))
+      ((eq format 'latex)
+        (format "\\texttt{doi:%s}" path))
       (t
         ""))))
 
