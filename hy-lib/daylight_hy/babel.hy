@@ -108,11 +108,3 @@
     (numeric? x)
     (not (np.isnan x))
     (not (instance? bool x))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defn matplotlib-prelude []
-  (import [matplotlib.pyplot :as plt])
-  (plt.tick-params :right F :top F)
-  (.set-visible (get (. (plt.gca) spines) "top") F)
-  (.set-visible (get (. (plt.gca) spines) "right") F))
