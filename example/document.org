@@ -158,6 +158,23 @@ saved-value
 #+RESULTS:
 | 1 |
 
+The following block exits prematurely with an exception, but ~still-saved~ is still saved.
+
+#+begin_src hy
+(setv still-saved 11)
+(floopy)
+#+end_src
+
+#+RESULTS:
+|   |
+
+#+begin_src hy
+still-saved
+#+end_src
+
+#+RESULTS:
+| 11 |
+
 The following two results, for plain strings, should perhaps be changed, but I haven't decided what I want yet.
 
 #+begin_src hy

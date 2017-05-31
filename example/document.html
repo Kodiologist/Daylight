@@ -361,6 +361,47 @@ saved-value
 </table>
 
 <p>
+The following block exits prematurely with an exception, but <code>still-saved</code> is still saved.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-hy">(setv still-saved 11)
+(floopy)
+</pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="left">
+</colgroup>
+<tbody>
+<tr>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-hy">still-saved
+</pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="right">
+</colgroup>
+<tbody>
+<tr>
+<td class="right">11</td>
+</tr>
+</tbody>
+</table>
+
+<p>
 The following two results, for plain strings, should perhaps be changed, but I haven't decided what I want yet.
 </p>
 
