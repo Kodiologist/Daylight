@@ -438,8 +438,7 @@ This function is called by `org-babel-execute-src-block'."
       (setq result-type 'matplotlib))
     (unless (or (eq result-type 'value) (eq result-type 'matplotlib))
       (error "Unimplemented :results type."))
-    (process-send-string (get-buffer-process session-buffer)
-      "(when True None (setv (get __builtins__ \"_\") [\"\"]))\n")
+    (process-send-string (get-buffer-process session-buffer) "[\"\"]\n")
       ; This should ensure that if the code block fails, '_' will
       ; be left as [""], so the RESULTS will be blank, alerting
       ; the user that something's gone wrong.
