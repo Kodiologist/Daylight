@@ -413,10 +413,10 @@ results block matching the file name (but without the file extension)."
 (defvar daylight-hy-image-file-output-fmt "
   (import [matplotlib.pyplot :as plt] daylight-hy.babel)
   (plt.ioff)
-  (apply plt.figure [\"daylight-file-output\"] {
-    \"figsize\" (, (/ %s 100) (/ %s 100))})
+  (plt.figure \"daylight-file-output\"
+    :figsize (, (/ %s 100) (/ %s 100)))
   %s
-  (apply plt.savefig [%S] {\"bbox_inches\" \"tight\" \"pad_inches\" .05})
+  (plt.savefig %S :bbox-inches \"tight\" :pad_inches .05)
   (plt.close \"daylight-file-output\")
   (plt.ion)")
 
