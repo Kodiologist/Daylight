@@ -72,7 +72,8 @@ bib_pickle_path = bib_path + '.pkl'
 
 if not exists(bib_pickle_path) or getmtime(bib_path) > getmtime(bib_pickle_path):
     import yaml
-    with open(bib_path) as f: old_database = yaml.load(f)
+    with open(bib_path) as f:
+        old_database = yaml.load(f, Loader=yaml.CLoader)
     database = {}
     for item in old_database:
         key = item['KEY'].lower()
