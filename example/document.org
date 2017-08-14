@@ -911,10 +911,9 @@ Pellentesque facilisis, tortor eget blandit mattis, libero nunc pulvinar dui, at
 
 * POSTPROC
 
-#+begin_src python
-POSTPROC = lambda text: re.sub(
-    'I like cheese puffs.',
-    'I like cheese puffs and tacos (this part was inserted by the POSTPROC block, via a regex substitution on the generated HTML).',
-    text,
-    count = 1)
+#+begin_src hy
+(re.sub :count 1
+  "I like cheese puffs."
+  "I like cheese puffs and tacos (this part was inserted by the POSTPROC block, via a regex substitution on the generated HTML)."
+  text)
 #+end_src

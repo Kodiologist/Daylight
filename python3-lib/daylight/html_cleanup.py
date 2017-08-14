@@ -351,8 +351,16 @@ if license_url and not apa:
 
 # Apply any post-processing block defined by the file.
 if info['postproc']:
-    exec(info['postproc'])
-    text = POSTPROC(text)
+    lang, _, body = info['postproc'].partition('\n')
+    if lang == 'python':
+        exec(body)
+        text = POSTPROC(text)
+    elif lang == 'hy':
+        import hy
+        POSTPROC = hy.eval(hy.read_str("(fn [text]\n" + body + "\n)"))
+        text = POSTPROC(text)
+    else:
+        raise ValueError("Unknown POSTPROC language " + repr(lang))
 
 # Done.
 print(text, end = '')

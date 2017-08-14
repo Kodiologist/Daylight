@@ -113,7 +113,7 @@ the paragraph into two)."
         (search-forward "\n* POSTPROC\n" nil t)
         (progn
           (backward-char)
-          (search-forward "\n#+BEGIN_SRC python\n" nil t))
+          (search-forward "\n#+BEGIN_SRC " nil t))
         (buffer-substring-no-properties (point) (progn
           (search-forward "\n#+END_SRC\n")
           (forward-line -1)
