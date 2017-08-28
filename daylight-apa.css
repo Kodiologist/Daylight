@@ -4,11 +4,16 @@
    {body
        {margin: 0;}}
 
-/* Make table captions as wide as the body text. */
+/* Make table captions and images as wide as the body text. */
 caption
    {width: 6.5in;} /* 8.5in - 2 * 1in */
 table
    {overflow: visible;}
+figure img
+   {max-width: 6.5in;}
+figure, figure p
+   {text-align: left;
+    margin: 0;}
 
 body
    {font-family: "Times New Roman";

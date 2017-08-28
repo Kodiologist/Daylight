@@ -25,6 +25,7 @@
     (:daylight-include-meta nil "daylight-include-meta" t)
     (:daylight-show-mdate nil "daylight-show-mdate" t)
     (:daylight-apa nil "daylight-apa" nil t)
+    (:daylight-apa-onefile nil "daylight-apa" nil t)
     (:daylight-slideshow nil "daylight-slideshow" nil t)))
 
 (defun daylight-export-to-file (file &optional ext-plist)

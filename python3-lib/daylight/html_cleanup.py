@@ -33,6 +33,7 @@ text = stdin.read()
 info = json.loads(argv[1])
 
 apa = info.get('daylight-apa') is True
+apa_onefile = info.get('daylight-apa-onefile') is True
 slideshow = info.get('daylight-slideshow') is True
 
 # Remove the class "mcolon", which is needed for intermediate
@@ -143,10 +144,11 @@ def f(m):
 text = re.sub(r'<a href="#(fig|tab)--([^"]+)">(\d+)</a>', f, text)
 
 # Add linkable labels to <figure>s with 'id's.
-text = re.sub(r'<figure\s+id="fig--([^"]+)">',
-    r'<figure id="fig--\1"><div class="figure-label">'
-        r'<a class="figure-label-text" href="#fig--\1">\1</a></div>',
-    text)
+if not apa:
+    text = re.sub(r'<figure\s+id="fig--([^"]+)">',
+        r'<figure id="fig--\1"><div class="figure-label">'
+            r'<a class="figure-label-text" href="#fig--\1">\1</a></div>',
+        text)
 
 # Take the ID from empty <a>s that begin paragraphs and put it on
 # the paragraph instead.
@@ -165,7 +167,8 @@ if apa:
    text = re.sub('(<h2 [^>]+>)Introduction</h2>',
        r'\1{}</h2>'.format(title_html),
        text, count = 1)
-else:
+
+if not apa or apa_onefile:
     # Add the subtitle.
     authors_html = escape(english_list(
         [undo_name_inversion(a) for a in info['author'].split('; ')]))
@@ -183,9 +186,14 @@ else:
                 if show_m else '')
     else:
         subtitle = ''
-    text = re.sub('(<h1 class="title">.+?</h1>)',
-        r'\1' + subtitle,
-        text)
+    if apa_onefile:
+        text = re.sub('(<h2 id="abstract-header">)',
+            '<h1>' + title_html + '</h1>' + subtitle + r'\1',
+            text)
+    else:
+        text = re.sub('(<h1 class="title">.+?</h1>)',
+            r'\1' + subtitle,
+            text)
 
 # Use names instead of numbers for section IDs.
 sections = {}
@@ -280,15 +288,22 @@ if apa:
    if tables:
        text = text.replace('</body>', '<h2 id="tables-header">Tables</h2>' +
            ''.join(tables) + '</body>')
-   # Remove figures, but move the figure captions to the end.
-   figcaptions = []
+   # Move the figure captions to the end. In apa_onefile mode, the
+   # figures go there, too. Otherwise, the figures are removed.
+   figs = []
    def f(m):
-       figcaptions.extend(re.findall('<figcaption>(.+?)</figcaption>', m.group(0), flags = re.DOTALL))
+       if apa_onefile:
+           figs.append(m.group(0))
+       else:
+           figs.extend(re.findall('<figcaption>(.+?)</figcaption>',
+               m.group(0), flags = re.DOTALL))
        return ''
    text = re.sub(r'<figure.+?</figure>', f, text, flags = re.DOTALL)
-   if figcaptions:
-       text = text.replace('</body>', '<h2 id="figure-captions-header">Figure Captions</h2>' +
-           ''.join('\n\n<p class="moved-figcaption">' + s for s in figcaptions) + '</body>')
+   if figs: text = text.replace('</body>',
+       '<h2 id="figure-captions-header">{}</h2>{}</body>'.format(
+           'Figures' if apa_onefile else 'Figure Captions',
+           ''.join('\n\n' + ('' if apa_onefile else '<p class="moved-figcaption">') + s
+               for s in figs)))
 
 # Move the table of contents to just before the first headline.
 # (Or, in APA or slideshow mode, just delete it.)
