@@ -106,6 +106,10 @@ if info.get('daylight-citation-meta'):
 # Remove '<meta name="author" …'.
 text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, 1)
 
+if apa:
+    # Add a class to the body.
+    text = re.sub('<body>', '<body class="apa">', text, 1)
+
 # Fix figure numbers, such that only figures with captions get
 # numbers, and the numbers are in the order that figures are
 # defined.
