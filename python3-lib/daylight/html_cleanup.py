@@ -310,7 +310,8 @@ if apa:
                for s in figs)))
 
 # Move the table of contents to just before the first headline.
-# (Or, in APA or slideshow mode, just delete it.)
+# (Or, in APA or slideshow mode, or if it only has boilerplate
+# sections, just delete it.)
 contents = ''
 def f(mo):
     global contents
@@ -324,7 +325,9 @@ text = re.sub(
         '.+?'
         r'</ul>\s*</div>\s*</nav>',
     f, text, 1, re.DOTALL)
-if contents and not (apa or slideshow):
+section_names = set(re.findall('([^<>]+)</a></li>', contents))
+if (contents and not (apa or slideshow) and
+       not (section_names <= {'Notes', 'References'})):
    text = re.sub('<div class="outline-2">',
        lambda mo: contents + mo.group(0),
        text, 1)
