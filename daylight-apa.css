@@ -13,6 +13,7 @@ figure img
    {max-width: 6.5in;}
 figure, figure p
    {text-align: left;
+    text-indent: 0;
     margin: 0;}
 
 body
@@ -57,7 +58,8 @@ p, ul, ol
 ul, ol
    {margin-left: 1em;}
 p, li, h1, h2, h3, h4, h5, h6
-   {line-height: 200%;}
+   {line-height: 200%;
+    margin: 0;}
 
 a:link, a:visited
    {color: black !important;
@@ -76,6 +78,8 @@ blockquote > p:first-child
     margin-top: 8em;}
 #bibliography, .footnotes, #tables-header, #figure-captions-header
    {font-weight: normal;}
+#text-bibliography > p
+   {margin-bottom: 0;}
 /*#footnotes .footnum
    {vertical-align: baseline;
     font-size: 100%;}
