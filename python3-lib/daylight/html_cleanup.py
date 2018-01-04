@@ -148,7 +148,7 @@ def f(m):
 text = re.sub(r'<a href="#(fig|tab)--([^"]+)">(\d+)</a>', f, text)
 
 # Add linkable labels to <figure>s with 'id's.
-if not apa:
+if not (apa or slideshow):
     text = re.sub(r'<figure\s+id="fig--([^"]+)">',
         r'<figure id="fig--\1"><div class="figure-label">'
             r'<a class="figure-label-text" href="#fig--\1">\1</a></div>',
