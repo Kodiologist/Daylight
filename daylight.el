@@ -153,6 +153,8 @@ results block matching the file name (but without the file extension)."
 (defvar daylight-apa-css-href "https://arfer.net/daylight-apa.css")
 (defvar daylight-slideshow-css-href "https://arfer.net/daylight-slideshow.css")
 
+(defvar ext-plist nil)
+
 (defadvice org-html-template (before add-to-html-head activate)
   (when (daylight-buffer-is-daylit)
     (plist-put info :html-head (concat
