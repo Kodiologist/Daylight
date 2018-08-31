@@ -5,7 +5,7 @@ import os.path
 import re
 from itertools import count
 from datetime import datetime
-from cgi import escape
+from html import escape
 import json
 from daylight.mathml_worker import to_mathml
 

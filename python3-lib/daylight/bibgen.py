@@ -4,7 +4,7 @@ from sys import argv, stdin
 from os import environ
 from os.path import join, getmtime, exists
 import re
-from cgi import escape
+from html import escape
 import pickle, json
 import quickbib, citematic_coins
 
