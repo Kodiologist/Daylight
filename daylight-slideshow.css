@@ -37,7 +37,8 @@ h1
     margin-top: 1in;}
 
 h2
-   {page-break-before: always;}
+   {page-break-before: always;
+    margin-bottom: 0;}
 
 .outline-text-2 > ul > li + li
    {margin-top: .5em;}
