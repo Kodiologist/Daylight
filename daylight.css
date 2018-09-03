@@ -13,14 +13,15 @@ h1
 #content > header > .subtitle
    {margin-top: 0;}
 
-.wabstract
+.wabstract, .wclosingnote
    {margin-left: 5%;
     margin-right: 5%;
-    margin-bottom: 2em;
     border: thin solid black;
     background-color: #eed;
     padding-left: 1em;
     padding-right: 1em;}
+.wabstract
+   {margin-bottom: 2em;}
 
 ul > li
    {list-style-type: disc;}
