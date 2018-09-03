@@ -1,4 +1,4 @@
-from hy.importer import import_file_to_ast, ast_compile, hy_eval
+from hy.importer import hy_parse, hy_compile, ast_compile, hy_eval
 from hy.compiler import HyTypeError
 from hy.lex import LexException
 import hy.macros
@@ -28,16 +28,19 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
         if code is None:
             preexisting = mname in sys.modules
             try:
+                with open(filename) as o:
+                    text = o.read()
                 if lang == "hy":
-                    _ast = import_file_to_ast(filename, mname)
+                    model = hy_parse(text)
                 m = (sys.modules[mname]
                     if preexisting
                     else imp.new_module(mname))
                 m.__file__ = filename
                 if lang == "hy":
+                    _ast = hy_compile(model, mname)
                     eval(ast_compile(_ast, filename, "exec"), m.__dict__)
                 elif lang == "python":
-                    exec(compile(open(filename).read(), filename, 'exec'), m.__dict__)
+                    exec(compile(text, filename, 'exec'), m.__dict__)
                 else:
                     raise ValueError("Unknown language: {}".format(lang))
                 sys.modules[mname] = m
