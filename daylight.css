@@ -108,10 +108,10 @@ figure
 .figure-label
    {margin-top: 1.5em;
     margin-bottom: 0em;}
-.figure-label + p
+.figure-label + img
    {margin-top: .5em;
     margin-bottom: 0;}
-p + figcaption
+img + figcaption
    {margin-top: .5em;}
 figcaption
    {text-align: left;}

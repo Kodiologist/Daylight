@@ -519,7 +519,7 @@ Currently, only a single session is supported."
       (:height . 500)
       (:exports . "both")))))
 
-(add-hook 'ess-R-post-run-hook 'daylight-ess-load-initial-R)
+(add-hook 'ess-r-post-run-hook 'daylight-ess-load-initial-R)
 (defconst daylight-ess-initial-R
 ; Load Kodi.R and set the ggplot2 theme to kodi_theme().
 "local(

@@ -118,7 +118,7 @@ def f(m):
     pre, idd = m.group(1), m.group(2)
     figures.append(idd)
     return '{}{}.'.format(pre, len(figures))
-text = re.sub(r'(<figure id="([^"]+)">\s*<p><img[^>]+>\s*</p>\s*<figcaption><span class="figure-number">Figure )\d+\.', f, text)
+text = re.sub(r'(<figure id="([^"]+)">\s*<img[^>]+>\s*<figcaption><span class="figure-number">Figure )\d+\.', f, text)
 
 # Change the text of table and figure references. For each
 # reference, if the table or figure has a caption, change the
