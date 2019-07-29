@@ -1,6 +1,5 @@
-from hy.importer import hy_parse, hy_compile, ast_compile, hy_eval
-from hy.compiler import HyTypeError
-from hy.lex import LexException
+from hy.compiler import HyTypeError, ast_compile, hy_compile, hy_eval
+from hy.lex import LexException, hy_parse
 import hy.macros
 import imp, sys, os.path
 
@@ -36,14 +35,14 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
                     if preexisting
                     else imp.new_module(mname))
                 m.__file__ = filename
+                sys.modules[mname] = m
                 if lang == "hy":
-                    _ast = hy_compile(model, mname)
+                    _ast = hy_compile(model, m)
                     eval(ast_compile(_ast, filename, "exec"), m.__dict__)
                 elif lang == "python":
                     exec(compile(text, filename, 'exec'), m.__dict__)
                 else:
                     raise ValueError("Unknown language: {}".format(lang))
-                sys.modules[mname] = m
             except (HyTypeError, LexException) as e:
                 if e.source is None:
                     with open(filename, 'rt') as fp:
@@ -62,7 +61,7 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
             if not m:
                 m = imp.new_module(mname)
                 sys.modules[mname] = m
-            returnval = hy_eval(code, m.__dict__, mname)
+            returnval = hy_eval(code, m.__dict__, m)
     finally:
         if m is not None:
             # Copy the module's names (except for names starting with "_")
@@ -71,5 +70,5 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
                if not k.startswith('_'):
                    globals_d[k] = getattr(m, k)
     # Import macros.
-    hy.macros.require(mname, context_name, "ALL")
+    hy.macros.require(m, sys.modules[context_name], "ALL")
     return returnval
