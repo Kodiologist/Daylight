@@ -436,9 +436,9 @@ goodbye
 </pre>
 
 <div class="org-src-container">
-<pre class="src src-hy">(defclass Phooey [] [
-  __repr__ (fn [self]
-    "(Phooey)")])
+<pre class="src src-hy">(defclass Phooey []
+  (defn __repr__ [self]
+    "(Phooey)"))
 (Phooey)
 </pre>
 </div>

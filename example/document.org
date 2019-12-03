@@ -193,9 +193,9 @@ The following two results, for plain strings, should perhaps be changed, but I h
 : goodbye
 
 #+begin_src hy
-(defclass Phooey [] [
-  __repr__ (fn [self]
-    "(Phooey)")])
+(defclass Phooey []
+  (defn __repr__ [self]
+    "(Phooey)"))
 (Phooey)
 #+end_src
 
