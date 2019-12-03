@@ -51,10 +51,10 @@ Oh boy, I hope you packed a lunch.
 
 - You'll need Emacs and Org. For Hy, you'll need Hy (hy-mode is nice but not really required). For R code, you'll need R and Emacs Speaks Statistics (ESS). Here's a known-good combination of versions:
 
-  - GNU Emacs 25.2.2
+  - GNU Emacs 26.4
   - Org 9.1.14
-  - hy 0.15.0+33.g662559de
-  - R 3.4.4
+  - hy 0.17.0+115.g39c150d
+  - R 3.6.1
   - ESS 18.10
 
 - Make sure Python 3 can find the ``daylight`` package in Daylight's ``python3-lib`` directory, and make sure Hy can find the ``daylight_hy`` package in Daylight's ``hy-lib`` directory. Also get `Kodhy`_ and make sure Hy can find the ``kodhy`` package.
