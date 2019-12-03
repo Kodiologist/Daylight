@@ -89,8 +89,8 @@
       (double-quote (str (cond
         [(= 0 x.hour x.minute x.second)
           (.date x)]
-        [(instance? pd.tslib.Timestamp x)
-          (.to-datetime x)]
+        [(instance? pd.Timestamp x)
+          (.to-pydatetime x)]
         [T
           x])))]
     [(instance? date x)
