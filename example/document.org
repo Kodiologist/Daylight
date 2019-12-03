@@ -705,13 +705,13 @@ mov[1:5, 1:5]
 #+end_src
 
 #+RESULTS:
-|   | title                                   | year | length | budget | rating |
-|---+-----------------------------------------+------+--------+--------+--------|
-| 1 | Ei ist eine geschissene Gottesgabe, Das | 1993 |     90 |        |    8.4 |
-| 2 | Hamos sto aigaio                        | 1985 |    109 |        |    5.5 |
-| 3 | Mind Benders, The                       | 1963 |     99 |        |    6.4 |
-| 4 | Trop (peu) d'amour                      | 1998 |    119 |        |    4.5 |
-| 5 | Crystania no densetsu                   | 1995 |     85 |        |    6.1 |
+|   | title                                           | year | length | budget | rating |
+|---+-------------------------------------------------+------+--------+--------+--------|
+| 1 | Hymens Parable, The                             | 2000 |     80 |        |    5.3 |
+| 2 | Riding Shotgun                                  | 1954 |     73 |        |    6.0 |
+| 3 | Bad Girls' Dormitory                            | 1984 |     95 |        |    2.6 |
+| 4 | Creature of the Sunny Side Up Trailer Park, The | 2004 |    105 |        |    4.5 |
+| 5 | In the Shadow of Hollywood                      | 2000 |    112 |        |    7.2 |
 
 Observe how TRUE and FALSE are color-coded in the HTML output:
 
@@ -720,13 +720,13 @@ transform(mov[1:5, 1:5], year = year > 1990)
 #+end_src
 
 #+RESULTS:
-|   | title                                   | year  | length | budget | rating |
-|---+-----------------------------------------+-------+--------+--------+--------|
-| 1 | Ei ist eine geschissene Gottesgabe, Das | [[cls:boolean-true][TRUE]]  |     90 |        |    8.4 |
-| 2 | Hamos sto aigaio                        | [[cls:boolean-false][FALSE]] |    109 |        |    5.5 |
-| 3 | Mind Benders, The                       | [[cls:boolean-false][FALSE]] |     99 |        |    6.4 |
-| 4 | Trop (peu) d'amour                      | [[cls:boolean-true][TRUE]]  |    119 |        |    4.5 |
-| 5 | Crystania no densetsu                   | [[cls:boolean-true][TRUE]]  |     85 |        |    6.1 |
+|   | title                                           | year  | length | budget | rating |
+|---+-------------------------------------------------+-------+--------+--------+--------|
+| 1 | Hymens Parable, The                             | [[cls:boolean-true][TRUE]]  |     80 |        |    5.3 |
+| 2 | Riding Shotgun                                  | [[cls:boolean-false][FALSE]] |     73 |        |    6.0 |
+| 3 | Bad Girls' Dormitory                            | [[cls:boolean-false][FALSE]] |     95 |        |    2.6 |
+| 4 | Creature of the Sunny Side Up Trailer Park, The | [[cls:boolean-true][TRUE]]  |    105 |        |    4.5 |
+| 5 | In the Shadow of Hollywood                      | [[cls:boolean-true][TRUE]]  |    112 |        |    7.2 |
 
 Evaluating the following does *not* print ~mov~ in the echo area.
 
