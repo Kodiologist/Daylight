@@ -258,13 +258,17 @@ results block matching the file name (but without the file extension)."
 ; kind of markup.
   'ignore
   (lambda (path desc format)
-    (unless (member path '("i" "code"))
+    (unless (member path '("i" "code" "cog"))
       (error "'m' link: Unknown type %S" path))
     (cond
       ((eq format 'html)
-        (format "<%s class='mcolon'>%s</%s>" path desc path))
-          ; The class is currently necessary to distinguish m:i
-          ; from the failure mode of `org-html-link'.
+        (let ((tag path) (class "mcolon"))
+          ; The class "mcolon" is currently necessary to distinguish
+          ; m:i from the failure mode of `org-html-link'.
+          (when (string= tag "cog")
+            ; This material represents thinking (cognition).
+            (setq tag "i"  class "cog"))
+          (format "<%s class='%s'>%s</%s>" tag class desc tag)))
       ((eq format 'odt)
         (org-odt-format-fontify (daylight-escape-html path) "Emphasis"))
       ((eq format 'latex)
