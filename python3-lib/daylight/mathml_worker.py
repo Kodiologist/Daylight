@@ -2,7 +2,7 @@
 
 import sys, re, argparse, subprocess
 from xml.sax.saxutils import unescape
-from cgi import escape
+from html import escape
 
 operators = ('logit', 'ilogit', 'invlogit', 'Bern', 'Unif', 'Normal')
 latex_chars = {
