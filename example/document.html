@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <title>Example document</title>
-<meta name="generator" content="Org mode">
 
+<meta name="generator" content="Org Mode" />
 
 <link rel="stylesheet" type="text/css" href="https://arfer.net/daylight.css">
 <meta name="citation_title" content="Example document">
@@ -16,7 +16,7 @@
 <meta name="citation_firstpage" content="231">
 <meta name="citation_lastpage" content="259"></head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <header>
 <h1 class="title">Example document</h1><p class="subtitle">Kodi B. Arfer and John Doe<br>Created 3 Oct 2009 • Last modified 7 Jul 2013</p>
 </header>
@@ -46,9 +46,9 @@ Here's some more text before the first heading. Here's <a class="internal" href=
 I like cheese puffs and tacos (this part was inserted by the POSTPROC block, via a regex substitution on the generated HTML).
 </p>
 
-<nav id="table-of-contents">
+<nav id="table-of-contents" role="doc-toc">
 <h2>Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a class="internal" href="#sec--emphasis-links-footnotes">Emphasis, links, and footnotes</a></li>
 <li><a class="internal" href="#sec--lists-hardwrapping">Lists and hard-wrapping</a>
@@ -118,7 +118,7 @@ The <code>cls</code> link type creates a <code>span</code> with the given class.
 </p>
 
 <p>
-I'm a <a href="http://en.wikipedia.org/Dualism">dualist</a>, sort of. (That link went to <a class="url" href="http://en.wikipedia.org/Dualism">http://en.wikipedia.org/Dualism</a> ). Here are some links: <a href="/a/b">absolute</a>, <a href="a/b">relative</a>. Some trickier ones: <a href="/foo/salt%20&amp;%20paper">ketchup &amp; mustard (absolute)</a>, <a href="foo/salt%20&amp;%20paper">ketchup &amp; mustard (relative)</a>. Here are some with pound signs: <a class="url" href="http://example.com/a#fragment">http://example.com/a#fragment</a>, <a href="/a#fragment">absolute</a>, <a href="a#fragment">relative</a>. For some time, I called myself a monist, since I believe that all we need to think is a physical nervous system and whatever that nervous system needs to function.<a id="fnr--foof" class="internal footref" href="#fn--foof">1</a> In<a id="fnr--taxonomy1" class="internal footref" href="#fn--taxonomy1">2</a><span class='footref'>, </span><a id="fnr--taxonomy2" class="internal footref" href="#fn--taxonomy2">3</a> particular<a id="fnr--multip" class="internal footref" href="#fn--multip">4</a>, I don't think<a id="fnr--foof.2" class="internal footref" href="#fn--foof">1</a> we need supernatural help<a id="fnr--finalf" class="internal footref" href="#fn--finalf">5</a>, like souls<a id="fnr--foof.3" class="internal footref" href="#fn--foof">1</a>. What, then, is a mind?
+I'm a <a href="http://en.wikipedia.org/Dualism">dualist</a>, sort of. (That link went to <a class="url" href="http://en.wikipedia.org/Dualism">http://en.wikipedia.org/Dualism</a> ). Here are some links: <a href="/a/b">absolute</a>, <a href="a/b">relative</a>. Some trickier ones: <a href="/foo/salt%20&amp;%20paper">ketchup &amp; mustard (absolute)</a>, <a href="foo/salt%20&amp;%20paper">ketchup &amp; mustard (relative)</a>. Here are some with pound signs: <a class="url" href="http://example.com/a#fragment">http://example.com/a#fragment</a>, <a href="/a#fragment">absolute</a>, <a href="a#fragment">relative</a>. For some time, I called myself a monist, since I believe that all we need to think is a physical nervous system and whatever that nervous system needs to function.<a id="fnr--foof" class="internal footref" href="#fn--foof" role="doc-backlink">1</a> In<a id="fnr--taxonomy1" class="internal footref" href="#fn--taxonomy1" role="doc-backlink">2</a><span class='footref'>, </span><a id="fnr--taxonomy2" class="internal footref" href="#fn--taxonomy2" role="doc-backlink">3</a> particular<a id="fnr--multip" class="internal footref" href="#fn--multip" role="doc-backlink">4</a>, I don't think<a id="fnr--foof.2" class="internal footref" href="#fn--foof" role="doc-backlink">1</a> we need supernatural help<a id="fnr--finalf" class="internal footref" href="#fn--finalf" role="doc-backlink">5</a>, like souls<a id="fnr--foof.3" class="internal footref" href="#fn--foof" role="doc-backlink">1</a>. What, then, is a mind?
 </p>
 
 <p>
@@ -241,7 +241,7 @@ Another sentence.
 <h2 id="sec--citations">Citations</h2>
 <div class="outline-text-2">
 <p>
-One of my favorite articles is <a class='internal bibref' href='#bibref--nisbett_wilson_1977_telling_more'>Nisbett and Wilson (1977)</a>. With parentheses: (<a class='internal bibref' href='#bibref--nisbett_wilson_1977_telling_more'>Nisbett &amp; Wilson, 1977</a>). Another article I like is <a class='internal bibref' href='#bibref--wilson_brekke_1994'>Wilson and Brekke (1994)</a> (<a class='internal bibref' href='#bibref--wilson_brekke_1994'>Wilson &amp; Brekke, 1994</a>). <a class='internal bibref' href='#bibref--hastie_tibshirani_friedman_2009'>Hastie, Tibshirani, and Friedman (2009)</a> have more authors (<a class='internal bibref' href='#bibref--hastie_tibshirani_friedman_2009'>Hastie et al., 2009</a>). <a class='internal bibref' href='#bibref--peters_miedl_b%C3%BCchel_2012'>Peters, Miedl, and Büchel (2012)</a> have an accent mark. <a class='internal bibref' href='#bibref--cohen_1994_round'>Cohen (1994)</a> has italics in the title. Here's a genitive citation: <a class='internal bibref' href='#bibref--geisser_1993'>Geisser's (1993)</a> monograph. Another: <a class='internal bibref' href='#bibref--domingos_2012_useful'>Domingos's (2012)</a> paper. This sentence has parenthesized citations with punctuation weirdness (<a class='internal bibref' href='#bibref--geisser_1993'>Geisser, 1993</a>, <a class='internal bibref' href='#bibref--geisser_1993'>Geisser, 1993,</a> <a class='internal bibref' href='#bibref--geisser_1993'>Geisser, 1993</a>; notice the automatically inserted comma after the middle citation). Here are three citations to two distinct articles with the same author and year: <a class='internal bibref' href='#bibref--sanday_1981_context'>Sanday (1981b)</a>, <a class='internal bibref' href='#bibref--sanday_1981_context'>Sanday (1981b)</a>, <a class='internal bibref' href='#bibref--sanday_1981_origins'>Sanday (1981a)</a>.<a id="fnr--fnwithbibref" class="internal footref" href="#fn--fnwithbibref">6</a>
+One of my favorite articles is <a class='internal bibref' href='#bibref--nisbett_wilson_1977_telling_more'>Nisbett and Wilson (1977)</a>. With parentheses: (<a class='internal bibref' href='#bibref--nisbett_wilson_1977_telling_more'>Nisbett &amp; Wilson, 1977</a>). Another article I like is <a class='internal bibref' href='#bibref--wilson_brekke_1994'>Wilson and Brekke (1994)</a> (<a class='internal bibref' href='#bibref--wilson_brekke_1994'>Wilson &amp; Brekke, 1994</a>). <a class='internal bibref' href='#bibref--hastie_tibshirani_friedman_2009'>Hastie, Tibshirani, and Friedman (2009)</a> have more authors (<a class='internal bibref' href='#bibref--hastie_tibshirani_friedman_2009'>Hastie et al., 2009</a>). <a class='internal bibref' href='#bibref--peters_miedl_b%C3%BCchel_2012'>Peters, Miedl, and Büchel (2012)</a> have an accent mark. <a class='internal bibref' href='#bibref--cohen_1994_round'>Cohen (1994)</a> has italics in the title. Here's a genitive citation: <a class='internal bibref' href='#bibref--geisser_1993'>Geisser's (1993)</a> monograph. Another: <a class='internal bibref' href='#bibref--domingos_2012_useful'>Domingos's (2012)</a> paper. This sentence has parenthesized citations with punctuation weirdness (<a class='internal bibref' href='#bibref--geisser_1993'>Geisser, 1993</a>, <a class='internal bibref' href='#bibref--geisser_1993'>Geisser, 1993,</a> <a class='internal bibref' href='#bibref--geisser_1993'>Geisser, 1993</a>; notice the automatically inserted comma after the middle citation). Here are three citations to two distinct articles with the same author and year: <a class='internal bibref' href='#bibref--sanday_1981_context'>Sanday (1981b)</a>, <a class='internal bibref' href='#bibref--sanday_1981_context'>Sanday (1981b)</a>, <a class='internal bibref' href='#bibref--sanday_1981_origins'>Sanday (1981a)</a>.<a id="fnr--fnwithbibref" class="internal footref" href="#fn--fnwithbibref" role="doc-backlink">6</a>
 </p>
 
 
@@ -3126,19 +3126,19 @@ Wilson, T. D., &amp; Brekke, N. (1994). Mental contamination and mental correcti
 
 
 <div id="footnotes"><h2 class="footnotes">Notes</h2><div id="text-footnotes">
-<div class="footdef"><a id="fn--foof" class="internal footnum" href="#fnr--foof">1</a> <div class="footpara"><p class="footpara">
+<div class="footdef"><a id="fn--foof" class="internal footnum" href="#fnr--foof" role="doc-backlink">1</a> <div class="footpara" role="doc-footnote"><p class="footpara">
 Duis at libero eros. Duis non luctus augue. In quis nibh vel libero commodo pretium. Aliquam a turpis placerat, facilisis dolor a, ultrices mi. Proin aliquam, nulla sed aliquam scelerisque, lorem eros fringilla mi, at hendrerit nibh erat non arcu. Aenean sollicitudin enim sed placerat volutpat. Integer sed volutpat dolor.
 </p></div></div>
 
-<div class="footdef"><a id="fn--taxonomy1" class="internal footnum" href="#fnr--taxonomy1">2</a> <div class="footpara"><p class="footpara">
+<div class="footdef"><a id="fn--taxonomy1" class="internal footnum" href="#fnr--taxonomy1" role="doc-backlink">2</a> <div class="footpara" role="doc-footnote"><p class="footpara">
 Formerly <i>Cnemidophorus uniparens</i>.
 </p></div></div>
 
-<div class="footdef"><a id="fn--taxonomy2" class="internal footnum" href="#fnr--taxonomy2">3</a> <div class="footpara"><p class="footpara">
+<div class="footdef"><a id="fn--taxonomy2" class="internal footnum" href="#fnr--taxonomy2" role="doc-backlink">3</a> <div class="footpara" role="doc-footnote"><p class="footpara">
 Formerly <i>Cnemidophorus inornatus</i>.
 </p></div></div>
 
-<div class="footdef"><a id="fn--multip" class="internal footnum" href="#fnr--multip">4</a> <div class="footpara"><p class="footpara">
+<div class="footdef"><a id="fn--multip" class="internal footnum" href="#fnr--multip" role="doc-backlink">4</a> <div class="footpara" role="doc-footnote"><p class="footpara">
 This is a two-sentence paragraph. The next paragraph belongs to the same footnote.
 </p>
 
@@ -3146,11 +3146,11 @@ This is a two-sentence paragraph. The next paragraph belongs to the same footnot
 Pellentesque facilisis, tortor eget blandit mattis, libero nunc pulvinar dui, at consectetur velit metus at ligula. Ut eget lorem molestie, auctor ligula in, tempus tortor. Suspendisse nunc tellus, vehicula eu semper non, accumsan a tortor. Curabitur eu ultrices urna. Nullam vulputate placerat tempus. Pellentesque faucibus ipsum sit amet sagittis ultrices. Vivamus a felis posuere, semper urna eget, pulvinar mi. Vivamus commodo odio in risus dictum iaculis. Fusce elementum semper lacus vel laoreet. Nullam commodo posuere ipsum eu lacinia.
 </p></div></div>
 
-<div class="footdef"><a id="fn--finalf" class="internal footnum" href="#fnr--finalf">5</a> <div class="footpara"><p class="footpara">
+<div class="footdef"><a id="fn--finalf" class="internal footnum" href="#fnr--finalf" role="doc-backlink">5</a> <div class="footpara" role="doc-footnote"><p class="footpara">
 I ain't 'fraid a' no ghost.
 </p></div></div>
 
-<div class="footdef"><a id="fn--fnwithbibref" class="internal footnum" href="#fnr--fnwithbibref">6</a> <div class="footpara"><p class="footpara">
+<div class="footdef"><a id="fn--fnwithbibref" class="internal footnum" href="#fnr--fnwithbibref" role="doc-backlink">6</a> <div class="footpara" role="doc-footnote"><p class="footpara">
 Here's a footnote with a bibliography reference (<a class='internal bibref' href='#bibref--hastie_tibshirani_friedman_2009'>Hastie et al., 2009</a>).
 </p></div></div>
 

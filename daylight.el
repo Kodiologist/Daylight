@@ -3,6 +3,7 @@
 (require 'ox)
 (require 'ox-html)
 (require 'ob-R)
+(require 'ol-doi)
 (require 'json)
 (require 'url-util)
 
@@ -313,10 +314,10 @@ results block matching the file name (but without the file extension)."
       (t
         ""))))
 
-(org-add-link-type "doi"
-  (lambda (path)
+(setcdr (assoc "doi" org-link-parameters) '(
+  :follow (lambda (path)
     (browse-url (concat org-doi-server-url path)))
-  (lambda (path desc format)
+  :export (lambda (path desc format)
     ; Unescape square brackets that were escaped in daylight.html_cleanup.
     (setq path (replace-regexp-in-string "\ue006" "["
       (replace-regexp-in-string "\ue007" "]" path)))
@@ -330,7 +331,7 @@ results block matching the file name (but without the file extension)."
       ((eq format 'latex)
         (format "\\texttt{doi:%s}" path))
       (t
-        ""))))
+        "")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; * Math

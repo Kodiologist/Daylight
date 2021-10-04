@@ -269,12 +269,12 @@ if '<div id="footnotes">' in text:
             r_id += '.' + str(footnotes[fn_n]['seen'])
         else:
             footnotes[fn_n] = dict(seen = 1, label = label)
-        return '{}<a id="{}"{} href="#fn--{}">'.format(
+        return '{}<a id="{}"{} href="#fn--{}" role="doc-backlink">'.format(
             preface, escape(r_id), rest, escape(label))
-    text = re.sub(r'<footenotelabel ([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+">',
+    text = re.sub(r'<footenotelabel ([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+" role="doc-backlink">',
         f, text)
-    text = re.sub(r'<a id="fn.(\d+)"([^>]+?) href="[^"]+">',
-        lambda m: '<a id="fn--{0}"{1} href="#fnr--{0}">'.format(
+    text = re.sub(r'<a id="fn.(\d+)"([^>]+?) href="[^"]+" role="doc-backlink">',
+        lambda m: '<a id="fn--{0}"{1} href="#fnr--{0}" role="doc-backlink">'.format(
             escape(footnotes[m.group(1)]['label']), m.group(2)),
         text)
 
@@ -325,9 +325,9 @@ def f(mo):
     contents = mo.group(0)
     return ''
 text = re.sub(
-    '<nav id="table-of-contents">'
+    '<nav id="table-of-contents" role="doc-toc">'
         '.+?'
-        '<div id="text-table-of-contents">'
+        '<div id="text-table-of-contents" role="doc-toc">'
         r'\s+<ul>'
         '.+?'
         r'</ul>\s*</div>\s*</nav>',
