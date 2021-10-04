@@ -150,7 +150,7 @@ results block matching the file name (but without the file extension)."
   (when (bound-and-true-p exporting-daylight)
     (let ((label (org-element-property :label footnote-reference)))
       (setq ad-return-value (concat
-        "<footenotelabel " label ">" ad-return-value)))))
+        "<footnotelabel " label ">" ad-return-value)))))
 
 (defvar daylight-css-href "https://arfer.net/daylight.css")
 (defvar daylight-apa-css-href "https://arfer.net/daylight-apa.css")

@@ -271,7 +271,7 @@ if '<div id="footnotes">' in text:
             footnotes[fn_n] = dict(seen = 1, label = label)
         return '{}<a id="{}"{} href="#fn--{}" role="doc-backlink">'.format(
             preface, escape(r_id), rest, escape(label))
-    text = re.sub(r'<footenotelabel ([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+" role="doc-backlink">',
+    text = re.sub(r'<footnotelabel ([^>]+)>(.*?)<a id="fnr\.(\d+)(?:\.\d+)?"([^>]+?) href="#fn.\d+" role="doc-backlink">',
         f, text)
     text = re.sub(r'<a id="fn.(\d+)"([^>]+?) href="[^"]+" role="doc-backlink">',
         lambda m: '<a id="fn--{0}"{1} href="#fnr--{0}" role="doc-backlink">'.format(
