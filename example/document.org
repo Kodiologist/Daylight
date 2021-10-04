@@ -749,6 +749,42 @@ The following block has ~:auto t~, so it's run when ~setup.R~ is evaluated, and 
 hello.from.notebook = T
 #+end_src
 
+Here is a reference to the next table: [[tab--fromcode]].
+
+#+begin_src R
+data.frame(foo = pi^(1:5), bar = exp(1:5), baz = sqrt(1:5))
+#+end_src
+
+#+NAME: tab--fromcode
+#+CAPTION: The caption for a table from R.
+#+RESULTS:
+|   |        foo |        bar |      baz |
+|---+------------+------------+----------|
+| 1 |   3.141593 |   2.718282 | 1.000000 |
+| 2 |   9.869604 |   7.389056 | 1.414214 |
+| 3 |  31.006277 |  20.085537 | 1.732051 |
+| 4 |  97.409091 |  54.598150 | 2.000000 |
+| 5 | 306.019685 | 148.413159 | 2.236068 |
+
+Here are some images produced by R code blocks. Notice that ~:results graphics~ is not necessary; graphics output is inferred from the file extension of ~:file~.
+
+#+begin_src R :file g/mov-len-rat.png
+qplot(length/60, rating, data = ss(mov, length/60 < 3))
+#+end_src
+
+#+RESULTS:
+[[file:g/mov-len-rat.png]]
+
+Here's one with a caption. This is a reference to it: [[fig--g/mov-rat-len]]. Notice how the target is provided by the file link in the ~#+RESULTS~ instead of by ~#+NAME~.
+
+#+begin_src R :file g/mov-rat-len.png
+qplot(rating, length/60, data = ss(mov, length/60 < 3))
+#+end_src
+
+#+CAPTION: The previous graph with the axes swapped.
+#+RESULTS:
+[[file:g/mov-rat-len.png]]
+
 * Tables
 
 Go to [[tab--trivial-table]].
@@ -759,23 +795,6 @@ Go to [[tab--trivial-table]].
 |-----+---------------+---------|
 | TR  | Build a canal | Panama  |
 | LBJ | Win a war     | Vietnam |
-
-Here is a reference to the next table: [[tab--fromcode]].
-
-#+begin_src R
-data.frame(foo = pi^(1:5), bar = exp(1:5), baz = sqrt(1:5))
-#+end_src
-
-#+NAME: tab--fromcode
-#+CAPTION: The caption for another table.
-#+RESULTS:
-|   |        foo |        bar |      baz |
-|---+------------+------------+----------|
-| 1 |   3.141593 |   2.718282 | 1.000000 |
-| 2 |   9.869604 |   7.389056 | 1.414214 |
-| 3 |  31.006277 |  20.085537 | 1.732051 |
-| 4 |  97.409091 |  54.598150 | 2.000000 |
-| 5 | 306.019685 | 148.413159 | 2.236068 |
 
 Here is a reference to a table without a caption: [[tab--nocap]]. Notice how the reference text looks different now.
 
@@ -816,25 +835,6 @@ Now for an image that has a ~#+NAME~ that we refer to ([[fig--tinypng2]]) but no
 
 #+NAME: fig--tinypng2
 [[./img.png]]
-
-Finally, some "graphics": that is, images produced by R code blocks. Notice that ~:results graphics~ is not necessary; graphics output is inferred from the file extension of ~:file~.
-
-#+begin_src R :file g/mov-len-rat.png
-qplot(length/60, rating, data = ss(mov, length/60 < 3))
-#+end_src
-
-#+RESULTS:
-[[file:g/mov-len-rat.png]]
-
-Here's one with a caption. This is a reference to it: [[fig--g/mov-rat-len]]. Notice how the target is provided by the file link in the ~#+RESULTS~ instead of by ~#+NAME~.
-
-#+begin_src R :file g/mov-rat-len.png
-qplot(rating, length/60, data = ss(mov, length/60 < 3))
-#+end_src
-
-#+CAPTION: The previous graph with the axes swapped.
-#+RESULTS:
-[[file:g/mov-rat-len.png]]
 
 * Mathematical notation
 

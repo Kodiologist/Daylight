@@ -2723,51 +2723,9 @@ The following block has <code>:auto t</code>, so it's run when <code>setup.R</co
 <pre class="src src-R">hello.from.notebook = T
 </pre>
 </div>
-</div>
-</div>
-</div>
-
-<div class="outline-2">
-<h2 id="sec--tables">Tables</h2>
-<div class="outline-text-2">
-<p>
-Go to <a class="internal table-ref-pretty" href="#tab--trivial-table">Table 1</a>.
-</p>
-
-<table id="tab--trivial-table">
-<caption class="t-above"><span class="table-number">Table 1.</span> The caption for the first table.</caption>
-
-<colgroup>
-<col  class="left">
-
-<col  class="left">
-
-<col  class="left">
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="left">Man</th>
-<th scope="col" class="left">Plan</th>
-<th scope="col" class="left">Place</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="left">TR</td>
-<td class="left">Build a canal</td>
-<td class="left">Panama</td>
-</tr>
-
-<tr>
-<td class="left">LBJ</td>
-<td class="left">Win a war</td>
-<td class="left">Vietnam</td>
-</tr>
-</tbody>
-</table>
 
 <p>
-Here is a reference to the next table: <a class="internal table-ref-pretty" href="#tab--fromcode">Table 2</a>.
+Here is a reference to the next table: <a class="internal table-ref-pretty" href="#tab--fromcode">Table 1</a>.
 </p>
 
 <div class="org-src-container">
@@ -2776,7 +2734,7 @@ Here is a reference to the next table: <a class="internal table-ref-pretty" href
 </div>
 
 <table id="tab--fromcode">
-<caption class="t-above"><span class="table-number">Table 2.</span> The caption for another table.</caption>
+<caption class="t-above"><span class="table-number">Table 1.</span> The caption for a table from R.</caption>
 
 <colgroup>
 <col  class="right">
@@ -2829,6 +2787,79 @@ Here is a reference to the next table: <a class="internal table-ref-pretty" href
 <td class="right">306.019685</td>
 <td class="right">148.413159</td>
 <td class="right">2.236068</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Here are some images produced by R code blocks. Notice that <code>:results graphics</code> is not necessary; graphics output is inferred from the file extension of <code>:file</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">qplot(length/60, rating, data = ss(mov, length/60 &lt; 3))
+</pre>
+</div>
+
+
+<figure id="fig--g/mov-len-rat"><div class="figure-label"><a class="internal figure-label-text" href="#fig--g/mov-len-rat">g/mov-len-rat</a></div>
+<img src="g/mov-len-rat.png" alt="mov-len-rat.png">
+
+</figure>
+
+<p>
+Here's one with a caption. This is a reference to it: <a class="internal figure-ref-pretty" href="#fig--g/mov-rat-len">Figure 1</a>. Notice how the target is provided by the file link in the <code>#+RESULTS</code> instead of by <code>#+NAME</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R">qplot(rating, length/60, data = ss(mov, length/60 &lt; 3))
+</pre>
+</div>
+
+
+<figure id="fig--g/mov-rat-len"><div class="figure-label"><a class="internal figure-label-text" href="#fig--g/mov-rat-len">g/mov-rat-len</a></div>
+<img src="g/mov-rat-len.png" alt="mov-rat-len.png">
+
+<figcaption><span class="figure-number">Figure 1. </span>The previous graph with the axes swapped.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+<div class="outline-2">
+<h2 id="sec--tables">Tables</h2>
+<div class="outline-text-2">
+<p>
+Go to <a class="internal table-ref-pretty" href="#tab--trivial-table">Table 2</a>.
+</p>
+
+<table id="tab--trivial-table">
+<caption class="t-above"><span class="table-number">Table 2.</span> The caption for the first table.</caption>
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Man</th>
+<th scope="col" class="left">Plan</th>
+<th scope="col" class="left">Place</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">TR</td>
+<td class="left">Build a canal</td>
+<td class="left">Panama</td>
+</tr>
+
+<tr>
+<td class="left">LBJ</td>
+<td class="left">Win a war</td>
+<td class="left">Vietnam</td>
 </tr>
 </tbody>
 </table>
@@ -2921,25 +2952,25 @@ An image included with an HTTP link. (It doesn't have a <code>figure-label</code
 </figure>
 
 <p>
-The next image is also included with an HTTP link. It also has alt-text and a caption. Here's a reference to it: <a class="internal figure-ref-pretty" href="#fig--comic">Figure 1</a>.
+The next image is also included with an HTTP link. It also has alt-text and a caption. Here's a reference to it: <a class="internal figure-ref-pretty" href="#fig--comic">Figure 2</a>.
 </p>
 
 
 <figure id="fig--comic"><div class="figure-label"><a class="internal figure-label-text" href="#fig--comic">comic</a></div>
 <img src="http://i.imgur.com/mCkZD.gif" alt="A comic strip in which Charlie Brown nervously introduces himself to a &quot;pretty girl&quot; as &quot;Brownie Charles&quot;.">
 
-<figcaption><span class="figure-number">Figure 1. </span><a href="http://www.gocomics.com/peanuts/1990/07/27"><i>Peanuts</i> strip for 27 July 1990</a> by Charles Schulz.</figcaption>
+<figcaption><span class="figure-number">Figure 2. </span><a href="http://www.gocomics.com/peanuts/1990/07/27"><i>Peanuts</i> strip for 27 July 1990</a> by Charles Schulz.</figcaption>
 </figure>
 
 <p>
-Next is a local image, <a class="internal figure-ref-pretty" href="#fig--tinypng">Figure 2</a>.
+Next is a local image, <a class="internal figure-ref-pretty" href="#fig--tinypng">Figure 3</a>.
 </p>
 
 
 <figure id="fig--tinypng"><div class="figure-label"><a class="internal figure-label-text" href="#fig--tinypng">tinypng</a></div>
 <img src="./img.png" alt="img.png">
 
-<figcaption><span class="figure-number">Figure 2. </span>A tiny PNG.</figcaption>
+<figcaption><span class="figure-number">Figure 3. </span>A tiny PNG.</figcaption>
 </figure>
 
 <p>
@@ -2950,37 +2981,6 @@ Now for an image that has a <code>#+NAME</code> that we refer to (<a class="inte
 <figure id="fig--tinypng2"><div class="figure-label"><a class="internal figure-label-text" href="#fig--tinypng2">tinypng2</a></div>
 <img src="./img.png" alt="img.png">
 
-</figure>
-
-<p>
-Finally, some "graphics": that is, images produced by R code blocks. Notice that <code>:results graphics</code> is not necessary; graphics output is inferred from the file extension of <code>:file</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R">qplot(length/60, rating, data = ss(mov, length/60 &lt; 3))
-</pre>
-</div>
-
-
-<figure id="fig--g/mov-len-rat"><div class="figure-label"><a class="internal figure-label-text" href="#fig--g/mov-len-rat">g/mov-len-rat</a></div>
-<img src="g/mov-len-rat.png" alt="mov-len-rat.png">
-
-</figure>
-
-<p>
-Here's one with a caption. This is a reference to it: <a class="internal figure-ref-pretty" href="#fig--g/mov-rat-len">Figure 3</a>. Notice how the target is provided by the file link in the <code>#+RESULTS</code> instead of by <code>#+NAME</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-R">qplot(rating, length/60, data = ss(mov, length/60 &lt; 3))
-</pre>
-</div>
-
-
-<figure id="fig--g/mov-rat-len"><div class="figure-label"><a class="internal figure-label-text" href="#fig--g/mov-rat-len">g/mov-rat-len</a></div>
-<img src="g/mov-rat-len.png" alt="mov-rat-len.png">
-
-<figcaption><span class="figure-number">Figure 3. </span>The previous graph with the axes swapped.</figcaption>
 </figure>
 </div>
 </div>
