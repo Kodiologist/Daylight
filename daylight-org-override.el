@@ -1,5 +1,9 @@
 (provide 'daylight-org-override)
 
+; The below is an edited version of a core Org function, because
+; I couldn't figure out how to do what I needed with advice.
+; Use Git to see what's different from the original.
+
 ;;;###autoload
 (defun org-babel-execute-src-block (&optional arg info params)
   "Execute the current source code block.
@@ -59,6 +63,10 @@ block."
 		       d))))
 		 (cmd (intern (concat "org-babel-execute:" lang)))
 		 result)
+            (when (and (cdr (assq :file params)) (or
+                (string= lang "hy")
+                (and (string= lang "R") (daylight-buffer-is-daylit))))
+              (push "file" result-params))
 	    (unless (fboundp cmd)
 	      (error "No org-babel-execute function for %s!" lang))
 	    (message "executing %s code block%s..."

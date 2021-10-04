@@ -1,5 +1,6 @@
-from hy.compiler import HyTypeError, ast_compile, hy_compile, hy_eval
+from hy.compiler import ast_compile, hy_compile, hy_eval
 from hy.lex import LexException, hy_parse
+from hy.errors import HyTypeError
 import hy.macros
 import imp, sys, os.path
 

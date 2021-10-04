@@ -432,8 +432,8 @@ The following two results, for plain strings, should perhaps be changed, but I h
 <pre class="example">
 hello
 goodbye
-
 </pre>
+
 
 <div class="org-src-container">
 <pre class="src src-hy">(defclass Phooey []
@@ -2173,7 +2173,7 @@ This DataFrame has duplicate column names.
 (cached (do
   (import time)
   (time.sleep 2)
-  (inc xyz)))
+  (+ xyz 1)))
 </pre>
 </div>
 
@@ -3040,10 +3040,13 @@ Here are some display equations:
 Here's an aligned group of equations (which doesn't really work in Firefox):
 </p>
 
+
+<div class="equation-container">
 <math alttext="\begin{aligned}
 \sin x + \sin y &amp;= 4πj \\
 &amp;= a^2 + b^2 - 2 ab \cos C
 \end{aligned}" display="block"><mstyle scriptlevel="0"><mtable displaystyle="true" columnalign="right left" columnspacing="0.2em"><mtr><mtd><mi>sin</mi><mspace width="0.167em"/><mi>x</mi><mo lspace="0.222em" rspace="0.222em">+</mo><mi>sin</mi><mspace width="0.167em"/><mi>y</mi></mtd><mtd><mo lspace="0" rspace="0.278em">=</mo><mn>4</mn><mi>&#x3c0;</mi><mspace width="0"/><mi>j</mi></mtd></mtr><mtr><mtd/><mtd><mo lspace="0" rspace="0.278em">=</mo><msup><mi>a</mi><mn>2</mn></msup><mo lspace="0.222em" rspace="0.222em">+</mo><msup><mi>b</mi><mn>2</mn></msup><mo lspace="0.222em" rspace="0.222em">-</mo><mn>2</mn><mi>a</mi><mspace width="0"/><mi>b</mi><mspace width="0.167em"/><mi>cos</mi><mspace width="0.167em"/><mi>C</mi></mtd></mtr></mtable></mstyle></math>
+</div>
 
 <p>
 Here's a line that has dollar signs inside tildes, where they should be left as-is: there is <code>show.param(l$sr.rho, "dr")</code> and <code>show.param(l$sr.rho, "rho")</code>.

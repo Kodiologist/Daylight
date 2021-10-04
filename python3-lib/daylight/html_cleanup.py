@@ -47,6 +47,12 @@ if apa:
       # the wrong thing. Whatever. I'll cross that bridge when I
       # come to it.
 
+# Remove equation labels and an extra equation span tag.
+text = re.sub(r'\s*<span class="equation">(.+?)\s*</span>\s*',
+    r'\1', text, flags = re.DOTALL)
+text = re.sub(r'\s*<span class="equation-label">.+?</span>\s*</div>',
+    '\n</div>', text, flags = re.DOTALL)
+
 # Convert <latexfrag>s and environments to MathML.
 text = re.sub(r'<latexfrag>(.+?)</latexfrag>',
     lambda m: to_mathml(m.group(1), delimited = True),
@@ -228,8 +234,9 @@ text = re.sub(r'<a href="#(org[^"]+)"',
     lambda m: '<a href="#{}"'.format(sections.get(m.group(1), m.group(1))),
     text)
 
-# Remove unnecessary hexadecimal IDs, which create noise in diffs
-# of output documents.
+# Remove unnecessary IDs, which create noise in diffs of output
+# documents.
+text = re.sub(' id="[^"]*?org[0-9a-f]{7}"', '', text)
 text = re.sub(r'<div id="outline-container-[^"]+" (class="outline-[-0-9]+")>',
     r'<div \1>', text)
 text = re.sub(r'<div (class="outline-text-[-0-9]+") id="text-[^"]+">',

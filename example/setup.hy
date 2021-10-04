@@ -1,9 +1,9 @@
-(require [kodhy.macros [cbind amap qw $ cached]])
+(require  kodhy.macros [cbind amap qw $ cached])
 
 (import
-  [numpy :as np]
-  [pandas :as pd]
-  [kodhy.util [T F valcounts]])
+  numpy :as np
+  pandas :as pd
+  kodhy.util [T F valcounts])
 
 (setv mtcars (cbind
   :I ["RX4" "RX4 Wag" "710" "4 Drive" "Sportabout" "Valiant" "360" "240D" "230" "280" "280C" "450SE" "450SL" "450SLC" "Fleetwood" "Continental" "Imperial" "128" "Civic" "Corolla" "Corona" "Challenger" "Javelin" "Z28" "Firebird" "X1-9" "914-2" "Europa" "Pantera L" "Dino" "Bora" "142E" "Batmobile"]

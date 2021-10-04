@@ -6,6 +6,8 @@
 (require 'json)
 (require 'url-util)
 
+(require 'daylight-org-override)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; * Backend and end-user functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -367,7 +369,7 @@ results block matching the file name (but without the file extension)."
 
 (defun hy ()
   (interactive)
-  (inferior-lisp "hy --repl-output-fn=hy.contrib.hy-repr.hy-repr")
+  (inferior-lisp "hy")
   (rename-buffer "*Hy*")
   (setq inferior-lisp-buffer "*Hy*")
   (when daylight-hy-init-file
@@ -418,7 +420,7 @@ results block matching the file name (but without the file extension)."
 (defvar daylight-hy-buffers '((:default . "*Hy*")))
 
 (defvar daylight-hy-image-file-output-fmt "
-  (import [matplotlib.pyplot :as plt] daylight-hy.babel)
+  (import   matplotlib.pyplot :as plt  daylight-hy.babel)
   (plt.ioff)
   (plt.figure \"daylight-file-output\"
     :figsize (, (/ %s 100) (/ %s 100)))

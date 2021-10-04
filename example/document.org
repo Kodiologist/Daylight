@@ -571,7 +571,7 @@ This DataFrame has duplicate column names.
 (cached (do
   (import time)
   (time.sleep 2)
-  (inc xyz)))
+  (+ xyz 1)))
 #+end_src
 
 #+RESULTS:
@@ -730,7 +730,7 @@ transform(mov[1:5, 1:5], year = year > 1990)
 
 Evaluating the following does *not* print ~mov~ in the echo area.
 
-#+begin_src R :results silent
+#+begin_src R :results none
 ww = mov
 #+end_src
 

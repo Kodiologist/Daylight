@@ -1,36 +1,41 @@
-(require [kodhy.macros [lc amap rmap fmap λ getl]])
+(require  kodhy.macros [lc amap rmap fmap λ getl])
 
 (import
-  [hy [HySymbol]]
-  [collections [OrderedDict]]
-  [datetime [datetime date]]
-  [numpy :as np]
-  [pandas :as pd]
-  [kodhy.util [T F double-quote]])
+  collections [OrderedDict]
+  collections.abc [Iterable]
+  datetime [datetime date]
+  numbers [Number]
+  hyrule [coll?]
+  numpy :as np
+  pandas :as pd
+  kodhy.util [T F double-quote]
+  toolz [first second])
 
 (defn to-el [x]
   "Returns a string for digestion by Daylight in org-babel-execute:hy."
   (cond
-    [(string? x)
+    [(isinstance x str)
       (if (in "\n" (.rstrip x))
         (double-quote x)
         (el-row [x]))]
-    [(numeric? x)
+    [(isinstance x Number)
       (el-row [x])]
-    [(instance? dict x) (do
-      (setv ks (list ((if (instance? OrderedDict x) identity sorted) (.keys x))))
+    [(isinstance x dict) (do
+      (setv ks (list (.keys x)))
+      (unless (isinstance x OrderedDict)
+        (setv ks (sorted ks)))
       (el-table [
         ["K" ks]
         ["value" (amap (get x it) ks)]]))]
-    [(instance? pd.Series x)
+    [(isinstance x pd.Series)
       (el-table (+
         (pandas-index-as-cols x.index)
         [[(or x.name "value") (.tolist x)]]))]
-    [(instance? pd.DataFrame x)
+    [(isinstance x pd.DataFrame)
       (el-table (+
         (pandas-index-as-cols x.index)
         (rmap [[vname v] (.iteritems x)] [vname (.tolist v)])))]
-    [(iterable? x) (do
+    [(isinstance x Iterable) (do
       (setv x (list x))
       (setv head (get x 0))
       (if (coll? head)
@@ -41,7 +46,7 @@
       (el-table [["Python repr" [(repr x)]]])]))
 
 (defn pandas-index-as-cols [ix]
-  (if (instance? pd.MultiIndex ix)
+  (if (isinstance ix pd.MultiIndex)
     (lc [[i name] (enumerate ix.names)]
       [(or name (.format "i{}" i)) (amap (get it i) ix)])
     [[(or ix.name "I") (list ix)]]))
@@ -62,7 +67,7 @@
       ; decimal digits as the one with the most.
       (do
         (setv n (max (map len decimals)))
-        (λ (.--format-- (float it) (.format ".{}f" n))))))
+        (λ (.__format__ (float it) (.format ".{}f" n))))))
     (for [[row-i x] (enumerate col)]
       (when (regnum? x)
         (setv (get col row-i) (f x)))))
@@ -81,31 +86,31 @@
   (cond
     [(pd.isnull x)
       "\"\""]
-    [(or (is x T) (and (instance? np.bool_ x) x))
+    [(or (is x T) (and (isinstance x np.bool_) x))
       "\"[[cls:boolean-true][True]]\""]
-    [(or (is x F) (and (instance? np.bool_ x) (not x)))
+    [(or (is x F) (and (isinstance x np.bool_) (not x)))
       "\"[[cls:boolean-false][False]]\""]
-    [(instance? datetime x)
+    [(isinstance x datetime)
       (double-quote (str (cond
         [(= 0 x.hour x.minute x.second)
           (.date x)]
-        [(instance? pd.Timestamp x)
+        [(isinstance x pd.Timestamp)
           (.to-pydatetime x)]
         [T
           x])))]
-    [(instance? date x)
+    [(isinstance x date)
       (double-quote (str x))]
-    [(numeric? x)
+    [(isinstance x Number)
       (str x)]
-    [(instance? HySymbol x)
+    [(isinstance x hy.models.Symbol)
       (str x)]
-    [(string? x)
+    [(isinstance x str)
       (double-quote x)]
     [T
       (double-quote (repr x))]))
 
 (defn regnum? [x]
   (and
-    (numeric? x)
+    (isinstance x Number)
     (not (np.isnan x))
-    (not (instance? bool x))))
+    (not (isinstance x bool))))
