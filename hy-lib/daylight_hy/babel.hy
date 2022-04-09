@@ -14,36 +14,36 @@
 (defn to-el [x]
   "Returns a string for digestion by Daylight in org-babel-execute:hy."
   (cond
-    [(isinstance x str)
+    (isinstance x str)
       (if (in "\n" (.rstrip x))
         (double-quote x)
-        (el-row [x]))]
-    [(isinstance x Number)
-      (el-row [x])]
-    [(isinstance x dict) (do
+        (el-row [x]))
+    (isinstance x Number)
+      (el-row [x])
+    (isinstance x dict) (do
       (setv ks (list (.keys x)))
       (unless (isinstance x OrderedDict)
         (setv ks (sorted ks)))
       (el-table [
         ["K" ks]
-        ["value" (amap (get x it) ks)]]))]
-    [(isinstance x pd.Series)
+        ["value" (amap (get x it) ks)]]))
+    (isinstance x pd.Series)
       (el-table (+
         (pandas-index-as-cols x.index)
-        [[(or x.name "value") (.tolist x)]]))]
-    [(isinstance x pd.DataFrame)
+        [[(or x.name "value") (.tolist x)]]))
+    (isinstance x pd.DataFrame)
       (el-table (+
         (pandas-index-as-cols x.index)
-        (rmap [[vname v] (.iteritems x)] [vname (.tolist v)])))]
-    [(isinstance x Iterable) (do
+        (rmap [[vname v] (.iteritems x)] [vname (.tolist v)])))
+    (isinstance x Iterable) (do
       (setv x (list x))
       (setv head (get x 0))
       (if (coll? head)
         (el-table (lc [col-i (range (len head))]
           [:no-head (amap (get it col-i) x)]))
-        (el-row x)))]
-    [T
-      (el-table [["Python repr" [(repr x)]]])]))
+        (el-row x)))
+    T
+      (el-table [["Python repr" [(repr x)]]])))
 
 (defn pandas-index-as-cols [ix]
   (if (isinstance ix pd.MultiIndex)
@@ -84,30 +84,30 @@
 
 (defn el-atom [x]
   (cond
-    [(pd.isnull x)
-      "\"\""]
-    [(or (is x T) (and (isinstance x np.bool_) x))
-      "\"[[cls:boolean-true][True]]\""]
-    [(or (is x F) (and (isinstance x np.bool_) (not x)))
-      "\"[[cls:boolean-false][False]]\""]
-    [(isinstance x datetime)
+    (pd.isnull x)
+      "\"\""
+    (or (is x T) (and (isinstance x np.bool_) x))
+      "\"[[cls:boolean-true][True]]\""
+    (or (is x F) (and (isinstance x np.bool_) (not x)))
+      "\"[[cls:boolean-false][False]]\""
+    (isinstance x datetime)
       (double-quote (str (cond
-        [(= 0 x.hour x.minute x.second)
-          (.date x)]
-        [(isinstance x pd.Timestamp)
-          (.to-pydatetime x)]
-        [T
-          x])))]
-    [(isinstance x date)
-      (double-quote (str x))]
-    [(isinstance x Number)
-      (str x)]
-    [(isinstance x hy.models.Symbol)
-      (str x)]
-    [(isinstance x str)
-      (double-quote x)]
-    [T
-      (double-quote (repr x))]))
+        (= 0 x.hour x.minute x.second)
+          (.date x)
+        (isinstance x pd.Timestamp)
+          (.to-pydatetime x)
+        T
+          x)))
+    (isinstance x date)
+      (double-quote (str x))
+    (isinstance x Number)
+      (str x)
+    (isinstance x hy.models.Symbol)
+      (str x)
+    (isinstance x str)
+      (double-quote x)
+    T
+      (double-quote (repr x))))
 
 (defn regnum? [x]
   (and

@@ -53,7 +53,7 @@ Oh boy, I hope you packed a lunch.
 
   - GNU Emacs 27.1
   - Org 9.5
-  - Hy 1.0a3+133.gd15b3eb7
+  - Hy 1.0a4+109.gd3267c9
   - R 4.0.4
   - ESS 18.10
 
