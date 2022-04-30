@@ -386,7 +386,7 @@ if info['postproc']:
         text = POSTPROC(text)
     elif lang == 'hy':
         import hy
-        POSTPROC = hy.eval(hy.read_str("(fn [text]\n" + body + "\n)"))
+        POSTPROC = hy.eval(hy.read("(fn [text]\n" + body + "\n)"))
         text = POSTPROC(text)
     else:
         raise ValueError("Unknown POSTPROC language " + repr(lang))

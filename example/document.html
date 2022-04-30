@@ -1710,7 +1710,7 @@ This DataFrame has a numeric column index.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-hy">(pd.DataFrame (amap (, it (* it 2)) (range 6)))
+<pre class="src src-hy">(pd.DataFrame (amap #(it (* it 2)) (range 6)))
 </pre>
 </div>
 
@@ -1771,7 +1771,7 @@ This DataFrame has a numeric column index.
 </table>
 
 <div class="org-src-container">
-<pre class="src src-hy">(pd.DataFrame (amap (, it (* it 2)) (range 8))
+<pre class="src src-hy">(pd.DataFrame (amap #(it (* it 2)) (range 8))
   :index (pd.MultiIndex.from-product
     [(qw A B C D) (qw black white)]))
 </pre>
@@ -1932,7 +1932,7 @@ This DataFrame has a numeric column index.
 </table>
 
 <div class="org-src-container">
-<pre class="src src-hy">(pd.DataFrame (amap (, it (* it 2)) (range 8))
+<pre class="src src-hy">(pd.DataFrame (amap #(it (* it 2)) (range 8))
   :index (pd.MultiIndex.from-product
     :names (qw ione itwo)
     [(qw A B C D) (qw black white)]))

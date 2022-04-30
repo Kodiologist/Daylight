@@ -424,7 +424,7 @@ results block matching the file name (but without the file extension)."
   (import   matplotlib.pyplot :as plt  daylight-hy.babel)
   (plt.ioff)
   (plt.figure \"daylight-file-output\"
-    :figsize (, (/ %s 100) (/ %s 100)))
+    :figsize #((/ %s 100) (/ %s 100)))
   %s
   (plt.savefig %S :bbox-inches \"tight\" :pad_inches .05)
   (plt.close \"daylight-file-output\")

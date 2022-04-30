@@ -458,7 +458,7 @@ mtcars
 This DataFrame has a numeric column index.
 
 #+begin_src hy
-(pd.DataFrame (amap (, it (* it 2)) (range 6)))
+(pd.DataFrame (amap #(it (* it 2)) (range 6)))
 #+end_src
 
 #+RESULTS:
@@ -472,7 +472,7 @@ This DataFrame has a numeric column index.
 | 5 | 5 | 10 |
 
 #+begin_src hy
-(pd.DataFrame (amap (, it (* it 2)) (range 8))
+(pd.DataFrame (amap #(it (* it 2)) (range 8))
   :index (pd.MultiIndex.from-product
     [(qw A B C D) (qw black white)]))
 #+end_src
@@ -508,7 +508,7 @@ This DataFrame has a numeric column index.
 | D  | white |     7 |
 
 #+begin_src hy
-(pd.DataFrame (amap (, it (* it 2)) (range 8))
+(pd.DataFrame (amap #(it (* it 2)) (range 8))
   :index (pd.MultiIndex.from-product
     :names (qw ione itwo)
     [(qw A B C D) (qw black white)]))

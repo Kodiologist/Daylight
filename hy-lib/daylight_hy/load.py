@@ -1,5 +1,6 @@
+import hy
+from hy.lex.exceptions import LexException
 from hy.compiler import ast_compile, hy_compile, hy_eval
-from hy.lex import LexException, hy_parse
 from hy.errors import HyTypeError
 import hy.macros
 import imp, sys, os.path
@@ -31,7 +32,7 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
                 with open(filename) as o:
                     text = o.read()
                 if lang == "hy":
-                    model = hy_parse(text)
+                    model = list(hy.read_many(text))
                 m = (sys.modules[mname]
                     if preexisting
                     else imp.new_module(mname))
