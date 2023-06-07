@@ -1,5 +1,6 @@
 @page
-   {margin: 1in;}
+   {margin: 1in;
+    size: 8.5in 11in;}
 @media print
    {body
        {margin: 0;}}
