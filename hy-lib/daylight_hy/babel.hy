@@ -1,4 +1,6 @@
-(require  kodhy.macros [lc amap rmap fmap λ getl])
+(require
+  hyrule [unless]
+  kodhy.macros [lc amap rmap fmap λ getl])
 
 (import
   collections [OrderedDict]

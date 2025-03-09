@@ -1,9 +1,9 @@
 import hy
-from hy.lex.exceptions import LexException
+from hy.reader.exceptions import LexException
 from hy.compiler import ast_compile, hy_compile, hy_eval
 from hy.errors import HyTypeError
 import hy.macros
-import imp, sys, os.path
+import types, sys, os.path
 
 def repl_import(filename, code, globals_d, context_name, lang = "hy"):
     """'code' should be a Hy sexp or None. If it's None, the
@@ -31,15 +31,13 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
             try:
                 with open(filename) as o:
                     text = o.read()
-                if lang == "hy":
-                    model = list(hy.read_many(text))
                 m = (sys.modules[mname]
                     if preexisting
-                    else imp.new_module(mname))
+                    else types.ModuleType(mname))
                 m.__file__ = filename
                 sys.modules[mname] = m
                 if lang == "hy":
-                    _ast = hy_compile(model, m)
+                    _ast = hy_compile(hy.read_many(text), m)
                     eval(ast_compile(_ast, filename, "exec"), m.__dict__)
                 elif lang == "python":
                     exec(compile(text, filename, 'exec'), m.__dict__)
@@ -61,9 +59,9 @@ def repl_import(filename, code, globals_d, context_name, lang = "hy"):
                 raise NotImplementedError
             m = sys.modules.get(mname)
             if not m:
-                m = imp.new_module(mname)
+                m = types.ModuleType(mname)
                 sys.modules[mname] = m
-            returnval = hy_eval(code, m.__dict__, m)
+            returnval = hy.eval(code, m.__dict__, module = m)
     finally:
         if m is not None:
             # Copy the module's names (except for names starting with "_")
