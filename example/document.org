@@ -225,7 +225,9 @@ The following two results, for plain strings, should perhaps be changed, but I h
 In the below, notice the trailing 0s.
 
 #+begin_src hy
-(amap [it] [1 2 3.14 "I like π" 5 None True "" False None])
+(lfor
+  x [1 2 3.14 "I like π" 5 None True "" False None]
+  [x])
 #+end_src
 
 #+RESULTS:
@@ -458,7 +460,7 @@ mtcars
 This DataFrame has a numeric column index.
 
 #+begin_src hy
-(pd.DataFrame (amap #(it (* it 2)) (range 6)))
+(pd.DataFrame (lfor  x (range 6)  #(x (* x 2))))
 #+end_src
 
 #+RESULTS:
@@ -472,7 +474,8 @@ This DataFrame has a numeric column index.
 | 5 | 5 | 10 |
 
 #+begin_src hy
-(pd.DataFrame (amap #(it (* it 2)) (range 8))
+(pd.DataFrame
+  (lfor  x (range 8)  #(x (* x 2)))
   :index (pd.MultiIndex.from-product
     [(qw A B C D) (qw black white)]))
 #+end_src
@@ -490,7 +493,8 @@ This DataFrame has a numeric column index.
 | D  | white | 7 | 14 |
 
 #+begin_src hy
-(pd.Series (range 8)
+(pd.Series
+  (range 8)
   :index (pd.MultiIndex.from-product
     [(qw A B C D) (qw black white)]))
 #+end_src
@@ -508,7 +512,8 @@ This DataFrame has a numeric column index.
 | D  | white |     7 |
 
 #+begin_src hy
-(pd.DataFrame (amap #(it (* it 2)) (range 8))
+(pd.DataFrame
+  (lfor  x (range 8)  #(x (* x 2)))
   :index (pd.MultiIndex.from-product
     :names (qw ione itwo)
     [(qw A B C D) (qw black white)]))
@@ -527,7 +532,8 @@ This DataFrame has a numeric column index.
 | D    | white | 7 | 14 |
 
 #+begin_src hy
-(pd.Series (range 8)
+(pd.Series
+  (range 8)
   :index (pd.MultiIndex.from-product
     :names (qw ione itwo)
     [(qw A B C D) (qw black white)]))
