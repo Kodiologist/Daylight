@@ -133,7 +133,7 @@ text = re.sub(r'(<figure id="([^"]+)">\s*<img[^>]+>\s*<figcaption><span class="f
 def f(m):
     idd, objnum = '{}--{}'.format(m.group(1), m.group(2)), m.group(3)
     if m.group(1) == 'tab':
-        m2 = re.search('<table\s+id="{}"[^>]*>\s+<(\w+)'.format(re.escape(idd)), text)
+        m2 = re.search(r'<table\s+id="{}"[^>]*>\s+<(\w+)'.format(re.escape(idd)), text)
         if m2.group(1) == 'caption':
             desc = 'Table {}'.format(objnum)
             cls = 'table-ref-pretty'
@@ -353,7 +353,7 @@ text = re.sub(r'<a\b[^>]+>', f, text)
 # Add a license footer.
 license_url = info.get('daylight-license-url')
 if license_url and not apa:
-    year_created = (int(re.search('\d\d\d\d', info['daylight-date-created']).group(0))
+    year_created = (int(re.search(r'\d\d\d\d', info['daylight-date-created']).group(0))
         if 'daylight-date-created' in info
         else None)
     year_modified = date_modified.year
