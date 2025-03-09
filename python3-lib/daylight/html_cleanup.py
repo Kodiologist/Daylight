@@ -4,7 +4,7 @@ from sys import stdin, argv
 import os.path
 import re
 from itertools import count
-from datetime import datetime
+from datetime import datetime, UTC
 from html import escape
 import json
 from daylight.mathml_worker import to_mathml
@@ -72,7 +72,7 @@ text = re.sub(r'^\\begin\{aligned\}$.+?^\\end\{aligned\}$',
 # daylight.bibgen has already replaced the link with
 # JSON-formatted bibliographic data so we don't have to open the
 # bibliographic database ourselves.
-date_modified = datetime.utcfromtimestamp(os.path.getmtime(info['input-file'])).date()
+date_modified = datetime.fromtimestamp(os.path.getmtime(info['input-file']), UTC).date()
 date_created_str = info.get('daylight-date-created')
 if date_created_str:
     try:
