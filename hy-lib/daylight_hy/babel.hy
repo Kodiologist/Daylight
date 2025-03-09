@@ -107,7 +107,7 @@
     (isinstance x hy.models.Symbol)
       (str x)
     (isinstance x str)
-      (double-quote x)
+      (.replace (double-quote x) "\n" "␤")
     T
       (double-quote (repr x))))
 

@@ -336,6 +336,19 @@ x
 | 3 | [[cls:boolean-true][True]]  |
 
 #+begin_src hy
+(pd.DataFrame (dict
+  :a [1 2 3]
+  :b ["a" "b\nc" "d"]))
+#+end_src
+
+#+RESULTS:
+| I | a | b   |
+|---+---+-----|
+| 0 | 1 | a   |
+| 1 | 2 | b␤c |
+| 2 | 3 | d   |
+
+#+begin_src hy
 (pd.Series (pd.Categorical
   (qw apple banana apple cantaloupe banana banana banana)))
 #+end_src

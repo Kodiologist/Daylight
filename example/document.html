@@ -974,6 +974,51 @@ x
 </table>
 
 <div class="org-src-container">
+<pre class="src src-hy">(pd.DataFrame (dict
+  :a [1 2 3]
+  :b ["a" "b\nc" "d"]))
+</pre>
+</div>
+
+<table>
+
+
+<colgroup>
+<col  class="right">
+
+<col  class="right">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right">I</th>
+<th scope="col" class="right">a</th>
+<th scope="col" class="left">b</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">0</td>
+<td class="right">1</td>
+<td class="left">a</td>
+</tr>
+
+<tr>
+<td class="right">1</td>
+<td class="right">2</td>
+<td class="left">b␤c</td>
+</tr>
+
+<tr>
+<td class="right">2</td>
+<td class="right">3</td>
+<td class="left">d</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
 <pre class="src src-hy">(pd.Series (pd.Categorical
   (qw apple banana apple cantaloupe banana banana banana)))
 </pre>
