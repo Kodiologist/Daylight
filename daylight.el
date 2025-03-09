@@ -261,7 +261,7 @@ results block matching the file name (but without the file extension)."
 ; kind of markup.
   'ignore
   (lambda (path desc format)
-    (unless (member path '("i" "code" "cog"))
+    (unless (member path '("i" "code" "cog" "dfn"))
       (error "'m' link: Unknown type %S" path))
     (cond
       ((eq format 'html)
