@@ -36,7 +36,7 @@
     (isinstance x pd.DataFrame)
       (el-table (+
         (pandas-index-as-cols x.index)
-        (rmap [[vname v] (.iteritems x)] [vname (.tolist v)])))
+        (rmap [[vname v] (.items x)] [vname (.tolist v)])))
     (isinstance x Iterable) (do
       (setv x (list x))
       (setv head (get x 0))
