@@ -110,11 +110,11 @@ if info.get('daylight-citation-meta'):
                 if v)))
 
 # Remove '<meta name="author" …'.
-text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, 1)
+text = re.sub(r'<meta\s+name="author"[^>]+>', '', text, count = 1)
 
 if apa:
     # Add a class to the body.
-    text = re.sub('<body>', '<body class="apa">', text, 1)
+    text = re.sub('<body>', '<body class="apa">', text, count = 1)
 
 # Fix figure numbers, such that only figures with captions get
 # numbers, and the numbers are in the order that figures are
@@ -331,13 +331,13 @@ text = re.sub(
         r'\s+<ul>'
         '.+?'
         r'</ul>\s*</div>\s*</nav>',
-    f, text, 1, re.DOTALL)
+    f, text, count = 1, flags = re.DOTALL)
 section_names = set(re.findall('([^<>]+)</a></li>', contents))
 if (contents and not (apa or slideshow) and
        not (section_names <= {'Notes', 'References'})):
    text = re.sub('<div class="outline-2">',
        lambda mo: contents + mo.group(0),
-       text, 1)
+       text, count = 1)
 
 # Give a class to all internal links.
 def f(m):
